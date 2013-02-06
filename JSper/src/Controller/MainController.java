@@ -25,6 +25,24 @@ public class MainController extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("test doGet!");
 		request.setCharacterEncoding("utf-8");
+		
+		
+		List<Function> fList;
+		fList = new ArrayList<Function>();
+		
+		// test data 
+		fList.add(new Function("name0",0,"root","comment0"));
+		fList.add(new Function("name1",1,"name0","comment1"));
+		fList.add(new Function("name2",2,"name1","comment2"));
+		fList.add(new Function("name3",3,"name2","comment3"));
+		fList.add(new Function("name4",2,"name1","comment4"));
+		fList.add(new Function("name5",1,"name0","comment5"));
+		fList.add(new Function("name6",2,"name5","comment6"));
+		fList.add(new Function("name7",2,"name5","comment7"));
+		fList.add(new Function("name8",3,"name7","comment8"));
+		fList.add(new Function("name9",1,"name0","comment9"));
+		
+		request.setAttribute("fList", fList);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request,  response);
@@ -39,7 +57,7 @@ public class MainController extends HttpServlet {
 		fList = new ArrayList<Function>();
 		
 		// test data
-		fList.add(new Function("name0",0,null,"comment0"));
+		fList.add(new Function("name0",0,"root","comment0"));
 		fList.add(new Function("name1",1,"name0","comment1"));
 		fList.add(new Function("name2",2,"name1","comment2"));
 		fList.add(new Function("name3",3,"name2","comment3"));
@@ -52,7 +70,6 @@ public class MainController extends HttpServlet {
 		
 		request.setAttribute("fList", fList);
 		
-
 		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request,  response);
 	}

@@ -49,9 +49,7 @@ function foo(items) {
 <script>
 	
 	$("#sendForm").click(function userViewSub(){
-		  
 		  var k = editor.getSession().getValue();
-		  
 		  $.ajax({   
 			   type: "POST",  
 			   url: "main",   

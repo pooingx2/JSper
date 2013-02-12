@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Controller
  */
-@WebServlet("/JSper")
+@WebServlet("/main")
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -32,7 +32,8 @@ public class MainController extends HttpServlet {
 		// TODO Auto-generated method stub
 		System.out.println("test");
 		request.setCharacterEncoding("utf-8");
-    	String actionUrl = "";
+    	
+		String actionUrl = "";
     	actionUrl="main.jsp";
 		RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
 		dispatcher.forward(request,  response);
@@ -43,6 +44,16 @@ public class MainController extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		System.out.println("test");
+		request.setCharacterEncoding("utf-8");
+		
+		// code data from main.jsp
+		request.getParameter("code");
+		
+    	String actionUrl = "";
+    	actionUrl="main.jsp";
+		RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
+		dispatcher.forward(request,  response);
 	}
 
 }

@@ -54,6 +54,8 @@ public class MainController extends HttpServlet {
 		
 		// code data from main.jsp
 		request.getParameter("code");
+		String code = request.getParameter("param");
+		System.out.println(code);
 		
 
 		System.out.println("test doPost!");

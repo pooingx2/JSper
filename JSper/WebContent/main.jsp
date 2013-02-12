@@ -4,90 +4,65 @@
 
 <!DOCTYPE html>
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<title>Insert title here</title>
-		<link rel="stylesheet" href="test.css" type="text/css" media="screen" />
-		<style type="text/css" media="screen">
-			#holder {
-				-moz-border-radius: 10px;
-				-webkit-border-radius: 10px;
-				position: relative;
-				top: -5%;
-				width: 100%;
-				height: 100%;
-			}
-			
-			p {
-				text-align: center;
-			}
-		</style>
-		<style type="text/css" media="screen">
-			#editor {
-				position: relative;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				height : 80%;
-				font-size : 11px;
-			}
-			
-			#left_text_section {
-				display: block;
-				width: 25%;
-				height: 100%;
-				float: left;
-			}
-			
-			#right_draw_section {
-				display: block;
-				width: 75%;
-				height: 100%;
-				float: left;
-			}
-		</style>
-	</head>
-	<body id="allpage">
-		<div id="left_text_section">
-			<div id="editor">
-				function foo(items) { 
-					var x = "All this is syntax highlighted"; 
-					return x; 
-				}
-			</div>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="CSS/ace_and_raphael.css" type="text/css" media="screen" />
+</head>
+<body id="allpage">
+	<div id="left_text_section">
+		<div id="editor">
+function foo(items) { 
+	var x = "All this is syntax highlighted"; 
+	return x; 
+}
 		</div>
-		<div id="right_draw_section">
-			<div id="holder"></div>
-		</div>
+	</div>
+	<div id="right_draw_section">
+		<div id="holder"></div>
+	</div>
 
-		------------ test ------------ <br/>
-		${fList.get(0).name}
-		${fList.get(0).depth}
-		${fList.get(0).parent}
-		${fList.get(0).comment} <br/><br/>
-		
-		<c:forEach var="function" items="${fList}">
-			name : ${ function.name } <br/>
-			depth : ${ function.depth }  <br/>
-			parent : ${ function.parent } <br/>
-			comment : ${ function.comment } <br/> <br/>
-		</c:forEach>
-	</body>
+	------------ test ------------
+	<br /> 
+	${fList.get(0).name} ${fList.get(0).depth}
+	${fList.get(0).parent} ${fList.get(0).comment}
+	<br />
+	<br />
 
-	<script src="jquery.js"></script>
-	<script
-		src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js"
-		type="text/javascript" charset="utf-8"></script>
-	<script>
-		var editor = ace.edit("editor");
-		editor.setTheme("ace/theme/monokai");
-		editor.getSession().setMode("ace/mode/javascript");
-	</script>
-	<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-	<script src="raphael-min.js"></script>
-	<script src="graffle.js"></script>
-	<script src="bootstrap.min.js"></script>
+	<c:forEach var="function" items="${fList}">
+			name : ${ function.name } <br />
+			depth : ${ function.depth }  <br />
+			parent : ${ function.parent } <br />
+			comment : ${ function.comment } <br />
+		<br />
+	</c:forEach>
+	
+	<button id="sendForm">변환하기</button>
+</body>
+<script src="JS/jquery.js"></script>
+<script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
+<script src="JS/ace_controll.js" type="text/javascript"></script>
+<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
+<script src="JS/raphael-min.js"></script>
+<script src="JS/graffle.js"></script>
+<script src="JS/bootstrap.min.js"></script>
+<script>
+	
+	$("#sendForm").click(function userViewSub(){
+		  var k = editor.getSession().getValue();
+		  $.ajax({   
+			   type: "POST",  
+			   url: "main",   
+			   data: "param="+k,   //&a=xxx 식으로 나옴
+			   success: function() {
+				   console.log('success');
+			   },
+			   error:function() {
+				   console.log('error');
+			   }
+		  });
+	});
+	
+</script>
 </html>
 

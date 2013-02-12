@@ -1,4 +1,5 @@
 package Antlr;
+
 import java.io.*;
 
 import org.antlr.runtime.*;
@@ -9,8 +10,8 @@ public class __Test__ {
 
     public static void main(String args[]) throws Exception {
     	//ANTLRStringStream input = new ANTLRStringStream(textBoxInput.Text);
-//    	ANTLRFileStream input = new ANTLRFileStream("D:\\Study\\Java\\Workspace\\Web\\ANTLR\\src\\__Test___input.txt", "UTF8");
-    	ANTLRFileStream input = new ANTLRFileStream("src\\Antlr\\__Test___input.txt", "UTF8");
+    	ANTLRFileStream input = new ANTLRFileStream("D:\\Study\\Java\\Workspace\\Web\\ANTLR\\src\\__Test___input.txt", "UTF8");
+//    	ANTLRFileStream input = new ANTLRFileStream("src\\Antlr\\__Test___input.txt", "UTF8");
     	JSLexer lex = new JSLexer(input);
     	
 //    	String aa = "var a = function () { function b () {var c = 4;}; var a; a = 3; return a;};";

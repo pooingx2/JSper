@@ -1,4 +1,3 @@
-package Antlr;
 // $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-13 00:18:30
 
 import org.antlr.runtime.*;
@@ -14,7 +13,6 @@ public class JSParser extends Parser {
     public static final String[] tokenNames = new String[] {
         "<invalid>", "<EOR>", "<DOWN>", "<UP>", "LT", "Identifier", "Comment", "StringLiteral", "NumericLiteral", "DoubleStringCharacter", "SingleStringCharacter", "EscapeSequence", "CharacterEscapeSequence", "HexEscapeSequence", "UnicodeEscapeSequence", "SingleEscapeCharacter", "NonEscapeCharacter", "EscapeCharacter", "DecimalDigit", "HexDigit", "DecimalLiteral", "HexIntegerLiteral", "ExponentPart", "IdentifierStart", "IdentifierPart", "UnicodeLetter", "UnicodeDigit", "UnicodeConnectorPunctuation", "UnicodeCombiningMark", "LineComment", "WhiteSpace", "'function'", "'var'", "'='", "'('", "')'", "','", "'{'", "'}'", "';'", "'if'", "'else'", "'do'", "'while'", "'for'", "'in'", "'continue'", "'break'", "'return'", "'with'", "':'", "'switch'", "'case'", "'default'", "'throw'", "'try'", "'catch'", "'finally'", "'new'", "'['", "']'", "'.'", "'*='", "'/='", "'%='", "'+='", "'-='", "'<<='", "'>>='", "'>>>='", "'&='", "'^='", "'|='", "'?'", "'&&'", "'||'", "'|'", "'^'", "'&'", "'=='", "'!='", "'==='", "'!=='", "'<'", "'>'", "'<='", "'>='", "'instanceof'", "'<<'", "'>>'", "'>>>'", "'+'", "'-'", "'*'", "'/'", "'%'", "'delete'", "'void'", "'typeof'", "'++'", "'--'", "'~'", "'!'", "'this'", "'null'", "'true'", "'false'"
     };
-    public static int depth =0;
     public static final int LT=4;
     public static final int DecimalDigit=18;
     public static final int EOF=-1;
@@ -1246,7 +1244,7 @@ public class JSParser extends Parser {
               System.out.println((Identifier42!=null?Identifier42.getText():null));
             }
             if ( state.backtracking==0 ) {
-              System.out.println("depth = " + depth);
+              System.out.println(depth);
             }
 
             }

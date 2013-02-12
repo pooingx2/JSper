@@ -1,4 +1,3 @@
-package Antlr;
 // $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-13 00:18:31
 
 import org.antlr.runtime.*;

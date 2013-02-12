@@ -36,6 +36,8 @@ function foo(items) {
 			comment : ${ function.comment } <br />
 		<br />
 	</c:forEach>
+	
+	<button id="sendForm">변환하기</button>
 </body>
 <script src="JS/jquery.js"></script>
 <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -45,16 +47,24 @@ function foo(items) {
 <script src="JS/graffle.js"></script>
 <script src="JS/bootstrap.min.js"></script>
 <script>
-	function click_fun() {
-		var $form = $('<form></form>');
-		var k = editor.getSession().getValue();
-		$form.hide();
-		$form.attr('action', 'main');
-		$form.attr('method', 'post');
-		$form.append("<input type='hidden' name='param' value='" + k + "'/>");
-		$form.appendTo('body');
-		$form.submit();
-	};
+	
+	$("#sendForm").click(function userViewSub(){
+		  
+		  var k = editor.getSession().getValue();
+		  
+		  $.ajax({   
+			   type: "POST",  
+			   url: "main",   
+			   data: "param="+k,   //&a=xxx 식으로 나옴
+			   success: function() {
+				   console.log('success');
+			   },
+			   error:function() {
+				   console.log('error');
+			   }
+		  });
+	});
+	
 </script>
 </html>
 

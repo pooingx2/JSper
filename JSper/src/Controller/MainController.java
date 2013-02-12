@@ -1,7 +1,9 @@
 package Controller;
 
-
+import Model.Function;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,38 +12,41 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- * Servlet implementation class Controller
- */
 @WebServlet("/main")
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
+
     public MainController() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("test");
+		System.out.println("test doGet!");
 		request.setCharacterEncoding("utf-8");
-    	
-		String actionUrl = "";
-    	actionUrl="main.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
+
+		List<Function> fList;
+		fList = new ArrayList<Function>();
+		
+		// test data 
+		fList.add(new Function("name0",0,"root","comment0"));
+		fList.add(new Function("name1",1,"name0","comment1"));
+		fList.add(new Function("name2",2,"name1","comment2"));
+		fList.add(new Function("name3",3,"name2","comment3"));
+		fList.add(new Function("name4",2,"name1","comment4"));
+		fList.add(new Function("name5",1,"name0","comment5"));
+		fList.add(new Function("name6",2,"name5","comment6"));
+		fList.add(new Function("name7",2,"name5","comment7"));
+		fList.add(new Function("name8",3,"name7","comment8"));
+		fList.add(new Function("name9",1,"name0","comment9"));
+		
+		request.setAttribute("fList", fList);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request,  response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		System.out.println("test");
@@ -50,9 +55,28 @@ public class MainController extends HttpServlet {
 		// code data from main.jsp
 		request.getParameter("code");
 		
-    	String actionUrl = "";
-    	actionUrl="main.jsp";
-		RequestDispatcher dispatcher = request.getRequestDispatcher(actionUrl);
+
+		System.out.println("test doPost!");
+		request.setCharacterEncoding("utf-8");
+		
+		List<Function> fList;
+		fList = new ArrayList<Function>();
+		
+		// test data
+		fList.add(new Function("name0",0,"root","comment0"));
+		fList.add(new Function("name1",1,"name0","comment1"));
+		fList.add(new Function("name2",2,"name1","comment2"));
+		fList.add(new Function("name3",3,"name2","comment3"));
+		fList.add(new Function("name4",2,"name1","comment4"));
+		fList.add(new Function("name5",1,"name0","comment5"));
+		fList.add(new Function("name6",2,"name5","comment6"));
+		fList.add(new Function("name7",2,"name5","comment7"));
+		fList.add(new Function("name8",3,"name7","comment8"));
+		fList.add(new Function("name9",1,"name0","comment9"));
+		
+		request.setAttribute("fList", fList);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request,  response);
 	}
 

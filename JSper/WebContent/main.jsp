@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -47,7 +49,6 @@
 			}
 		</style>
 	</head>
-
 	<body id="allpage">
 		<div id="left_text_section">
 			<div id="editor">
@@ -60,13 +61,21 @@
 		<div id="right_draw_section">
 			<div id="holder"></div>
 		</div>
-		<form method="POST" action="main">
-			<h1>Test</h1> <br/>
-			<textarea class ="span7" rows="20" name="code"> </textarea>
-			<input type="submit" class="btn" value="Test">
-		</form>
+
+		------------ test ------------ <br/>
+		${fList.get(0).name}
+		${fList.get(0).depth}
+		${fList.get(0).parent}
+		${fList.get(0).comment} <br/><br/>
+		
+		<c:forEach var="function" items="${fList}">
+			name : ${ function.name } <br/>
+			depth : ${ function.depth }  <br/>
+			parent : ${ function.parent } <br/>
+			comment : ${ function.comment } <br/> <br/>
+		</c:forEach>
 	</body>
-	
+
 	<script src="jquery.js"></script>
 	<script
 		src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js"

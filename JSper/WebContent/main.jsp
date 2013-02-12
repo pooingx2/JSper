@@ -21,22 +21,6 @@ function foo(items) {
 	<div id="right_draw_section">
 		<div id="holder"></div>
 	</div>
-
-	------------ test ------------
-	<br /> 
-	${fList.get(0).name} ${fList.get(0).depth}
-	${fList.get(0).parent} ${fList.get(0).comment}
-	<br />
-	<br />
-
-	<c:forEach var="function" items="${fList}">
-			name : ${ function.name } <br />
-			depth : ${ function.depth }  <br />
-			parent : ${ function.parent } <br />
-			comment : ${ function.comment } <br />
-		<br />
-	</c:forEach>
-	
 	<button id="sendForm">변환하기</button>
 </body>
 <script src="JS/jquery.js"></script>
@@ -44,10 +28,24 @@ function foo(items) {
 <script src="JS/ace_controll.js" type="text/javascript"></script>
 <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
 <script src="JS/raphael-min.js"></script>
+<script>
+	var gender = [];
+</script>
+
+<c:set var="i" value="0" />
+<c:forEach var="function" items="${fList}" >
+    <c:if test="${i < fList.size()}">
+        <script type="text/javascript">
+        gender.push(["<c:out value="${fList.get(i).depth}"/>","<c:out value="${fList.get(i).name}"/>","<c:out value="${fList.get(i).parent}"/>","<c:out value="${fList.get(i).comment}"/>",[0,0]]);
+        </script>
+    </c:if> 
+    <c:set var="i" value="${i + 1}" />
+</c:forEach>
+
+
 <script src="JS/graffle.js"></script>
 <script src="JS/bootstrap.min.js"></script>
 <script>
-	
 	$("#sendForm").click(function userViewSub(){
 		  var k = editor.getSession().getValue();
 		  $.ajax({   

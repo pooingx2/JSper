@@ -30,7 +30,7 @@ public class MainController extends HttpServlet {
 		fList = new ArrayList<Function>();
 		
 		// test data 
-		fList.add(new Function("name0",0,"root","comment0"));
+		fList.add(new Function("name0",0,"0","comment0"));
 		fList.add(new Function("name1",1,"name0","comment1"));
 		fList.add(new Function("name2",2,"name1","comment2"));
 		fList.add(new Function("name3",3,"name2","comment3"));
@@ -65,7 +65,7 @@ public class MainController extends HttpServlet {
 		fList = new ArrayList<Function>();
 		
 		// test data
-		fList.add(new Function("name0",0,"root","comment0"));
+		fList.add(new Function("name0",0,"0","comment0"));
 		fList.add(new Function("name1",1,"name0","comment1"));
 		fList.add(new Function("name2",2,"name1","comment2"));
 		fList.add(new Function("name3",3,"name2","comment3"));

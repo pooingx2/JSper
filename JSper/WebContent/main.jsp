@@ -39,7 +39,7 @@ function foo(items) {
 </body>
 <script src="JS/jquery.js"></script>
 <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-<script src="JS/ace.js" type="text/javascript"></script>
+<script src="JS/ace_controll.js" type="text/javascript"></script>
 <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
 <script src="JS/raphael-min.js"></script>
 <script src="JS/graffle.js"></script>

@@ -7,8 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="CSS/ace_and_raphael.css" type="text/css"
-	media="screen" />
+<link rel="stylesheet" href="CSS/ace_and_raphael.css" type="text/css" media="screen" />
 </head>
 <body id="allpage">
 	<div id="left_text_section">
@@ -24,7 +23,8 @@ function foo(items) {
 	</div>
 
 	------------ test ------------
-	<br /> ${fList.get(0).name} ${fList.get(0).depth}
+	<br /> 
+	${fList.get(0).name} ${fList.get(0).depth}
 	${fList.get(0).parent} ${fList.get(0).comment}
 	<br />
 	<br />
@@ -37,7 +37,6 @@ function foo(items) {
 		<br />
 	</c:forEach>
 </body>
-
 <script src="JS/jquery.js"></script>
 <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="JS/ace.js" type="text/javascript"></script>
@@ -45,5 +44,17 @@ function foo(items) {
 <script src="JS/raphael-min.js"></script>
 <script src="JS/graffle.js"></script>
 <script src="JS/bootstrap.min.js"></script>
+<script>
+	function click_fun() {
+		var $form = $('<form></form>');
+		var k = editor.getSession().getValue();
+		$form.hide();
+		$form.attr('action', 'main');
+		$form.attr('method', 'post');
+		$form.append("<input type='hidden' name='param' value='" + k + "'/>");
+		$form.appendTo('body');
+		$form.submit();
+	};
+</script>
 </html>
 

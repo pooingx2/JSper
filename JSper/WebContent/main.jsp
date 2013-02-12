@@ -4,7 +4,6 @@
 
 <!DOCTYPE html>
 <html>
-<<<<<<< HEAD
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -17,61 +16,6 @@ function foo(items) {
 	var x = "All this is syntax highlighted"; 
 	return x; 
 }
-=======
-	<head>
-		<meta charset="UTF-8">
-		<title>Insert title here</title>
-		<link rel="stylesheet" href="test.css" type="text/css" media="screen" />
-		<style type="text/css" media="screen">
-			#holder {
-				-moz-border-radius: 10px;
-				-webkit-border-radius: 10px;
-				position: relative;
-				top: -5%;
-				width: 100%;
-				height: 100%;
-			}
-			
-			p {
-				text-align: center;
-			}
-		</style>
-		<style type="text/css" media="screen">
-			#editor {
-				position: relative;
-				top: 0;
-				right: 0;
-				bottom: 0;
-				left: 0;
-				width: 100%;
-				height : 80%;
-				font-size : 11px;
-			}
-			
-			#left_text_section {
-				display: block;
-				width: 25%;
-				height: 100%;
-				float: left;
-			}
-			
-			#right_draw_section {
-				display: block;
-				width: 75%;
-				height: 100%;
-				float: left;
-			}
-		</style>
-	</head>
-	<body id="allpage">
-		<div id="left_text_section">
-			<div id="editor">
-				function();
-			</div>
-		</div>
-		<div id="right_draw_section">
-			<div id="holder"></div>
->>>>>>> c
 		</div>
 	</div>
 	<div id="right_draw_section">
@@ -85,7 +29,6 @@ function foo(items) {
 	<br />
 	<br />
 
-<<<<<<< HEAD
 	<c:forEach var="function" items="${fList}">
 			name : ${ function.name } <br />
 			depth : ${ function.depth }  <br />
@@ -93,6 +36,8 @@ function foo(items) {
 			comment : ${ function.comment } <br />
 		<br />
 	</c:forEach>
+	
+	<button id="sendForm">변환하기</button>
 </body>
 <script src="JS/jquery.js"></script>
 <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
@@ -102,35 +47,24 @@ function foo(items) {
 <script src="JS/graffle.js"></script>
 <script src="JS/bootstrap.min.js"></script>
 <script>
-	function click_fun() {
-		var $form = $('<form></form>');
-		var k = editor.getSession().getValue();
-		$form.hide();
-		$form.attr('action', 'main');
-		$form.attr('method', 'post');
-		$form.append("<input type='hidden' name='param' value='" + k + "'/>");
-		$form.appendTo('body');
-		$form.submit();
-	};
+	
+	$("#sendForm").click(function userViewSub(){
+		  
+		  var k = editor.getSession().getValue();
+		  
+		  $.ajax({   
+			   type: "POST",  
+			   url: "main",   
+			   data: "param="+k,   //&a=xxx 식으로 나옴
+			   success: function() {
+				   console.log('success');
+			   },
+			   error:function() {
+				   console.log('error');
+			   }
+		  });
+	});
+	
 </script>
-=======
-	<script src="jquery.js"></script>
-	<script
-		src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js"
-		type="text/javascript" charset="utf-8"></script>
-	<script>
-		var editor = ace.edit("editor");
-		editor.setTheme("ace/theme/monokai");
-		editor.getSession().setMode("ace/mode/javascript");
-	</script>
-	<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-	<script src="raphael-min.js"></script>
-	<script src="graffle.js"></script>
-	<script src="bootstrap.min.js"></script>
-	<script>
-	 var k = editor.getSession().getValue();
-	 console.log(k);
-	</script>
->>>>>>> c
 </html>
 

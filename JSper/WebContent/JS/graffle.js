@@ -1,22 +1,22 @@
-//	var make_list_node = 
-//		[
-//		 [0,"bfunction","0","this is caption1.",[10,2,"var a = 3","function b"]], 
-//		 [1,"cfun","bfunction","this is caption2. this is caption2. this is caption2. this is caption2.",[10,4,"var a","var b","function a","function b"]], 
-//		 [1,"dfun","bfunction","this is caption3",[10,3,"var m = 3","var k = 3","function m"]],
-//		 [0,"afunctionisveryveryveryverylong","0","this is caption2. this is caption2. this is caption2.",[0,0]],
-//		 [1,"afunctionisveryverylong","afunctionisveryveryveryverylong","this is caption2. this is caption2. this is caption2.",[0,0]], 
-//		 [2,"efun","afunctionisveryverylong","this is caption4",[0,0]], 
-//		 [0,"ffun","0","this is caption5",[0,0]], 
-//		 [1,"gfun","ffun","this is caption6",[0,0]], 
-//		 [1,"hfun","ffun","this is caption7",[0,0]], 
-//		 [2,"ifun","hfun","this is caption8",[0,0]], 
-//		 [0,"jfunction","0","this is caption9",[0,0]] 
-//		 ];
-	var make_list_node = gender;
+	var make_list_node = 
+		[
+		 [0,"bfunction","0","this is caption1.",[10,2,"var a = 3","function b"]], 
+		 [1,"cfun","bfunction","this is caption2. this is caption2. this is caption2. this is caption2.",[10,4,"var a","var b","function a","function b"]], 
+		 [1,"dfun","bfunction","this is caption3",[10,3,"var m = 3","var k = 3","function m"]],
+		 [0,"afunctionisveryveryveryverylong","0","this is caption2. this is caption2. this is caption2.",[0,0]],
+		 [1,"afunctionisveryverylong","afunctionisveryveryveryverylong","this is caption2. this is caption2. this is caption2.",[0,0]], 
+		 [2,"efun","afunctionisveryverylong","this is caption4",[0,0]], 
+		 [0,"ffun","0","this is caption5",[0,0]], 
+		 [1,"gfun","ffun","this is caption6",[0,0]], 
+		 [1,"hfun","ffun","this is caption7",[0,0]], 
+		 [2,"ifun","hfun","this is caption8",[0,0]], 
+		 [0,"jfunction","0","this is caption9",[0,0]] 
+		 ];
+//	var make_list_node = gender;
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	
 	if (obj1.line && obj1.from && obj1.to) {
-		line = obj1;
+		line = obj1.toBack();
 		obj1 = line.from;
 		obj2 = line.to;
 	}
@@ -74,8 +74,11 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 
 $(document).ready(function() {
 	/*----------------------- Var Declaration -----------------------*/
-	var homepage_height = make_list_node.length*80;
-	$('#holder').height(homepage_height).css({'border': '2px solid #fff'});
+	var homepage_height = make_list_node.length * 80;
+	if(homepage_height < 100){
+		homepage_height = 1000;
+	}
+	$('#holder').height(homepage_height);
 	var	r = Raphael("holder", 1800, homepage_height);
 	var m_connection = [];
 	var font = r.getFont("whoa");
@@ -97,18 +100,18 @@ $(document).ready(function() {
 	function make_line( shapes_start, shapes_end ){ push_array( m_connection,r.connection( shapes_start, shapes_end, "#fff")); };
 	function line_to_line( parent , child ){
 		push_array( m_shapes,child );
-		push_array( m_connection,r.connection( parent, child, "#fff", "#fff|1")  );
+		push_array( m_connection,r.connection( parent, child, "#000", "#000|2")  );
 //		push_array( m_connection,r.connection( parent, child, "#eee")  );
 	};
 	function make_rec_to_line( shape1, posx, posy, lengthx, lengthy, shape_edge ){
 		shape = r.rect(posx, posy, lengthx, lengthy, shape_edge);
-		push_array( m_shapes,shape );
-		push_array( m_connection,r.connection( shape1, shape, "#fff", "#fff|1")  );
+		push_array( m_shapes,shape );	
+		push_array( m_connection,r.connection( shape1, shape, "#000", "#000|2")  );
 	};
 	function make_eclipse_to_line( shape1, posx, posy, lengthx, lengthy ){
 		shape = r.eclipse(posx, posy, lengthx, lengthy);
 		push_array( m_shapes,shape );
-		push_array( m_connection,r.connection( shape1, shape, "#fff", "#fff|1")  );
+		push_array( m_connection,r.connection( shape1, shape, "#000", "#000|2")  );
 	};
 	function make_rectangle(){
 		
@@ -122,13 +125,13 @@ $(document).ready(function() {
 	/*----------------------- Gather Function -----------------------*/
 	function push_arrays( index , node, depth ){
 		length = m_shapes[index].attrs.x+m_shapes[index].attrs.width+40;
-		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,20 + node[1].length*15, 30 ,5));
+		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,20 + node[1].length*15, 30 ,2));
 		if( 20 + node[1].length*14 >= 20+ node[3].length*6  ){
-			push_array( m_caption_rect, r.rect(length, 135 + depth*62,20 + node[1].length*15, 15 ,5));			
+			push_array( m_caption_rect, r.rect(length, 135 + depth*62,20 + node[1].length*15, 15 ,2));			
 		}else{
-			push_array( m_caption_rect, r.rect(length, 135 + depth*62,30+ node[3].length*6, 15 ,5));			
+			push_array( m_caption_rect, r.rect(length, 135 + depth*62,30+ node[3].length*6, 15 ,2));			
 		}
-		push_array( m_caption, r.text(length+10, 142 + depth*62," : "+ node[3]).attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#fff","text-anchor": "start"}) );
+		push_array( m_caption, r.text(length+10, 142 + depth*62," : "+ node[3]).attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );
 		push_array( m_texts, r.text(length+8, 117 + depth*62, node[1]).attr({font: "25px Helvetica", opacity: 0.5}).attr({fill: "#000", cursor: "pointer","text-anchor": "start"}) );		
 	};
 
@@ -138,27 +141,28 @@ $(document).ready(function() {
 			if(m_detail_shapes[i-1].attr('fill-opacity') == 0){
 				m_detail_shapes[i-1].attr({'fill-opacity':1}).show();
 				m_detail_shapes[i].attr({'fill-opacity':1}).show();
-				m_texts[i/2].attr({'fill':'#fff'});
-				m_shapes[i/2].attr({'fill-opacity':'0.4'});
+///				m_texts[i/2].attr({'fill':'#000'});
+				m_shapes[i/2].attr({'fill-opacity':'2.0'});
 			}
 			else{
 				m_detail_shapes[i-1].attr({'fill-opacity':0}).hide();				
 				m_detail_shapes[i].attr({'fill-opacity':0}).hide();
 				m_shapes[i/2].attr({'fill-opacity':'0.9'});
-				m_texts[i/2].attr({'fill':'#000'});			}
+///				m_texts[i/2].attr({'fill':'#000'});			
+				}
 		};
 	};	
 
 	var clickFuncAll = function(){
 		return function(){
 			if(m_show_detail){
-				m_texts[0].attr({'fill':'#fff'});
-				m_shapes[0].attr({'fill-opacity':'0.4'});
+///				m_texts[0].attr({'fill':'#fff'});
+				m_shapes[0].attr({'fill-opacity':'2.0'});
 				for(var i = 1 ; count = m_texts.length, i<count; i++){
 					m_detail_shapes[i*2].attr({'fill-opacity':1}).show();
 					m_detail_shapes[i*2-1].attr({'fill-opacity':1}).show();
-					m_texts[i].attr({'fill':'#fff'});
-					m_shapes[i].attr({'fill-opacity':'0.4'});
+//					m_texts[i].attr({'fill':'#333'});
+					m_shapes[i].attr({'fill-opacity':'2.0'});
 				}
 				m_show_detail = false;
 			}
@@ -168,7 +172,7 @@ $(document).ready(function() {
 				for(var i = 1 ; count = m_texts.length, i<count; i++){
 					m_detail_shapes[i*2].attr({'fill-opacity':0}).hide();				
 					m_detail_shapes[i*2-1].attr({'fill-opacity':0}).hide();
-					m_texts[i].attr({'fill':'#000'});			
+///					m_texts[i].attr({'fill':'#000'});			
 					m_shapes[i].attr({'fill-opacity':'0.9'});
 				}	
 				m_show_detail = true;
@@ -180,7 +184,7 @@ $(document).ready(function() {
 	push_array( m_shapes, r.rect(50, 100, 80, 30 ,5) );
 	push_array( m_texts, r.text(85, 117, "start").attr({font: "25px Helvetica", opacity: 0.5}).attr({fill: "#000",cursor: "pointer"	}));
 	push_array( m_caption_rect, r.rect(50, 135, 80, 15,5)  );
-	push_array( m_caption, r.text(85, 142, ": caption").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#fff"}));
+	push_array( m_caption, r.text(85, 142, ": caption").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000"}));
 	push_array( m_detail_shapes, r.rect(50, 150, 50, 50 ,5).attr({fill: m_shapes[0].attrs.fill, stroke: 0, "fill-opacity": 0, "stroke-width": 2}));
 
 	for( var m = 0 ,list_length = make_list_node.length;  m < list_length ; m++ ){
@@ -195,7 +199,7 @@ $(document).ready(function() {
 
 	for(var i = 0 , count = m_shapes.length; i<count;i++){
 		var color = Raphael.getColor();
-		m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 2});	
+		m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 4});	
 		m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});
 	};
 
@@ -230,7 +234,7 @@ $(document).ready(function() {
 	m_texts[0].click(clickFuncAll());
 	
 	$("#holder").draggable();
-	$('#holder').css({'background-color': '#111'});
+	$('#holder').css({'background-color': '#fff'});
 	/*----------------------- Drag Function -----------------------*/
 //	var dragger = function () {
 //	this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");

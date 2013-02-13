@@ -17,7 +17,6 @@
 
 	<div class="outer-west">
 		<div id="editor">
-<<<<<<< HEAD
 function foo(items) { 
 	var x = "All this is syntax highlighted"; 
 	return x; 
@@ -28,7 +27,6 @@ function foo(items) {
 
 	<div class="ui-layout-north"></div>
 	<div class="ui-layout-south">JSPer</div>
-=======
 			function foo(items) {
 				var x = "All this is syntax highlighted"; 
 				return x;
@@ -38,13 +36,7 @@ function foo(items) {
 	<div id="right_draw_section">
 		<div id="holder"></div>
 	</div>
-
-
-
-
-
-
-	------------ test ------------
+	
 	<br /> 
 	${fList.get(0).name} ${fList.get(0).depth}
 	${fList.get(0).parent} ${fList.get(0).comment}
@@ -60,12 +52,10 @@ function foo(items) {
 	</c:forEach>
 	
 	<button id="sendForm">변환하기</button>
->>>>>>> tt
 </body>
 
 
 <script src="JS/jquery.js"></script>
-<<<<<<< HEAD
 <script
 	src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js"
 	type="text/javascript" charset="utf-8"></script>
@@ -115,7 +105,6 @@ function foo(items) {
 	});
 
 	</script>
-=======
 <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
 <script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
 <script src="JS/ace.js" type="text/javascript"></script>
@@ -141,6 +130,5 @@ function foo(items) {
 	});
 	
 </script>
->>>>>>> tt
 </html>
 

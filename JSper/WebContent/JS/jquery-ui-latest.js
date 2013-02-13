@@ -11508,4 +11508,8 @@ $.extend( $.ui.tabs.prototype, {
 	}
 });
 
+<<<<<<< HEAD
 })( jQuery );
+=======
+})( jQuery );
+>>>>>>> t

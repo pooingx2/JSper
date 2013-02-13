@@ -42,7 +42,7 @@ functionName
 			System.out.println("functionName = " + name);
 			System.out.println("depth = " + depth);
 			insertFunction();
-			comment="null";
+			comment="0";
 		}
 	;
 

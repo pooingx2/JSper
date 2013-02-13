@@ -56,9 +56,5 @@ function foo(items) {
 <script type="text/javascript" src="JS/jquery-ui-latest.js"></script>
 <script type="text/javascript" src="JS/jquery.layout-latest.js"></script>
 <script type="text/javascript" src="JS/layout.js"></script>
-<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-<script src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>
-<script src="JS/raphael-min.js"></script>
-<script src="JS/graffle.js"></script>
 </html>
 

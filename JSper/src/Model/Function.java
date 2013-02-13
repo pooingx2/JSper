@@ -10,6 +10,7 @@ public class Function implements Serializable{
 	private int depth;
 	private String parent;
 	private String comment;
+	private int length;
 	
 	public Function(){}
 	public Function(String name, int depth, String parent, String comment){
@@ -17,6 +18,7 @@ public class Function implements Serializable{
 		this.depth = depth;
 		this.parent = parent;
 		this.comment = comment;
+		this.length = name.length();
 	}
 	
 	public String getName() {
@@ -51,5 +53,10 @@ public class Function implements Serializable{
 	public void setComment(String comment) {
 		this.comment = comment;
 	}
-	
+	public int getLength() {
+		return length;
+	}
+	public void setLength(int length) {
+		this.length = length;
+	}
 }

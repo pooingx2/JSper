@@ -12,21 +12,25 @@
 </head>
 <body id="allpage">
 	<div class="outer-center">
+		<div class="diagramCode">TEST</div>
 		<div id="holder"></div>
 	</div>
 
 	<div class="outer-west">
+	<div class="textCode">TEST></div>
 		<div id="editor">
+<<<<<<< HEAD
 
+=======
+>>>>>>> gooood
 function foo(items) { 
 	var x = "All this is syntax highlighted"; 
 	return x; 
 }
 		</div>
-	<button id="sendForm">변환하기</button>
 	</div>
-	<div class="ui-layout-north"></div>
-	<div class="ui-layout-south">JSPer</div>
+	<div class="ui-layout-northd"></div>
+	<div class="ui-layout-south"><button id="changeBtn"><h1>변환하기</h1></button></div>
 </body>
 
 

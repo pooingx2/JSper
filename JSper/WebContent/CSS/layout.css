@@ -12,6 +12,7 @@
 .ui-layout-pane-north,.ui-layout-pane-south {
 	border: 1px solid #BBB;
 	overflow: hidden;
+	background-color:#FFFFFF;
 }
 
 .ui-layout-pane-west,.ui-layout-pane-east {
@@ -93,4 +94,20 @@
 .ui-layout-resizer-north-dragging,.ui-layout-resizer-south-dragging {
 	border-top: 1px solid #BBB;
 	border-bottom: 1px solid #BBB;
+}
+
+.textCode{
+	height: 50px;
+	background-color: #FFFFFF;
+}
+
+.diagramCode{
+	height: 50px;
+	background-color: #FFFFFF;
+}
+
+#changeBtn{
+	margin:16px; 
+	width:200px; 
+	height: 80px;
 }

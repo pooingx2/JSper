@@ -151,7 +151,15 @@ public class JSParser extends Parser {
     }
     
     public void insertFunction(){
+    	int subDep=0;
+    	if(fList.size()>0) subDep=depth-fList.get(fList.size()-1).getDepth();
+    	if(depth==0) parent=null;
+    	else if(subDep>0) parent=fList.get(depth-subDep).getName();
+    	//else if (depth < fList.get(fList.size()-1).getDepth()) parent = fList.get(fList.size()-1).getName();
+    	
 		fList.add(new Function(name,depth,parent,comment));
+		comment = null;
+		parent = null;
     }
 
     

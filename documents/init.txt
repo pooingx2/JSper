@@ -1,0 +1,38 @@
+package Antlr;
+
+
+
+    private String name;
+	private int depth;
+	private String parent;
+	private String comment;
+	private List<Function> fList;
+	
+    public List<Function> getFlist(){
+    	return fList;
+    }
+    
+    public void init(){
+    	name = null;
+    	depth = 0;
+    	parent = null;
+    	comment = null;
+		fList = new ArrayList<Function>();
+    }
+    
+    public void insertFunction(){
+		fList.add(new Function(name,depth,parent,comment));
+    }
+
+
+
+
+
+
+
+
+type
+ 
+Declaration
+Expression
+Anonymous

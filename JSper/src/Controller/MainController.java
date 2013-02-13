@@ -1,5 +1,7 @@
 package Controller;
 
+import Antlr.JSLexer;
+import Antlr.JSParser;
 import Model.Function;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -12,72 +14,73 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.antlr.runtime.ANTLRStringStream;
+import org.antlr.runtime.CommonTokenStream;
+import org.antlr.runtime.RecognitionException;
+
 @WebServlet("/main")
 public class MainController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-    public MainController() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	public MainController() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("test doGet!");
-		request.setCharacterEncoding("utf-8");
-
-		List<Function> fList;
-		fList = new ArrayList<Function>();
-		
-		// test data 
-		fList.add(new Function("name0",0,"0","comment0"));
-		fList.add(new Function("name1",1,"name0","comment1"));
-		fList.add(new Function("name2",2,"name1","comment2"));
-		fList.add(new Function("name3",3,"name2","comment3"));
-		fList.add(new Function("name4",2,"name1","comment4"));
-		fList.add(new Function("name5",1,"name0","comment5"));
-		fList.add(new Function("name6",2,"name5","comment6"));
-		fList.add(new Function("name7",2,"name5","comment7"));
-		fList.add(new Function("name8",3,"name7","comment8"));
-		fList.add(new Function("name9",1,"name0","comment9"));
-		
-		request.setAttribute("fList", fList);
-
-		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
-		dispatcher.forward(request,  response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		System.out.println("test");
 		request.setCharacterEncoding("utf-8");
-		
-		// code data from main.jsp
-		request.getParameter("code");
-		String code = request.getParameter("param");
-		System.out.println(code);
-		
-
 		System.out.println("test doPost!");
-		request.setCharacterEncoding("utf-8");
-		
-		List<Function> fList;
-		fList = new ArrayList<Function>();
-		
+
+		String code = request.getParameter("param");
+		ANTLRStringStream input = new ANTLRStringStream(code);
+		JSLexer lex = new JSLexer(input);
+
+		System.out.println(code);
+		CommonTokenStream tokens = new CommonTokenStream(lex);
+		JSParser g = new JSParser(tokens);
+
+		try {
+			g.init();
+			g.program();
+			
+			System.out.println("List Test!!!!");
+			
+			for(int i=0;i<g.getFlist().size();i++){
+				System.out.println("getName : " + g.getFlist().get(i).getName());
+				System.out.println("getType : " + g.getFlist().get(i).getType());
+				System.out.println("getDepth : " + g.getFlist().get(i).getDepth());
+				System.out.println("getParent : " + g.getFlist().get(i).getParent());
+				System.out.println("getComment : " + g.getFlist().get(i).getComment());
+			}
+			
+			request.setAttribute("fList", g.getFlist());
+			
+		} catch (RecognitionException e) {
+			e.printStackTrace();
+		}
+
+		//		List<Function> fList;
+		//		fList = new ArrayList<Function>();
+
 		// test data
-		fList.add(new Function("name0",0,"0","comment0"));
-		fList.add(new Function("name1",1,"name0","comment1"));
-		fList.add(new Function("name2",2,"name1","comment2"));
-		fList.add(new Function("name3",3,"name2","comment3"));
-		fList.add(new Function("name4",2,"name1","comment4"));
-		fList.add(new Function("name5",1,"name0","comment5"));
-		fList.add(new Function("name6",2,"name5","comment6"));
-		fList.add(new Function("name7",2,"name5","comment7"));
-		fList.add(new Function("name8",3,"name7","comment8"));
-		fList.add(new Function("name9",1,"name0","comment9"));
-		
-		request.setAttribute("fList", fList);
-		
+		//		fList.add(new Function("name0",0,"root","comment0"));
+		//		fList.add(new Function("name1",1,"name0","comment1"));
+		//		fList.add(new Function("name2",2,"name1","comment2"));
+		//		fList.add(new Function("name3",3,"name2","comment3"));
+		//		fList.add(new Function("name4",2,"name1","comment4"));
+		//		fList.add(new Function("name5",1,"name0","comment5"));
+		//		fList.add(new Function("name6",2,"name5","comment6"));
+		//		fList.add(new Function("name7",2,"name5","comment7"));
+		//		fList.add(new Function("name8",3,"name7","comment8"));
+		//		fList.add(new Function("name9",1,"name0","comment9"));
+
+//		request.setAttribute("fList", fList);
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request,  response);
 	}

@@ -67,7 +67,7 @@ public class MainController extends HttpServlet {
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		}
-
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request,  response);
 	}

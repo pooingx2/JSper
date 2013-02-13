@@ -17,10 +17,7 @@
 
 	<div class="outer-west">
 		<div id="editor">
-<<<<<<< HEAD
-=======
 
->>>>>>> t
 function foo(items) { 
 	var x = "All this is syntax highlighted"; 
 	return x; 
@@ -34,10 +31,6 @@ function foo(items) {
 
 
 <script src="JS/jquery.js"></script>
-<<<<<<< HEAD
-=======
-
->>>>>>> t
 <script
 	src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js"
 	type="text/javascript" charset="utf-8"></script>
@@ -63,33 +56,7 @@ function foo(items) {
 <script type="text/javascript" src="JS/jquery-latest.js"></script>
 <script type="text/javascript" src="JS/jquery-ui-latest.js"></script>
 <script type="text/javascript" src="JS/jquery.layout-latest.js"></script>
-<<<<<<< HEAD
 <script type="text/javascript" src="JS/layout.js"></script>
-=======
 
-<script type="text/javascript">
-
-	$(document).ready(function () {
-
-		// OUTER-LAYOUT
-		$('body').layout({
-			center__paneSelector:	".outer-center"
-		,	west__paneSelector:		".outer-west"
-		//,	east__paneSelector:		".outer-east"
-		,	west__size:				300
-		//,	east__size:				125
-		,	north__size:			80
-		,	south__size:			30
-		,	spacing_open:			8  // ALL panes
-		//,   south__spacing_open:	5
-		,	spacing_closed:			12 // ALL panes
-		,	north__maxSize:			200
-		//,	south__maxSize:			200
-		});
-
-	});
-
-	</script>
->>>>>>> t
 </html>
 

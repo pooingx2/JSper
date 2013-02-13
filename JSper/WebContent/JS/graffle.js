@@ -75,6 +75,9 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 $(document).ready(function() {
 	/*----------------------- Var Declaration -----------------------*/
 	var homepage_height = make_list_node.length*80;
+	if(homepage_height<10){
+		homepage_height = 1000;
+	}
 	$('#editor').height(homepage_height);
 	$('#holder').height(homepage_height).css({'border': '2px solid #fff'});
 	var	r = Raphael("holder", 1800, homepage_height);

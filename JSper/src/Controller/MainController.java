@@ -50,39 +50,23 @@ public class MainController extends HttpServlet {
 		try {
 			g.init();
 			g.program();
-			
+
 			System.out.println("List Test!!!!");
-			
+
 			for(int i=0;i<g.getFlist().size();i++){
 				System.out.println("getName : " + g.getFlist().get(i).getName());
 				System.out.println("getType : " + g.getFlist().get(i).getType());
 				System.out.println("getDepth : " + g.getFlist().get(i).getDepth());
 				System.out.println("getParent : " + g.getFlist().get(i).getParent());
 				System.out.println("getComment : " + g.getFlist().get(i).getComment());
+				System.out.println("getLength : " + g.getFlist().get(i).getLength()+"\n");
 			}
-			
+
 			request.setAttribute("fList", g.getFlist());
-			
+
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		}
-
-				List<Function> fList;
-				fList = new ArrayList<Function>();
-
-//		 test data
-				fList.add(new Function("name0",0,"root","comment0"));
-				fList.add(new Function("name1",1,"name0","comment1"));
-				fList.add(new Function("name2",2,"name1","comment2"));
-				fList.add(new Function("name3",3,"name2","comment3"));
-				fList.add(new Function("name4",2,"name1","comment4"));
-				fList.add(new Function("name5",1,"name0","comment5"));
-				fList.add(new Function("name6",2,"name5","comment6"));
-				fList.add(new Function("name7",2,"name5","comment7"));
-				fList.add(new Function("name8",3,"name7","comment8"));
-				fList.add(new Function("name9",1,"name0","comment9"));
-
-		request.setAttribute("fList", fList);
 
 		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request,  response);

@@ -26,9 +26,21 @@ public class __Test__ {
        
         
         try {
+        	g.init();
+        	
             g.program();
-            System.out.println(tokens.size());
-            System.out.println(tokens.get(3).getText());
+            
+            System.out.println("getName : " + g.getFlist().get(0).getName());
+            System.out.println("getType : " + g.getFlist().get(0).getType());
+            System.out.println("getDepth : " + g.getFlist().get(0).getDepth());
+            System.out.println("getParent : " + g.getFlist().get(0).getParent());
+            System.out.println("getComment : " + g.getFlist().get(0).getComment());
+            System.out.println("getName : " + g.getFlist().get(1).getName());
+            System.out.println("getType : " + g.getFlist().get(1).getType());
+            System.out.println("getDepth : " + g.getFlist().get(1).getDepth());
+            System.out.println("getParent : " + g.getFlist().get(1).getParent());
+            System.out.println("getComment : " + g.getFlist().get(1).getComment());
+            
         } catch (RecognitionException e) {
             e.printStackTrace();
         }

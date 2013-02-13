@@ -7,7 +7,6 @@ options
 	//k = 1;
 	memoize=true;
 }
-
 program
 	: {System.out.println("ANTLR start");}
 	LT!* sourceElements LT!* EOF!
@@ -24,29 +23,37 @@ sourceElement
 	
 // functions
 functionDeclaration
-	: functionComment* LT!* 'function' LT!* functionName LT!* formalParameterList LT!* functionBody
+	: functionComment* LT!* 'function' LT!* functionName {fList.get(fList.size()-1).setType("Declaration");} LT!* formalParameterList LT!* functionBody
 	;
 
 functionExpression
-	: functionComment* LT!* 'var'? LT!* functionName  LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
 	;
 
 functionAnonymous
-	: functionComment* '(' LT!* 'function' {System.out.println("functionAnonymous");} LT!* formalParameterList LT!* functionBody LT!* ')'
+	: functionComment* '(' LT!* 'function' {fList.get(fList.size()-1).setType("Anonymous");} LT!* formalParameterList LT!* functionBody LT!* ')'
 	;
 	
 functionName
 	: 	
 	( Identifier )
-	{System.out.println($Identifier.text);}
-	{System.out.println(depth);}
+		{
+			name = $Identifier.text;
+			System.out.println("functionName = " + name);
+			System.out.println("depth = " + depth);
+			insertFunction();
+			comment="null";
+		}
 	;
 
 functionComment
 	: 	
 	( Comment LT!* )
 	//{System.out.println($Comment.text);}
-	{System.out.println($Comment.text);}
+		{
+			comment = $Comment.text;
+			System.out.println("comment = " + comment);
+		}
 	;
  
 formalParameterList

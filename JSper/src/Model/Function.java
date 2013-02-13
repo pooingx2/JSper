@@ -12,10 +12,8 @@ public class Function implements Serializable{
 	private String comment;
 	
 	public Function(){}
-	public Function(String name, String type , 
-			int depth, String parent, String comment){
+	public Function(String name, int depth, String parent, String comment){
 		this.name = name;
-		this.type = type;
 		this.depth = depth;
 		this.parent = parent;
 		this.comment = comment;

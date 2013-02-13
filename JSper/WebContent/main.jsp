@@ -41,26 +41,8 @@ function foo(items) {
     </c:if> 
     <c:set var="i" value="${i + 1}" />
 </c:forEach>
-
-
 <script src="JS/graffle.js"></script>
 <script src="JS/bootstrap.min.js"></script>
-<script>
-	$("#sendForm").click(function userViewSub(){
-		  var k = editor.getSession().getValue();
-		  $.ajax({   
-			   type: "POST",  
-			   url: "main",   
-			   data: "param="+k,   //&a=xxx 식으로 나옴
-			   success: function() {
-				   console.log('success');
-			   },
-			   error:function() {
-				   console.log('error');
-			   }
-		  });
-	});
-	
-</script>
+<script src="JS/post_value.js"></script>
 </html>
 

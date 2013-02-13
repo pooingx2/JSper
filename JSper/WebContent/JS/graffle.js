@@ -111,7 +111,15 @@ $(document).ready(function() {
 		push_array( m_shapes,shape );
 		push_array( m_connection,r.connection( shape1, shape, "#fff", "#fff|1")  );
 	};
-
+	function make_rectangle(){
+		
+	};
+	function make_circle(){
+		
+	};
+	function make_rhombus(){
+		
+	};
 	/*----------------------- Gather Function -----------------------*/
 	function push_arrays( index , node, depth ){
 		length = m_shapes[index].attrs.x+m_shapes[index].attrs.width+40;
@@ -222,13 +230,8 @@ $(document).ready(function() {
 	};	
 	m_texts[0].click(clickFuncAll());
 	
-	
-	
-	
 	$("#holder").draggable();
 	$('#holder').css({'background-color': '#111'});
-	
-	
 	/*----------------------- Drag Function -----------------------*/
 //	var dragger = function () {
 //	this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");

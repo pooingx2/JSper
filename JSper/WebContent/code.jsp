@@ -10,8 +10,7 @@
 <link rel="stylesheet" href="CSS/layout-default.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="CSS/layout.css" type="text/css" media="screen" />
 </head>
- <body id="allpage">
- JSPer ${test}
+<body id="allpage">
 	<div class="outer-center">
 		<div id="holder"></div>
 	</div>
@@ -26,16 +25,23 @@ function foo(items) {
 		</div>
 	<button id="sendForm">변환하기</button>
 	</div>
-	<div class="ui-layout-north">JSPer ${test}</div>
-	<div class="ui-layout-south">JSPer ${test}</div>
+	<div class="ui-layout-north"></div>
+	<div class="ui-layout-south">JSPer</div>
 </body>
 
+
 <script src="JS/jquery.js"></script>
+<!-- 
 <script
 	src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js"
 	type="text/javascript" charset="utf-8"></script>
 <script src="JS/ace/ace.js" type="text/javascript"></script>
 <script src="JS/ace_controll.js" type="text/javascript"></script>
+ -->
+<script src="lib/codemirror.js"></script>
+<link rel="stylesheet" href="../lib/codemirror.css">
+<script src="mode/javascript/javascript.js"></script>
+
 <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
 <script src="JS/raphael-min.js"></script>
 <script>

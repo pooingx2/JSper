@@ -157,19 +157,16 @@ public class JSParser extends Parser {
     	if(depth==0) parent="0";
     	else{
     		subDep=depth-fList.get(fList.size()-1).getDepth();
-
-    		if(subDep>0) parent=fList.get(depth-subDep).getName();
+    		if(subDep>0) parent=fList.get(fList.size()-1).getName();
     		else{
-    			System.out.println("Test"+subDep);
     			for(int i=fList.size()-1;i>=0;i--){
-    				System.out.println("index : "+i);
     				if(depth==fList.get(i).getDepth()) {
     					parent=fList.get(i).getParent();
     					break;
     				}
     			}
     		}
-    	}	
+    	}
 		fList.add(new Function(name,depth,parent,comment));
 		comment = "0";
 		parent = "0";

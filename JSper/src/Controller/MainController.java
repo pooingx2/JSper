@@ -13,6 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
@@ -29,6 +30,8 @@ public class MainController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
+		request.setCharacterEncoding("utf-8");
+		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request,  response);
 	}
@@ -42,7 +45,6 @@ public class MainController extends HttpServlet {
 		ANTLRStringStream input = new ANTLRStringStream(code);
 		JSLexer lex = new JSLexer(input);
 
-		System.out.println(code);
 		CommonTokenStream tokens = new CommonTokenStream(lex);
 		JSParser g = new JSParser(tokens);
 
@@ -50,23 +52,21 @@ public class MainController extends HttpServlet {
 			g.init();
 			g.program();
 
-			System.out.println("List Test!!!!");
-
-			for(int i=0;i<g.getFlist().size();i++){
-				System.out.println("getName : " + g.getFlist().get(i).getName());
-				System.out.println("getType : " + g.getFlist().get(i).getType());
-				System.out.println("getDepth : " + g.getFlist().get(i).getDepth());
-				System.out.println("getParent : " + g.getFlist().get(i).getParent());
-				System.out.println("getComment : " + g.getFlist().get(i).getComment());
-				System.out.println("getLength : " + g.getFlist().get(i).getLength()+"\n");
+			System.out.println("List Print Test!!!!");
+			List<Function> fList = g.getFlist();
+			
+			for(Function function : fList) {
+				System.out.println("getName : " + function.getName());
+				System.out.println("getType : " + function.getType());
+				System.out.println("getDepth : " + function.getDepth());
+				System.out.println("getParent : " + function.getParent());
+				System.out.println("getComment : " + function.getComment());
+				System.out.println("getLength : " + function.getLength()+"\n");
 			}
-
-			request.setAttribute("fList", g.getFlist());
-
+			request.setAttribute("fList", fList);
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		}
-		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request,  response);
 	}

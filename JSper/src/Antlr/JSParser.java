@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-14 22:25:35
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-15 04:00:51
 package Antlr;
 
 import java.util.ArrayList;
@@ -131,6 +131,7 @@ public class JSParser extends Parser {
     public static final int HexIntegerLiteral=21;
     public static final int NonEscapeCharacter=16;
 
+    
     private String name;
     private int depth;
     private String parent;
@@ -168,9 +169,6 @@ public class JSParser extends Parser {
         			}
         		}
         	}
-        }
-        if(!(comment.equals("0"))){
-            comment = comment.substring(2,comment.length()-2);
         }
     	fList.add(new Function(name,depth,parent,comment));
     	initData();
@@ -1307,8 +1305,8 @@ public class JSParser extends Parser {
             if ( state.backtracking==0 ) {
 
               			name = (Identifier42!=null?Identifier42.getText():null);
-              			System.out.println("functionName = " + name);
-              			System.out.println("depth = " + depth);
+              			//System.out.println("functionName = " + name);
+              			//System.out.println("depth = " + depth);
               			insertFunction();
               			//initData();
               		
@@ -1408,7 +1406,7 @@ public class JSParser extends Parser {
             if ( state.backtracking==0 ) {
 
               			comment = (Comment43!=null?Comment43.getText():null);
-              			System.out.println("comment = " + comment);
+              			//System.out.println("comment = " + comment);
               		
             }
 

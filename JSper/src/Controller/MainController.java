@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -52,7 +51,6 @@ public class MainController extends HttpServlet {
 			g.init();
 			g.program();
 
-			System.out.println("List Print Test!!!!");
 			List<Function> fList = g.getFlist();
 			
 			for(Function function : fList) {

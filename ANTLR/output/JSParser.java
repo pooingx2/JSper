@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-14 23:19:07
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-15 04:00:51
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -1249,8 +1249,8 @@ public class JSParser extends Parser {
             if ( state.backtracking==0 ) {
 
               			name = (Identifier42!=null?Identifier42.getText():null);
-              			System.out.println("functionName = " + name);
-              			System.out.println("depth = " + depth);
+              			//System.out.println("functionName = " + name);
+              			//System.out.println("depth = " + depth);
               			insertFunction();
               			//initData();
               		
@@ -1350,7 +1350,7 @@ public class JSParser extends Parser {
             if ( state.backtracking==0 ) {
 
               			comment = (Comment43!=null?Comment43.getText():null);
-              			System.out.println("comment = " + comment);
+              			//System.out.println("comment = " + comment);
               		
             }
 

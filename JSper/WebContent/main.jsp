@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- ace -->
-<link type="text/css" rel="stylesheet" href="CSS/twilight.css">
 <link rel="stylesheet" href="CSS/layout-default.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="CSS/layout.css" type="text/css" media="screen" />
 <!-- jquert.layout -->
@@ -25,43 +24,76 @@ $(document).ready(function () {
 	//,	east__paneSelector:		".outer-east"
 	,	west__size:				350
 	//,	east__size:				125
-	,	north__size:			80
-	,	south__size:			30
-	,	spacing_open:			8  // ALL panes
-	,   south__spacing_open:	5
-	,	spacing_closed:			12 // ALL panes
-	,	north__maxSize:			200
-	//,	south__maxSize:			200
+	//,	north__size:			80
+	,	south__size:			80
+	,	spacing_open:			10  // ALL panes
+	,   south__spacing_open:	10
+	,	spacing_closed:			20 // ALL panes
+	//,	north__maxSize:			200
+	,	south__maxSize:			80
 	});
-
 });
+var setSize;
+window.onload = function(){
+	var codeBtn = document.getElementById('editor');
+		codeBtn.style.fontSize='12px';
+	setSize = function( n ) {
+		
+		switch (n) {
+			case 1:
+				//Diagram ?뺣? 
+				break;
+			case 2:
+				//Diagram 異뺤냼 
+				break;
+			case 3:
+				var t  = parseFloat(codeBtn.style.fontSize);
+				if(t<=16) t += 2; codeBtn.style.fontSize= t + "px" ;
+				//console.log(parseFloat(codeBtn.style.fontSize));
+				break;
+			case 4:
+				var t  = parseFloat(codeBtn.style.fontSize)
+				if(t>10) t -= 2; codeBtn.style.fontSize= t + "px" ;
+			default:
+				break;
+		}
+			
+	}
+}
 
 </script>
 
 </head>
  <body id="allpage">
 	<div class="outer-center">
- 		<div id="holder"></div> 
+ 		<div id="holder"></div>
+ 		<div class="zoomBG">
+ 			<div><a href="#" onClick="setSize(1); return false;">+</a></div>
+ 			<div><a href="#" onClick="setSize(2); return false;">-</a></div>
+ 		</div>
 	</div>
 
 	<div class="outer-west">
-	<div class="textCode">TEST></div>
 		<div id="editor">
 function foo(items) { 
-	function test(){};
+	function test(){}
 	function test1(){
-		function test2(){};
-	};
+		function test2(){}
+	}
 	var x = "All this is syntax highlighted"; 
 	var k = 0;
 }
 		</div>
-</div>
+		<div class="zoomBG">
+			<div><a href="#" onClick="setSize(3); return false;">+</a></div>
+ 			<div><a href="#" onClick="setSize(4); return false;">-</a></div>
+		</div>
+	</div>
 <!-- <div class="outer-east">Outer East</div> -->
 
 <!-- <div class="ui-layout-north">Outer North</div> -->
 <div class="ui-layout-south">
-	<button id="sendForm">변환하기</button>
+	<button id="sendForm">Translate</button>
 </div>
 </body>
 
@@ -91,7 +123,7 @@ function foo(items) {
 		  $.ajax({   
 			   type: "POST",  
 			   url: "main",   
-			   data: "param="+k,   //&a=xxx 식으로 나옴
+			   data: "param="+k,   //&a=xxx ?앹쑝濡??섏샂
 			   success: function(value) {
 				   console.log('success');
 				   $("#allpage").html(value);

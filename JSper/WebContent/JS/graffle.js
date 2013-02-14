@@ -1,22 +1,39 @@
-//	var make_list_node = 
-//		[
-//		 [0,"bfunction","0","this is caption1.",[10,2,"var a = 3","function b"]], 
-//		 [1,"cfun","bfunction","this is caption2. this is caption2. this is caption2. this is caption2.",[10,4,"var a","var b","function a","function b"]], 
-//		 [1,"dfun","bfunction","this is caption3",[10,3,"var m = 3","var k = 3","function m"]],
-//		 [0,"afunctionisveryveryveryverylong","0","this is caption2. this is caption2. this is caption2.",[0,0]],
-//		 [1,"afunctionisveryverylong","afunctionisveryveryveryverylong","this is caption2. this is caption2. this is caption2.",[0,0]], 
-//		 [2,"efun","afunctionisveryverylong","this is caption4",[0,0]], 
-//		 [0,"ffun","0","this is caption5",[0,0]], 
-//		 [1,"gfun","ffun","this is caption6",[0,0]], 
-//		 [1,"hfun","ffun","this is caption7",[0,0]], 
-//		 [2,"ifun","hfun","this is caption8",[0,0]], 
-//		 [0,"jfunction","0","this is caption9",[0,0]] 
-//		 ];
-var make_list_node = gender;
+	var make_list_node = 
+		[
+		 [0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"]], 
+		 [1,"cfun","bfunction",17,["this is caption2."," this is caption2."," this is caption2."," this is caption2."],[10,4,"var a","var b","function a","function b"]], 
+		 [1,"dfun","bfunction",17,["this is caption3"],[10,3,"var m = 3","var k = 3","function m"]],
+		 [0,"afunctionisvery","0",17,["this is caption2."," this is caption2."," this is caption2."],[0,0]],
+		 [1,"afunctionisveryverylong","afunctionisvery",22,["this is caption2 test."," this is caption2."," this is caption2."],[0,0]], 
+		 [2,"efun","afunctionisvery",17,["this is caption4"],[0,0]], 
+		 [0,"ffun","0",17,["this is caption5"],[0,0]], 
+		 [1,"gfun","ffun",17,["this is caption6"],[0,0]], 
+		 [1,"hfun","ffun",17,["this is caption7"],[0,0]], 
+		 [2,"ifun","hfun",17,["this is caption8"],[0,0]], 
+		 [0,"jfunction","0",17,["this is caption9"],[0,0]] 
+		 ];
+//var make_list_node = gender;
+	/*----------------------- Var Declaration -----------------------*/
+	var homepage_height = make_list_node.length * 80;
+	if(homepage_height < 100){
+		homepage_height = 1000;
+	}
+	$('#holder').height(homepage_height);
+	var	r = Raphael("holder", 1800, homepage_height);
+	var m_connection = [];
+	var font = r.getFont("whoa");
+	var m_shapes = r.set();
+	var m_texts = r.set();
+	var m_caption_rect = r.set();
+	var m_caption = r.set();
+	var m_detail_shapes = r.set();
+	var m_detail_text = r.set();
+	var m_show_detail = true;
+	var m_caption_hides = r.set();
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	
 	if (obj1.line && obj1.from && obj1.to) {
-		line = obj1.toBack();
+		line = obj1;
 		obj1 = line.from;
 		obj2 = line.to;
 	}
@@ -73,22 +90,7 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 };
 
 $(document).ready(function() {
-	/*----------------------- Var Declaration -----------------------*/
-	var homepage_height = make_list_node.length * 80;
-	if(homepage_height < 100){
-		homepage_height = 1000;
-	}
-	$('#holder').height(homepage_height);
-	var	r = Raphael("holder", 1800, homepage_height);
-	var m_connection = [];
-	var font = r.getFont("whoa");
-	var m_shapes = r.set();
-	var m_texts = r.set();
-	var m_caption_rect = r.set();
-	var m_caption = r.set();
-	var m_detail_shapes = r.set();
-	var m_detail_text = r.set();
-	var m_show_detail = true;
+
 	/*----------------------- Common Function -----------------------*/
 	function push_array( array ,shape ){ array.push( shape ); };
 	function push_num_array( array, shapes, num ){
@@ -100,18 +102,18 @@ $(document).ready(function() {
 	function make_line( shapes_start, shapes_end ){ push_array( m_connection,r.connection( shapes_start, shapes_end, "#fff")); };
 	function line_to_line( parent , child ){
 		push_array( m_shapes,child );
-		push_array( m_connection,r.connection( parent, child, "#000", "#000|2")  );
+		push_array( m_connection,r.connection( parent, child, "#000", "#000|1")  );
 //		push_array( m_connection,r.connection( parent, child, "#eee")  );
 	};
 	function make_rec_to_line( shape1, posx, posy, lengthx, lengthy, shape_edge ){
 		shape = r.rect(posx, posy, lengthx, lengthy, shape_edge);
 		push_array( m_shapes,shape );	
-		push_array( m_connection,r.connection( shape1, shape, "#000", "#000|2")  );
+		push_array( m_connection,r.connection( shape1, shape, "#000", "#000|1")  );
 	};
 	function make_eclipse_to_line( shape1, posx, posy, lengthx, lengthy ){
 		shape = r.eclipse(posx, posy, lengthx, lengthy);
 		push_array( m_shapes,shape );
-		push_array( m_connection,r.connection( shape1, shape, "#000", "#000|2")  );
+		push_array( m_connection,r.connection( shape1, shape, "#000", "#000|1")  );
 	};
 	function make_rectangle(){
 		
@@ -124,20 +126,21 @@ $(document).ready(function() {
 	};
 	/*----------------------- Gather Function -----------------------*/
 	function push_arrays( index , node, depth ){
+		var caption_array = r.set();
 		length = m_shapes[index].attrs.x+m_shapes[index].attrs.width+40;
 		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,20 + node[1].length*15, 30 ,2));
-		if( 20 + node[1].length*14 >= 20+ node[3].length*6  ){
-			push_array( m_caption_rect, r.rect(length, 135 + depth*62,20 + node[1].length*15, 15 ,2));			
-		}else{
-			push_array( m_caption_rect, r.rect(length, 135 + depth*62,30+ node[3].length*6, 15 ,2));			
+		push_array( m_caption_rect, r.rect(length, 135 + depth*62,30+ node[3]*6, node[4].length*30 ,2).attr({'fill-opacity':0}));			
+		push_array( m_caption_hides, r.rect(length, 135 + depth*62,30+ node[3]*6, 10 ,2).attr({'fill-opacity':0}));			
+		for( var i=0 ; i<node[4].length ; i++ ){
+			push_array( caption_array, r.text(length+10, 148 + depth*62 + i*30 ," : "+ node[4][i]).attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );			
 		}
-		push_array( m_caption, r.text(length+10, 142 + depth*62," : "+ node[3]).attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );
+		m_caption.push(caption_array);
 		push_array( m_texts, r.text(length+8, 117 + depth*62, node[1]).attr({font: "25px Helvetica", opacity: 0.5}).attr({fill: "#000", cursor: "pointer","text-anchor": "start"}) );		
 	};
-
 	/*----------------------- Var Function -----------------------*/
 	var clickFunc = function(i){
 		return function(){
+
 			if(m_detail_shapes[i-1].attr('fill-opacity') == 0){
 				m_detail_shapes[i-1].attr({'fill-opacity':1}).show();
 				m_detail_shapes[i].attr({'fill-opacity':1}).show();
@@ -152,6 +155,18 @@ $(document).ready(function() {
 				}
 		};
 	};	
+	var mouseon = function(i){
+		return function(){
+			m_caption_rect[i/2].attr({'fill-opacity':1}).show().toFront();
+			m_caption[i/2].show().toFront();			
+		}
+	}
+	var mouseout = function(i){
+		return function(){
+			m_caption_rect[i/2].attr({'fill-opacity':0}).hide();
+			m_caption[i/2].hide();	
+		}
+	}
 
 	var clickFuncAll = function(){
 		return function(){
@@ -181,9 +196,10 @@ $(document).ready(function() {
 	};		
 
 	/*----------------------- Push -----------------------*/
-	push_array( m_shapes, r.rect(50, 100, 80, 30 ,5) );
-	push_array( m_texts, r.text(85, 117, "start").attr({font: "25px Helvetica", opacity: 0.5}).attr({fill: "#000",cursor: "pointer"	}));
-	push_array( m_caption_rect, r.rect(50, 135, 80, 15,5)  );
+	push_array( m_shapes, r.rect(25, 100, 120, 30 ,5) );
+	push_array( m_texts, r.text(85, 117, "document").attr({font: "25px Helvetica", opacity: 0.5}).attr({fill: "#000",cursor: "pointer"	}));
+	push_array( m_caption_rect, r.rect(25, 135, 80, 15,5)  );
+	push_array( m_caption_hides, r.rect(25, 135, 80, 10,2)  );
 	push_array( m_caption, r.text(85, 142, ": caption").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000"}));
 	push_array( m_detail_shapes, r.rect(50, 150, 50, 50 ,5).attr({fill: m_shapes[0].attrs.fill, stroke: 0, "fill-opacity": 0, "stroke-width": 2}));
 
@@ -201,6 +217,7 @@ $(document).ready(function() {
 		var color = Raphael.getColor();
 		m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 4});	
 		m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});
+		m_caption_hides[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});			
 	};
 
 	/*----------------------- Left Chart -----------------------*/
@@ -215,92 +232,62 @@ $(document).ready(function() {
 		push_num_array( m_detail_shapes, [ rectangle, function_detail ],2 );
 		function_detail.hide();
 	}	
+
 	m_detail_shapes.hide();
-	/*----------------------- Down Chart -----------------------*/
-//	for( var m = 0 ; list_length = make_list_node.length, m < list_length ; m++ ){
-//	var function_detail = r.set();
-//	var position_x = m_shapes[m+1].attrs.x;
-//	var position_y = m_shapes[m+1].attrs.y;
-//	var rectangle = r.rect( position_x ,position_y+70,make_list_node[m][4][0]*20,make_list_node[m][4][1]*20,10).attr({fill: m_shapes[m+1].attrs.fill, stroke: 0, "fill-opacity": 0, "stroke-width": 2});
-//	for( var k=0 ; k < make_list_node[m][4][1] ; k++ ){				
-//	function_detail.push( r.text( position_x+10,position_y + 20*k + 80 , make_list_node[m][4][k+2]).attr({font: "15px Helvetica", opacity: 0.5}).attr({fill: "#000" , "text-anchor": "start"}));
-//	}
-//	push_num_array( m_detail_shapes, [ rectangle, function_detail ],2 );
-//	function_detail.hide();
-//	}	
+	m_caption_rect.hide();
+	m_caption.hide();
+
 	for(var i = 1, count = m_texts.length ; i < count ; i++){
-		m_texts[i].click( clickFunc( i*2 ) );
+		m_texts[i].click( clickFunc( i*2 ) ).mouseover( mouseon( i*2 ) ).mouseout( mouseout( i*2 ) );
 	};	
 	m_texts[0].click(clickFuncAll());
 	
-	$("#holder").draggable();
+//	$("#holder").draggable();
 	$('#holder').css({'background-color': '#fff'});
-	/*----------------------- Drag Function -----------------------*/
-//	var dragger = function () {
-//	this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
-//	this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
-//	this.animate({"fill-opacity": .2}, 500);
-//	},
-//	move = function (dx, dy) {
-//	var att = this.type == "rect" ? {x: this.ox + dx, y: this.oy + dy} : {cx: this.ox + dx, cy: this.oy + dy};
-//	this.attr(att);
-//	for (var i = connections.length; i--;) {
-//	r.connection(connections[i]);
-//	}
-//	r.safari();
-//	},
-//	up = function () {
-//	this.animate({"fill-opacity": 0}, 500);
-//	},
-//	l = Raphael("holder", 640, 480),
-//	connections = [],
-//	shapes = [  l.ellipse(190, 100, 30, 20),
-//	l.rect(290, 80, 60, 40, 10),
-//	l.rect(290, 180, 60, 40, 2),
-//	l.ellipse(450, 100, 20, 20),
-//	l.ellipse(450, 200, 20, 20)
-//	];
-//	for (var i = 0, ii = shapes.length; i < 3; i++) {
-//	var color = Raphael.getColor();
-//	shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0, "stroke-width": 2, cursor: "move"});
-//	shapes[i].drag(move, dragger, up);    
-//	}
-//	connections.push(l.connection(shapes[0], shapes[1], "#fff"));
-//	connections.push(l.connection(shapes[1], shapes[2], "#fff", "#fff|5"));
-//	connections.push(l.connection(shapes[1], shapes[3], "#000", "#fff"));
-	/*----------------------- Drag Function -----------------------*/
-//	var dragger = function () {
-//	this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
-//	this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
-//	this.animate({"fill-opacity": .2}, 500);
-//	},
-//	move = function (dx, dy) {
-//	var att = this.type == "rect" ? {x: this.ox + dx, y: this.oy + dy} : {cx: this.ox + dx, cy: this.oy + dy};
-//	this.attr(att);
-//	for (var i = connections.length; i--;) {
-//	r.connection(connections[i]);
-//	}
-//	r.safari();
-//	},
-//	up = function () {
-//	this.animate({"fill-opacity": 0}, 500);
-//	},
-//	l = Raphael("holder", 640, 480),
-//	connections = [],
-//	shapes = [  l.ellipse(190, 100, 30, 20),
-//	l.rect(290, 80, 60, 40, 10),
-//	l.rect(290, 180, 60, 40, 2),
-//	l.ellipse(450, 100, 20, 20),
-//	l.ellipse(450, 200, 20, 20)
-//	];
-//	for (var i = 0, ii = shapes.length; i < 3; i++) {
-//	var color = Raphael.getColor();
-//	shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0, "stroke-width": 2, cursor: "move"});
-//	shapes[i].drag(move, dragger, up);    
-//	}
-//	connections.push(l.connection(shapes[0], shapes[1], "#fff"));
-//	connections.push(l.connection(shapes[1], shapes[2], "#fff", "#fff|5"));
-//	connections.push(l.connection(shapes[1], shapes[3], "#000", "#fff"));
+	
+	 var dragger = function () {
+		 this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
+		 this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
+	 };
+	 var move = function (dx, dy) {
+		 var att = this.type == "rect" ? {x: this.ox + dx, y: this.oy + dy} : {cx: this.ox + dx, cy: this.oy + dy};
+		 this.attr(att);
+		 for (var i = m_connection.length; i--;) {
+			 r.connection(m_connection[i]);
+		 }
+		 r.safari();
+	 };
+	 var up = function () {
+	 };
+	 for (var i = 0, ii = m_shapes.length; i < ii; i++) {
+		 m_shapes[i].drag(move, dragger, up);
+	 }
+
+	 
+	 for(var k = 0;k<m_shapes.length;k++){
+		 m_shapes[k].data("enclosedText",m_texts[k]);
+		 m_shapes[k].data("enclosedShape",m_caption_hides[k]);
+		 m_shapes[k].data("enclosedDetailShape",m_caption_rect[k]);
+		 m_shapes[k].data("enclosedDetail",m_caption[k]);		 
+	 }
+
+
+	 var dragShape = function () {
+		 this.ox = this.attr("cx");
+		 this.oy = this.attr("cy");
+	 } 
+	 var moveShape = function (dx, dy) {
+		 this.attr({cx: this.ox + dx, cy: this.oy + dy});
+		 this.data("enclosedText").attr({x: this.ox + dx + 2, y: this.oy + dy + 10});
+		 this.data("enclosedShape").attr({x: this.ox + dx , y: this.oy + dy + 35});
+		 this.data("enclosedDetailShape").attr({x: this.ox + dx , y: this.oy + dy + 35});
+		 this.data("enclosedDetail").attr({x: this.ox + dx , y: this.oy + dy + 50});
+	 }
+	 var upShape = function () {
+	 }       
+	 for(var k = 0;k<m_shapes.length;k++){
+		 m_shapes[k].drag(moveShape, dragShape, upShape);
+	 }
 });
 
 

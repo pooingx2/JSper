@@ -47,7 +47,7 @@ $(document).ready(function () {
 	<div class="outer-west">
 	<div class="textCode">TEST></div>
 		<div id="editor">
-function foo(items) { 
+function foo(items) {
 	function test(){};
 	function test1(){
 		function test2(){};

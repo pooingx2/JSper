@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Function implements Serializable{
@@ -11,6 +12,8 @@ public class Function implements Serializable{
 	private String parent;
 	private String comment;
 	private int length;
+	private List<String> lines;	// commentLines
+	private int maxLength;		// maxlength - commnetLine
 	
 	public Function(){}
 	public Function(String name, int depth, String parent, String comment){
@@ -19,6 +22,17 @@ public class Function implements Serializable{
 		this.parent = parent;
 		this.comment = comment;
 		this.length = name.length();
+		this.maxLength = 0;
+		this.lines = new ArrayList<String>();
+		initLines();
+	}
+	
+	private void initLines() {
+		String[] temp = comment.split("\n");
+		for(int i=0;i<temp.length;i++){
+			lines.add(temp[i]);
+			if(temp[i].length() > maxLength) maxLength=temp[i].length();
+		}
 	}
 	
 	public String getName() {
@@ -58,5 +72,11 @@ public class Function implements Serializable{
 	}
 	public void setLength(int length) {
 		this.length = length;
+	}
+	public List<String> getLines() {
+		return lines;
+	}
+	public void setLines(List<String> lines) {
+		this.lines = lines;
 	}
 }

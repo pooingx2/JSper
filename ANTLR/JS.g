@@ -899,7 +899,10 @@ fragment UnicodeConnectorPunctuation	// Any character in the Unicode category "C
 	;
 	
 Comment
-	: '/*' (options {greedy=false;} : .)* '*/' //{$channel=HIDDEN;}
+	: '/*' CommetText '*/' //{$channel=HIDDEN;}
+	;
+CommetText
+	: (options {greedy=false;} : .)*
 	;
 //Comment 
 	//: '/*'~(LT)*'/*'

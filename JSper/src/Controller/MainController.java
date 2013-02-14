@@ -1,10 +1,6 @@
 package Controller;
 
-import Antlr.JSLexer;
-import Antlr.JSParser;
-import Model.Function;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,11 +9,16 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.swing.text.html.HTMLDocument.Iterator;
 
+import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
+
+import Antlr.JSLexer;
+import Antlr.JSParser;
+import Model.Function;
+
 
 @WebServlet("/main")
 public class MainController extends HttpServlet {
@@ -31,7 +32,7 @@ public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		
+
 		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request,  response);
 	}
@@ -39,7 +40,6 @@ public class MainController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		System.out.println("test doPost!");
 
 		String code = request.getParameter("param");
 		ANTLRStringStream input = new ANTLRStringStream(code);

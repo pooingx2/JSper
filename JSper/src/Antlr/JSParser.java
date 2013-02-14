@@ -169,6 +169,9 @@ public class JSParser extends Parser {
         		}
         	}
         }
+        if(!(comment.equals("0"))){
+            comment = comment.substring(2,comment.length()-2);
+        }
     	fList.add(new Function(name,depth,parent,comment));
     	initData();
     }

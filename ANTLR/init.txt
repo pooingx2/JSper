@@ -45,7 +45,6 @@ package Antlr;
 
 
 
-
 type
  
 Declaration

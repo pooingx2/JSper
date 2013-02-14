@@ -59,7 +59,8 @@ public class MainController extends HttpServlet {
 				System.out.println("getDepth : " + function.getDepth());
 				System.out.println("getParent : " + function.getParent());
 				System.out.println("getComment : " + function.getComment());
-				System.out.println("getLength : " + function.getLength()+"\n");
+				System.out.println("getLength : " + function.getLength());
+				System.out.println("getMaxLength : " + function.getMaxLength()+"\n");
 			}
 			request.setAttribute("fList", fList);
 		} catch (RecognitionException e) {

@@ -4,6 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author 박주영
+ *
+ */
 public class Function implements Serializable{
 	
 	private String name;
@@ -28,11 +32,14 @@ public class Function implements Serializable{
 	}
 	
 	private void initLines() {
-		String[] temp = comment.split("\n");
-		for(int i=0;i<temp.length;i++){
-			lines.add(temp[i]);
-			if(temp[i].length() > maxLength) maxLength=temp[i].length();
-		}
+        if(!(comment.equals("0"))) {
+        	this.comment = comment.substring(2, comment.length()-2);
+        	String[] temp = comment.split("\n");
+    		for(int i=0;i<temp.length;i++){
+    			lines.add(temp[i]);
+    			if(temp[i].length() > maxLength) maxLength=temp[i].length();
+    		}
+        }
 	}
 	
 	public String getName() {
@@ -79,4 +86,11 @@ public class Function implements Serializable{
 	public void setLines(List<String> lines) {
 		this.lines = lines;
 	}
+	public int getMaxLength() {
+		return maxLength;
+	}
+	public void setMaxLength(int maxLength) {
+		this.maxLength = maxLength;
+	}
+	
 }

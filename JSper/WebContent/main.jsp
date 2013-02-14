@@ -45,8 +45,8 @@ $(document).ready(function () {
 	</div>
 
 	<div class="outer-west">
+	<div class="textCode">TEST></div>
 		<div id="editor">
-
 function foo(items) { 
 	function test(){};
 	function test1(){
@@ -63,7 +63,6 @@ function foo(items) {
 <div class="ui-layout-south">
 	<button id="sendForm">변환하기</button>
 </div>
-
 </body>
 
 

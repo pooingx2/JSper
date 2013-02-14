@@ -16,6 +16,5 @@ $(document).ready(function () {
 				,	north__maxSize:			200
 				//,	south__maxSize:			200
 	});
-
 });
 

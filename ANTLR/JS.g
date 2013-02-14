@@ -42,26 +42,31 @@ functionName
 			System.out.println("functionName = " + name);
 			System.out.println("depth = " + depth);
 			insertFunction();
-			comment="0";
+			//initData();
 		}
 	;
 
 functionComment
 	: 	
 	( Comment LT!* )
-	//{System.out.println($Comment.text);}
 		{
 			comment = $Comment.text;
 			System.out.println("comment = " + comment);
 		}
+		/*
+	|( LineComment LT!* )
+		{
+			comment = $LineComment.text;
+			System.out.println("comment = " + comment);
+		}*/
 	;
- 
+	 
 formalParameterList
 	: '(' (LT!* Identifier (LT!* ',' LT!* Identifier)*)? LT!* ')'
 	;
 
 functionBody
-	: '{' {depth++;} LT!* sourceElements LT!* {depth--;}'}'
+	: '{' {depth++;} LT!* sourceElements? LT!* {depth--;}'}'
 	;
 
 // statements
@@ -896,6 +901,9 @@ fragment UnicodeConnectorPunctuation	// Any character in the Unicode category "C
 Comment
 	: '/*' (options {greedy=false;} : .)* '*/' //{$channel=HIDDEN;}
 	;
+//Comment 
+	//: '/*'~(LT)*'/*'
+	//;
 
 //Comment
 //    :  '/*' .* '*/' // no need for a NEWLINE at the end

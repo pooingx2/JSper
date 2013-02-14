@@ -1,0 +1,53 @@
+package Antlr;
+
+
+    private String name;
+    private int depth;
+    private String parent;
+    private String comment;
+    private List<Function> fList;
+
+    public List<Function> getFlist(){
+        return fList;
+    }
+
+    public void init(){
+        initData();
+    	fList = new ArrayList<Function>();
+    }
+    
+    public void initData(){
+        name = "0";
+        depth = 0;
+        parent = "0";
+        comment = "0";
+    }
+
+    public void insertFunction(){
+        int subDep;
+        if(depth==0) parent="0";
+        else{
+        	subDep=depth-fList.get(fList.size()-1).getDepth();
+        	if(subDep>0) parent=fList.get(fList.size()-1).getName();
+        	else{
+        		for(int i=fList.size()-1;i>=0;i--){
+        			if(depth==fList.get(i).getDepth()) {
+        				parent=fList.get(i).getParent();
+        				break;
+        			}
+        		}
+        	}
+        }
+    	fList.add(new Function(name,depth,parent,comment));
+    	comment = "0";
+    	parent = "0";
+    }
+
+
+
+
+type
+ 
+Declaration
+Expression
+Anonymous

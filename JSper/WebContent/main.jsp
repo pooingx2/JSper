@@ -74,9 +74,10 @@ window.onload = function(){
 	</div>
 
 	<div class="outer-west">
+	<div class="textCode"></div>
 		<div id="editor">
-function foo(items) { 
-	function test(){}
+function foo(items) {
+	function test(){};
 	function test1(){
 		function test2(){}
 	}

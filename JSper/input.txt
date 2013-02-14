@@ -1,0 +1,10 @@
+function foo(items) {
+	function testA(){};
+	function testB(){
+		function testC(){};
+	};
+	var x = "All this is syntax highlighted"; 
+}
+var i = function(){
+    
+}

@@ -1,18 +1,18 @@
-	var make_list_node = 
-		[
-		 [0,"bfunction","0","this is caption1.",[10,2,"var a = 3","function b"]], 
-		 [1,"cfun","bfunction","this is caption2. this is caption2. this is caption2. this is caption2.",[10,4,"var a","var b","function a","function b"]], 
-		 [1,"dfun","bfunction","this is caption3",[10,3,"var m = 3","var k = 3","function m"]],
-		 [0,"afunctionisveryveryveryverylong","0","this is caption2. this is caption2. this is caption2.",[0,0]],
-		 [1,"afunctionisveryverylong","afunctionisveryveryveryverylong","this is caption2. this is caption2. this is caption2.",[0,0]], 
-		 [2,"efun","afunctionisveryverylong","this is caption4",[0,0]], 
-		 [0,"ffun","0","this is caption5",[0,0]], 
-		 [1,"gfun","ffun","this is caption6",[0,0]], 
-		 [1,"hfun","ffun","this is caption7",[0,0]], 
-		 [2,"ifun","hfun","this is caption8",[0,0]], 
-		 [0,"jfunction","0","this is caption9",[0,0]] 
-		 ];
-//	var make_list_node = gender;
+//	var make_list_node = 
+//		[
+//		 [0,"bfunction","0","this is caption1.",[10,2,"var a = 3","function b"]], 
+//		 [1,"cfun","bfunction","this is caption2. this is caption2. this is caption2. this is caption2.",[10,4,"var a","var b","function a","function b"]], 
+//		 [1,"dfun","bfunction","this is caption3",[10,3,"var m = 3","var k = 3","function m"]],
+//		 [0,"afunctionisveryveryveryverylong","0","this is caption2. this is caption2. this is caption2.",[0,0]],
+//		 [1,"afunctionisveryverylong","afunctionisveryveryveryverylong","this is caption2. this is caption2. this is caption2.",[0,0]], 
+//		 [2,"efun","afunctionisveryverylong","this is caption4",[0,0]], 
+//		 [0,"ffun","0","this is caption5",[0,0]], 
+//		 [1,"gfun","ffun","this is caption6",[0,0]], 
+//		 [1,"hfun","ffun","this is caption7",[0,0]], 
+//		 [2,"ifun","hfun","this is caption8",[0,0]], 
+//		 [0,"jfunction","0","this is caption9",[0,0]] 
+//		 ];
+var make_list_node = gender;
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	
 	if (obj1.line && obj1.from && obj1.to) {

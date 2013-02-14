@@ -6,41 +6,74 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="CSS/ace_and_raphael.css" type="text/css" media="screen" />
+<!-- ace -->
+<link type="text/css" rel="stylesheet" href="CSS/twilight.css">
 <link rel="stylesheet" href="CSS/layout-default.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="CSS/layout.css" type="text/css" media="screen" />
+<!-- jquert.layout -->
+<script type="text/javascript" src="JS/jquery-latest.js"></script>
+<script type="text/javascript" src="JS/jquery-ui-latest.js"></script>
+<script type="text/javascript" src="JS/jquery.layout-latest.js"></script>
+<script type="text/javascript">
+
+$(document).ready(function () {
+
+	// OUTER-LAYOUT
+	$('body').layout({
+		center__paneSelector:	".outer-center"
+	,	west__paneSelector:		".outer-west"
+	//,	east__paneSelector:		".outer-east"
+	,	west__size:				350
+	//,	east__size:				125
+	,	north__size:			80
+	,	south__size:			30
+	,	spacing_open:			8  // ALL panes
+	,   south__spacing_open:	5
+	,	spacing_closed:			12 // ALL panes
+	,	north__maxSize:			200
+	//,	south__maxSize:			200
+	});
+
+});
+
+</script>
+
 </head>
 <body id="allpage">
 	<div class="outer-center">
-		<div id="holder"></div>
+ 		<div id="holder"></div> 
 	</div>
 
 	<div class="outer-west">
 		<div id="editor">
 
 function foo(items) { 
+	function test(){};
+	function test1(){
+		function test2(){};
+	};
 	var x = "All this is syntax highlighted"; 
-	return x; 
+	var k = 0;
 }
 		</div>
+</div>
+<!-- <div class="outer-east">Outer East</div> -->
+
+<!-- <div class="ui-layout-north">Outer North</div> -->
+<div class="ui-layout-south">
 	<button id="sendForm">변환하기</button>
-	</div>
-	<div class="ui-layout-north"></div>
-	<div class="ui-layout-south">JSPer</div>
+</div>
+
 </body>
 
 
-<script src="JS/jquery.js"></script>
-<script
-	src="http://d1n0x3qji82z53.cloudfront.net/src-min-noconflict/ace.js"
-	type="text/javascript" charset="utf-8"></script>
-<script src="JS/ace_controll.js" type="text/javascript"></script>
-<script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
-<script src="JS/raphael-min.js"></script>
+<!-- ace -->
+
+<script type="text/javascript" src="JS/ace/ace.js" charset="utf-8"></script>
+<script type="text/javascript" src="JS/ace/ace-controll.js" charset="utf-8"></script>
 <script>
 	var gender = [];
 </script>
-
 <c:set var="i" value="0" />
 <c:forEach var="function" items="${fList}">
 	<c:if test="${i < fList.size()}">
@@ -50,13 +83,25 @@ function foo(items) {
 	</c:if>
 	<c:set var="i" value="${i + 1}" />
 </c:forEach>
+
+<script src="JS/raphael-min.js"></script>
 <script src="JS/graffle.js"></script>
-<script src="JS/bootstrap.min.js"></script>
-<script src="JS/post_value.js"></script>
-<script type="text/javascript" src="JS/jquery-latest.js"></script>
-<script type="text/javascript" src="JS/jquery-ui-latest.js"></script>
-<script type="text/javascript" src="JS/jquery.layout-latest.js"></script>
-<script type="text/javascript" src="JS/layout.js"></script>
-
+<script type="text/javascript">
+	$("#sendForm").click(function userViewSub(){
+		  var k = editor.getValue();
+		  $.ajax({   
+			   type: "POST",  
+			   url: "main",   
+			   data: "param="+k,   //&a=xxx 식으로 나옴
+			   success: function(value) {
+				   console.log('success');
+				   $("#allpage").html(value);
+				   editor.setValue(k);
+			   },
+			   error:function() {
+				   console.log('error');
+			   }
+		  });
+	});
+</script>
 </html>
-

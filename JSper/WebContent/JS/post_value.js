@@ -1,5 +1,5 @@
 	$("#sendForm").click(function userViewSub(){
-		  var k = editor.getSession().getValue();
+		  var k = "function foo(items) { 	var x = 3; return x; }";
 		  $.ajax({   
 			   type: "POST",  
 			   url: "main",   

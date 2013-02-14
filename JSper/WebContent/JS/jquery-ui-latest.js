@@ -11508,5 +11508,4 @@ $.extend( $.ui.tabs.prototype, {
 	}
 });
 
-
 })( jQuery );

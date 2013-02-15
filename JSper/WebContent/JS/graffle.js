@@ -95,7 +95,7 @@ function darw_raphael( make_list_node ){
 		homepage_height = 1000;
 	}
 	$('#holder').height(homepage_height);
-	r = Raphael("holder", 1800, homepage_height);
+	r.clear();
 	m_connection = [];
 	font = r.getFont("whoa");
 	m_shapes = r.set();
@@ -145,7 +145,7 @@ function darw_raphael( make_list_node ){
 	function push_arrays( index , node, depth ){
 		var caption_array = r.set();
 		length = m_shapes[index].attrs.x+m_shapes[index].attrs.width+40;
-		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,20 + node[1].length*15, 30 ,2));
+		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,10 + node[1].length*15, 30 ,2));
 		if(node[3] == 0){
 			push_array( m_caption_hides, r.rect(length, 135 + depth*62,20+ node[1].length*15, 0 ,2).attr({'fill-opacity':0}));			
 			push_array( m_caption_rect, r.rect(length, 135 + depth*62 ,20+ node[1].length*15, 0 ,2));			
@@ -179,32 +179,43 @@ function darw_raphael( make_list_node ){
 	};	
 	var mouseon = function(i){
 		return function(){
-			m_caption_hides[i/2].hide();			
-			m_caption_rect[i/2].attr({'fill-opacity':0.7}).show().toFront();
-			m_caption[i/2].show().toFront();			
+			if(m_show_caption){
+				m_caption_hides[i/2].hide();			
+				m_caption_rect[i/2].show().toFront();
+				m_caption[i/2].show().toFront();							
+			}
 		}
 	}
 	var mouseout = function(i){
 		return function(){
-			m_caption_rect[i/2].attr({'fill-opacity':0}).hide();
-			m_caption_hides[i/2].show();			
-			m_caption[i/2].hide();	
+			if(m_show_caption){
+				m_caption_rect[i/2].hide();
+				m_caption_hides[i/2].show();			
+				m_caption[i/2].hide();					
+			}
 		}
 	}
-	
+	var unclickFuncCaptionAll = function(){
+		return function(){
+			if(!m_show_caption){
+				for(var i = 0 ; count = m_caption.length, i<count; i++){
+					m_caption_hides[i].show();
+					m_caption_rect[i].hide();
+					m_caption.hide();
+				}
+				m_show_caption = true;								
+			}			
+		}
+	}
 	var clickFuncCaptionAll = function(){
 		return function(){
 			if(m_show_caption){
-				for(var i = 1 ; count = m_texts.length, i<count; i++){
-					m_detail_shapes[i*2].attr({'fill-opacity':1}).show();
-					m_detail_shapes[i*2-1].attr({'fill-opacity':1}).show();
-//					m_texts[i].attr({'fill':'#333'});
-					m_shapes[i].attr({'fill-opacity':'2.0'});
+				for(var i = 0 ; count = m_caption.length, i<count; i++){
+					m_caption_hides[i].hide();
+					m_caption_rect[i].show();
+					m_caption.show();
 				}
-				m_show_detail = false;				
-			}
-			else{
-				m_show_detail = true;								
+				m_show_caption = false;				
 			}
 		}
 	}
@@ -257,7 +268,7 @@ function darw_raphael( make_list_node ){
 	for(var i = 0 , count = m_shapes.length; i<count;i++){
 		var color = Raphael.getColor();
 		m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 4});	
-		m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});
+		m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.7, "stroke-width": 2});
 		m_caption_hides[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});			
 	};
 
@@ -272,7 +283,7 @@ function darw_raphael( make_list_node ){
 		}
 		push_num_array( m_detail_shapes, [ rectangle, function_detail ],2 );
 		function_detail.hide();
-	}	
+	};	
 
 	m_detail_shapes.hide();
 	m_caption_rect.hide();
@@ -283,6 +294,8 @@ function darw_raphael( make_list_node ){
 //		m_texts[i].click( clickFunc( i*2 ) ).mouseover( mouseon( i*2 ) ).mouseout( mouseout( i*2 ) );
 	};	
 //	m_texts[0].click(clickFuncAll());
+	m_caption_hides[0].attr({cursor: "pointer"}).click(clickFuncCaptionAll());
+	m_caption[0].attr({cursor: "pointer"}).click(unclickFuncCaptionAll());
 	$("#holder").draggable();
 
 
@@ -291,13 +304,13 @@ function darw_raphael( make_list_node ){
 		 m_shapes[k].data("enclosedShape",m_caption_hides[k]);
 		 m_shapes[k].data("enclosedDetailShape",m_caption_rect[k]);
 		 m_shapes[k].data("enclosedDetail",m_caption[k]);		 
-	 }
+	 };
 
 	 var dragShape = function () {
 		 $("#holder").draggable("destroy");
 		 this.ox = this.attr("x");
 		 this.oy = this.attr("y");
-	 } 
+	 };
 	 var moveShape = function (dx, dy) {
 		 this.attr({x: this.ox + dx, y: this.oy + dy});
 		 this.data("enclosedText").attr({x: this.ox + dx + 5, y: this.oy + dy + 15});
@@ -311,11 +324,12 @@ function darw_raphael( make_list_node ){
 	 }
 	 var upShape = function () {
 		 $("#holder").draggable();
-	 }       
+	 };     
 	 for(var k = 1;k<m_shapes.length;k++){
 		 m_shapes[k].drag(moveShape, dragShape, upShape);
-	 }	
+	 };	
 }
+
 $(document).ready(function() {
 	darw_raphael(make_list_node);
 });

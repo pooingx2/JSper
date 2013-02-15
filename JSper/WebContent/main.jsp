@@ -9,6 +9,8 @@
 <!-- ace -->
 <link rel="stylesheet" href="CSS/layout-default.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="CSS/layout.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="CSS/custom.css" type="text/css" media="screen" />
+
 <!-- jquert.layout -->
 <script type="text/javascript" src="JS/jquery-latest.js"></script>
 <script type="text/javascript" src="JS/jquery-ui-latest.js"></script>
@@ -99,8 +101,10 @@ function foo(items) {
 
 <!-- <div class="ui-layout-north">Outer North</div> -->
 <div class="ui-layout-south">
-	<button id="sendForm">Translate</button>
-</div>
+		<a class="button" id="sendForm" href="#"> 
+		<img src="./img/btnRun.png" style="position: absolute; left: 103px; width: 20px; height: 20px; margin-top: 15px" />Run
+			</a>
+		</div>
 </body>
 
 

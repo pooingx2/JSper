@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.antlr.runtime.ANTLRFileStream;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
@@ -52,7 +51,6 @@ public class MainController extends HttpServlet {
 			g.init();
 			g.program();
 
-			System.out.println("List Print Test!!!!");
 			List<Function> fList = g.getFlist();
 			
 			for(Function function : fList) {
@@ -61,7 +59,8 @@ public class MainController extends HttpServlet {
 				System.out.println("getDepth : " + function.getDepth());
 				System.out.println("getParent : " + function.getParent());
 				System.out.println("getComment : " + function.getComment());
-				System.out.println("getLength : " + function.getLength()+"\n");
+				System.out.println("getLength : " + function.getLength());
+				System.out.println("getMaxLength : " + function.getMaxLength()+"\n");
 			}
 			request.setAttribute("fList", fList);
 		} catch (RecognitionException e) {

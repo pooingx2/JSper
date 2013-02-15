@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-14 23:19:07
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-15 04:00:51
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -1730,7 +1730,7 @@ public class JSLexer extends Lexer {
                         int alt1=2;
                         int LA1_0 = input.LA(1);
 
-                        if ( ((LA1_0>='\u0000' && LA1_0<='!')||(LA1_0>='#' && LA1_0<='\uFFFF')) ) {
+                        if ( ((LA1_0>='\u0000' && LA1_0<='\t')||(LA1_0>='\u000B' && LA1_0<='\f')||(LA1_0>='\u000E' && LA1_0<='!')||(LA1_0>='#' && LA1_0<='\u2027')||(LA1_0>='\u202A' && LA1_0<='\uFFFF')) ) {
                             alt1=1;
                         }
 
@@ -1763,7 +1763,7 @@ public class JSLexer extends Lexer {
                         int alt2=2;
                         int LA2_0 = input.LA(1);
 
-                        if ( ((LA2_0>='\u0000' && LA2_0<='&')||(LA2_0>='(' && LA2_0<='\uFFFF')) ) {
+                        if ( ((LA2_0>='\u0000' && LA2_0<='\t')||(LA2_0>='\u000B' && LA2_0<='\f')||(LA2_0>='\u000E' && LA2_0<='&')||(LA2_0>='(' && LA2_0<='\u2027')||(LA2_0>='\u202A' && LA2_0<='\uFFFF')) ) {
                             alt2=1;
                         }
 
@@ -1803,7 +1803,7 @@ public class JSLexer extends Lexer {
             int alt4=2;
             int LA4_0 = input.LA(1);
 
-            if ( ((LA4_0>='\u0000' && LA4_0<='!')||(LA4_0>='#' && LA4_0<='[')||(LA4_0>=']' && LA4_0<='\uFFFF')) ) {
+            if ( ((LA4_0>='\u0000' && LA4_0<='\t')||(LA4_0>='\u000B' && LA4_0<='\f')||(LA4_0>='\u000E' && LA4_0<='!')||(LA4_0>='#' && LA4_0<='[')||(LA4_0>=']' && LA4_0<='\u2027')||(LA4_0>='\u202A' && LA4_0<='\uFFFF')) ) {
                 alt4=1;
             }
             else if ( (LA4_0=='\\') ) {
@@ -1820,7 +1820,7 @@ public class JSLexer extends Lexer {
                 case 1 :
                     // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:414:4: ~ ( '\"' | '\\\\' | LT )
                     {
-                    if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
+                    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\u2027')||(input.LA(1)>='\u202A' && input.LA(1)<='\uFFFF') ) {
                         input.consume();
                     state.failed=false;
                     }
@@ -1856,7 +1856,7 @@ public class JSLexer extends Lexer {
             int alt5=2;
             int LA5_0 = input.LA(1);
 
-            if ( ((LA5_0>='\u0000' && LA5_0<='&')||(LA5_0>='(' && LA5_0<='[')||(LA5_0>=']' && LA5_0<='\uFFFF')) ) {
+            if ( ((LA5_0>='\u0000' && LA5_0<='\t')||(LA5_0>='\u000B' && LA5_0<='\f')||(LA5_0>='\u000E' && LA5_0<='&')||(LA5_0>='(' && LA5_0<='[')||(LA5_0>=']' && LA5_0<='\u2027')||(LA5_0>='\u202A' && LA5_0<='\uFFFF')) ) {
                 alt5=1;
             }
             else if ( (LA5_0=='\\') ) {
@@ -1873,7 +1873,7 @@ public class JSLexer extends Lexer {
                 case 1 :
                     // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:419:4: ~ ( '\\'' | '\\\\' | LT )
                     {
-                    if ( (input.LA(1)>='\u0000' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\uFFFF') ) {
+                    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='\u2027')||(input.LA(1)>='\u202A' && input.LA(1)<='\uFFFF') ) {
                         input.consume();
                     state.failed=false;
                     }
@@ -1909,7 +1909,7 @@ public class JSLexer extends Lexer {
             int alt6=4;
             int LA6_0 = input.LA(1);
 
-            if ( ((LA6_0>='\u0000' && LA6_0<='/')||(LA6_0>=':' && LA6_0<='t')||(LA6_0>='v' && LA6_0<='w')||(LA6_0>='y' && LA6_0<='\uFFFF')) ) {
+            if ( ((LA6_0>='\u0000' && LA6_0<='\t')||(LA6_0>='\u000B' && LA6_0<='\f')||(LA6_0>='\u000E' && LA6_0<='/')||(LA6_0>=':' && LA6_0<='t')||(LA6_0>='v' && LA6_0<='w')||(LA6_0>='y' && LA6_0<='\u2027')||(LA6_0>='\u202A' && LA6_0<='\uFFFF')) ) {
                 alt6=1;
             }
             else if ( (LA6_0=='0') ) {
@@ -1975,7 +1975,7 @@ public class JSLexer extends Lexer {
             if ( (LA7_0=='\"'||LA7_0=='\''||LA7_0=='\\'||LA7_0=='b'||LA7_0=='f'||LA7_0=='n'||LA7_0=='r'||LA7_0=='t'||LA7_0=='v') ) {
                 alt7=1;
             }
-            else if ( ((LA7_0>='\u0000' && LA7_0<='!')||(LA7_0>='#' && LA7_0<='&')||(LA7_0>='(' && LA7_0<='/')||(LA7_0>=':' && LA7_0<='[')||(LA7_0>=']' && LA7_0<='a')||(LA7_0>='c' && LA7_0<='e')||(LA7_0>='g' && LA7_0<='m')||(LA7_0>='o' && LA7_0<='q')||LA7_0=='s'||LA7_0=='w'||(LA7_0>='y' && LA7_0<='\uFFFF')) ) {
+            else if ( ((LA7_0>='\u0000' && LA7_0<='\t')||(LA7_0>='\u000B' && LA7_0<='\f')||(LA7_0>='\u000E' && LA7_0<='!')||(LA7_0>='#' && LA7_0<='&')||(LA7_0>='(' && LA7_0<='/')||(LA7_0>=':' && LA7_0<='[')||(LA7_0>=']' && LA7_0<='a')||(LA7_0>='c' && LA7_0<='e')||(LA7_0>='g' && LA7_0<='m')||(LA7_0>='o' && LA7_0<='q')||LA7_0=='s'||LA7_0=='w'||(LA7_0>='y' && LA7_0<='\u2027')||(LA7_0>='\u202A' && LA7_0<='\uFFFF')) ) {
                 alt7=2;
             }
             else {
@@ -2014,7 +2014,7 @@ public class JSLexer extends Lexer {
             // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:436:2: (~ ( EscapeCharacter | LT ) )
             // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:436:4: ~ ( EscapeCharacter | LT )
             {
-            if ( (input.LA(1)>='\u0000' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='/')||(input.LA(1)>=':' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='a')||(input.LA(1)>='c' && input.LA(1)<='e')||(input.LA(1)>='g' && input.LA(1)<='m')||(input.LA(1)>='o' && input.LA(1)<='q')||input.LA(1)=='s'||input.LA(1)=='w'||(input.LA(1)>='y' && input.LA(1)<='\uFFFF') ) {
+            if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='!')||(input.LA(1)>='#' && input.LA(1)<='&')||(input.LA(1)>='(' && input.LA(1)<='/')||(input.LA(1)>=':' && input.LA(1)<='[')||(input.LA(1)>=']' && input.LA(1)<='a')||(input.LA(1)>='c' && input.LA(1)<='e')||(input.LA(1)>='g' && input.LA(1)<='m')||(input.LA(1)>='o' && input.LA(1)<='q')||input.LA(1)=='s'||input.LA(1)=='w'||(input.LA(1)>='y' && input.LA(1)<='\u2027')||(input.LA(1)>='\u202A' && input.LA(1)<='\uFFFF') ) {
                 input.consume();
             state.failed=false;
             }
@@ -3022,7 +3022,7 @@ public class JSLexer extends Lexer {
                 int alt25=2;
                 int LA25_0 = input.LA(1);
 
-                if ( () ) {
+                if ( ((LA25_0>='\u0000' && LA25_0<='\t')||(LA25_0>='\u000B' && LA25_0<='\f')||(LA25_0>='\u000E' && LA25_0<='\u2027')||(LA25_0>='\u202A' && LA25_0<='\uFFFF')) ) {
                     alt25=1;
                 }
 
@@ -3031,7 +3031,7 @@ public class JSLexer extends Lexer {
             	case 1 :
             	    // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:913:9: ~ ( LT )
             	    {
-            	    if (  ) {
+            	    if ( (input.LA(1)>='\u0000' && input.LA(1)<='\t')||(input.LA(1)>='\u000B' && input.LA(1)<='\f')||(input.LA(1)>='\u000E' && input.LA(1)<='\u2027')||(input.LA(1)>='\u202A' && input.LA(1)<='\uFFFF') ) {
             	        input.consume();
             	    state.failed=false;
             	    }
@@ -3067,70 +3067,21 @@ public class JSLexer extends Lexer {
             int _type = LT;
             int _channel = DEFAULT_TOKEN_CHANNEL;
             // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:917:2: ( '\\n' | '\\r' | '\\u2028' | '\\u2029' )
-            int alt26=4;
-            switch ( input.LA(1) ) {
-            case '\n':
-                {
-                alt26=1;
-                }
-                break;
-            case '\r':
-                {
-                alt26=2;
-                }
-                break;
-            case '\u2028':
-                {
-                alt26=3;
-                }
-                break;
-            case '\u2029':
-                {
-                alt26=4;
-                }
-                break;
-            default:
+            // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:
+            {
+            if ( input.LA(1)=='\n'||input.LA(1)=='\r'||(input.LA(1)>='\u2028' && input.LA(1)<='\u2029') ) {
+                input.consume();
+            state.failed=false;
+            }
+            else {
                 if (state.backtracking>0) {state.failed=true; return ;}
-                NoViableAltException nvae =
-                    new NoViableAltException("", 26, 0, input);
+                MismatchedSetException mse = new MismatchedSetException(null,input);
+                recover(mse);
+                throw mse;}
 
-                throw nvae;
-            }
-
-            switch (alt26) {
-                case 1 :
-                    // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:917:4: '\\n'
-                    {
-                    match('\n'); if (state.failed) return ;
-                    if ( state.backtracking==0 ) {
-                       line++; 
-                    }
-
-                    }
-                    break;
-                case 2 :
-                    // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:918:4: '\\r'
-                    {
-                    match('\r'); if (state.failed) return ;
-
-                    }
-                    break;
-                case 3 :
-                    // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:919:4: '\\u2028'
-                    {
-                    match('\u2028'); if (state.failed) return ;
-
-                    }
-                    break;
-                case 4 :
-                    // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:920:4: '\\u2029'
-                    {
-                    match('\u2029'); if (state.failed) return ;
-
-                    }
-                    break;
 
             }
+
             state.type = _type;
             state.channel = _channel;
         }
@@ -3173,9 +3124,9 @@ public class JSLexer extends Lexer {
 
     public void mTokens() throws RecognitionException {
         // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:1:8: ( T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | StringLiteral | NumericLiteral | Identifier | Comment | LineComment | LT | WhiteSpace )
-        int alt27=83;
-        alt27 = dfa27.predict(input);
-        switch (alt27) {
+        int alt26=83;
+        alt26 = dfa26.predict(input);
+        switch (alt26) {
             case 1 :
                 // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:1:10: T__31
                 {
@@ -3790,7 +3741,7 @@ public class JSLexer extends Lexer {
 
 
     protected DFA18 dfa18 = new DFA18(this);
-    protected DFA27 dfa27 = new DFA27(this);
+    protected DFA26 dfa26 = new DFA26(this);
     static final String DFA18_eotS =
         "\1\uffff\1\2\2\uffff";
     static final String DFA18_eofS =
@@ -3843,7 +3794,7 @@ public class JSLexer extends Lexer {
             return "471:10: fragment DecimalLiteral : ( ( DecimalDigit )+ '.' ( DecimalDigit )* ( ExponentPart )? | ( '.' )? ( DecimalDigit )+ ( ExponentPart )? );";
         }
     }
-    static final String DFA27_eotS =
+    static final String DFA26_eotS =
         "\1\uffff\2\47\1\61\6\uffff\7\47\1\uffff\3\47\2\uffff\1\103\1\105"+
         "\1\111\1\113\1\116\1\121\1\124\1\127\1\132\1\134\1\137\1\uffff\1"+
         "\141\6\uffff\6\47\1\151\1\uffff\1\152\1\154\1\47\1\156\15\47\17"+
@@ -3857,9 +3808,9 @@ public class JSLexer extends Lexer {
         "\1\47\2\uffff\1\u00cb\1\u00cc\1\uffff\1\u00cd\1\47\1\u00cf\1\47"+
         "\1\u00d1\1\uffff\1\47\3\uffff\1\u00d3\1\uffff\1\47\1\uffff\1\u00d5"+
         "\1\uffff\1\47\1\uffff\1\u00d7\1\uffff";
-    static final String DFA27_eofS =
+    static final String DFA26_eofS =
         "\u00d8\uffff";
-    static final String DFA27_minS =
+    static final String DFA26_minS =
         "\1\11\2\141\1\75\6\uffff\1\146\1\154\1\145\1\150\1\141\1\162\1"+
         "\145\1\uffff\1\167\1\150\1\145\2\uffff\1\60\1\75\1\52\1\75\1\53"+
         "\1\55\1\74\1\75\1\46\2\75\1\uffff\1\75\6\uffff\1\156\1\162\1\156"+
@@ -3876,7 +3827,7 @@ public class JSLexer extends Lexer {
         "\171\1\uffff\1\143\1\164\1\44\1\uffff\1\165\2\uffff\2\44\1\uffff"+
         "\1\44\1\156\1\44\1\145\1\44\1\uffff\1\145\3\uffff\1\44\1\uffff\1"+
         "\157\1\uffff\1\44\1\uffff\1\146\1\uffff\1\44\1\uffff";
-    static final String DFA27_maxS =
+    static final String DFA26_maxS =
         "\1\uffdc\1\165\1\157\1\75\6\uffff\1\156\1\154\1\157\1\151\1\157"+
         "\1\162\1\145\1\uffff\1\167\1\171\1\165\2\uffff\1\71\6\75\1\76\2"+
         "\75\1\174\1\uffff\1\75\6\uffff\1\156\1\162\1\156\1\154\1\162\1\151"+
@@ -3894,7 +3845,7 @@ public class JSLexer extends Lexer {
         "\uffff\1\165\2\uffff\2\uffdc\1\uffff\1\uffdc\1\156\1\uffdc\1\145"+
         "\1\uffdc\1\uffff\1\145\3\uffff\1\uffdc\1\uffff\1\157\1\uffff\1\uffdc"+
         "\1\uffff\1\146\1\uffff\1\uffdc\1\uffff";
-    static final String DFA27_acceptS =
+    static final String DFA26_acceptS =
         "\4\uffff\1\4\1\5\1\6\1\7\1\10\1\11\7\uffff\1\24\3\uffff\1\35\1"+
         "\36\13\uffff\1\53\1\uffff\1\107\1\115\1\116\1\117\1\122\1\123\7"+
         "\uffff\1\3\21\uffff\1\37\1\40\1\77\1\41\1\120\1\121\1\100\1\42\1"+
@@ -3907,9 +3858,9 @@ public class JSLexer extends Lexer {
         "\1\114\3\uffff\1\15\1\uffff\1\32\1\21\2\uffff\1\30\5\uffff\1\102"+
         "\1\uffff\1\22\1\25\1\104\1\uffff\1\33\1\uffff\1\27\1\uffff\1\1\1"+
         "\uffff\1\20\1\uffff\1\71";
-    static final String DFA27_specialS =
+    static final String DFA26_specialS =
         "\u00d8\uffff}>";
-    static final String[] DFA27_transitionS = {
+    static final String[] DFA26_transitionS = {
             "\1\51\1\50\1\uffff\1\51\1\50\22\uffff\1\51\1\43\1\45\1\uffff"+
             "\1\47\1\32\1\37\1\45\1\4\1\5\1\30\1\33\1\6\1\34\1\27\1\31\12"+
             "\46\1\21\1\11\1\35\1\3\1\36\1\42\1\uffff\32\47\1\25\1\47\1\26"+
@@ -6012,34 +5963,34 @@ public class JSLexer extends Lexer {
             ""
     };
 
-    static final short[] DFA27_eot = DFA.unpackEncodedString(DFA27_eotS);
-    static final short[] DFA27_eof = DFA.unpackEncodedString(DFA27_eofS);
-    static final char[] DFA27_min = DFA.unpackEncodedStringToUnsignedChars(DFA27_minS);
-    static final char[] DFA27_max = DFA.unpackEncodedStringToUnsignedChars(DFA27_maxS);
-    static final short[] DFA27_accept = DFA.unpackEncodedString(DFA27_acceptS);
-    static final short[] DFA27_special = DFA.unpackEncodedString(DFA27_specialS);
-    static final short[][] DFA27_transition;
+    static final short[] DFA26_eot = DFA.unpackEncodedString(DFA26_eotS);
+    static final short[] DFA26_eof = DFA.unpackEncodedString(DFA26_eofS);
+    static final char[] DFA26_min = DFA.unpackEncodedStringToUnsignedChars(DFA26_minS);
+    static final char[] DFA26_max = DFA.unpackEncodedStringToUnsignedChars(DFA26_maxS);
+    static final short[] DFA26_accept = DFA.unpackEncodedString(DFA26_acceptS);
+    static final short[] DFA26_special = DFA.unpackEncodedString(DFA26_specialS);
+    static final short[][] DFA26_transition;
 
     static {
-        int numStates = DFA27_transitionS.length;
-        DFA27_transition = new short[numStates][];
+        int numStates = DFA26_transitionS.length;
+        DFA26_transition = new short[numStates][];
         for (int i=0; i<numStates; i++) {
-            DFA27_transition[i] = DFA.unpackEncodedString(DFA27_transitionS[i]);
+            DFA26_transition[i] = DFA.unpackEncodedString(DFA26_transitionS[i]);
         }
     }
 
-    class DFA27 extends DFA {
+    class DFA26 extends DFA {
 
-        public DFA27(BaseRecognizer recognizer) {
+        public DFA26(BaseRecognizer recognizer) {
             this.recognizer = recognizer;
-            this.decisionNumber = 27;
-            this.eot = DFA27_eot;
-            this.eof = DFA27_eof;
-            this.min = DFA27_min;
-            this.max = DFA27_max;
-            this.accept = DFA27_accept;
-            this.special = DFA27_special;
-            this.transition = DFA27_transition;
+            this.decisionNumber = 26;
+            this.eot = DFA26_eot;
+            this.eof = DFA26_eof;
+            this.min = DFA26_min;
+            this.max = DFA26_max;
+            this.accept = DFA26_accept;
+            this.special = DFA26_special;
+            this.transition = DFA26_transition;
         }
         public String getDescription() {
             return "1:1: Tokens : ( T__31 | T__32 | T__33 | T__34 | T__35 | T__36 | T__37 | T__38 | T__39 | T__40 | T__41 | T__42 | T__43 | T__44 | T__45 | T__46 | T__47 | T__48 | T__49 | T__50 | T__51 | T__52 | T__53 | T__54 | T__55 | T__56 | T__57 | T__58 | T__59 | T__60 | T__61 | T__62 | T__63 | T__64 | T__65 | T__66 | T__67 | T__68 | T__69 | T__70 | T__71 | T__72 | T__73 | T__74 | T__75 | T__76 | T__77 | T__78 | T__79 | T__80 | T__81 | T__82 | T__83 | T__84 | T__85 | T__86 | T__87 | T__88 | T__89 | T__90 | T__91 | T__92 | T__93 | T__94 | T__95 | T__96 | T__97 | T__98 | T__99 | T__100 | T__101 | T__102 | T__103 | T__104 | T__105 | T__106 | StringLiteral | NumericLiteral | Identifier | Comment | LineComment | LT | WhiteSpace );";

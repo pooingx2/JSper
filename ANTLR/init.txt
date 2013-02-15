@@ -12,13 +12,14 @@ package Antlr;
     }
 
     public void init(){
+    	depth=0;
         initData();
     	fList = new ArrayList<Function>();
     }
     
     public void initData(){
         name = "0";
-        depth = 0;
+        //depth = 0;
         parent = "0";
         comment = "0";
     }
@@ -39,10 +40,8 @@ package Antlr;
         	}
         }
     	fList.add(new Function(name,depth,parent,comment));
-    	comment = "0";
-    	parent = "0";
+    	initData();
     }
-
 
 
 

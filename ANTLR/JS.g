@@ -39,8 +39,8 @@ functionName
 	( Identifier )
 		{
 			name = $Identifier.text;
-			System.out.println("functionName = " + name);
-			System.out.println("depth = " + depth);
+			//System.out.println("functionName = " + name);
+			//System.out.println("depth = " + depth);
 			insertFunction();
 			//initData();
 		}
@@ -51,7 +51,7 @@ functionComment
 	( Comment LT!* )
 		{
 			comment = $Comment.text;
-			System.out.println("comment = " + comment);
+			//System.out.println("comment = " + comment);
 		}
 		/*
 	|( LineComment LT!* )
@@ -899,10 +899,7 @@ fragment UnicodeConnectorPunctuation	// Any character in the Unicode category "C
 	;
 	
 Comment
-	: '/*' CommetText '*/' //{$channel=HIDDEN;}
-	;
-CommetText
-	: (options {greedy=false;} : .)*
+	: '/*' (options {greedy=false;} : .)* '*/' //{$channel=HIDDEN;}
 	;
 //Comment 
 	//: '/*'~(LT)*'/*'

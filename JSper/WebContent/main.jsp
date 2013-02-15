@@ -34,7 +34,6 @@ $(document).ready(function () {
 	,	spacing_closed:			20 // ALL panes
 	,	spacing_open:			10  // ALL panes
 	});
-
 });
 
 var setSize;
@@ -45,8 +44,15 @@ window.onload = function(){
 		
 		switch (n) {
 			case 1:
+<<<<<<< HEAD
 				break;
 			case 2:
+=======
+				//Diagram 확대 
+				break;
+			case 2:
+				//Diagram 축소 
+>>>>>>> aa
 				break;
 			case 3:
 				var t  = parseFloat(codeBtn.style.fontSize);
@@ -76,13 +82,17 @@ window.onload = function(){
 	</div>
 
 	<div class="outer-west">
-	<div class="textCode"></div>
 		<div id="editor">
+<<<<<<< HEAD
 /*this is test foo*/
 function foo(items) {
 	/*this is test test*/
 	function test(){};
 	/*this is test test1*/
+=======
+function foo(items) { 
+	function test(){}
+>>>>>>> aa
 	function test1(){
 		function test2(){}
 	}

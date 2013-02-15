@@ -14,7 +14,7 @@
 //		 ];
 	var make_list_node = test_gender;
 	/*----------------------- Var Declaration -----------------------*/
-	var homepage_height = make_list_node.length * 100;
+	var homepage_height = make_list_node.length * 150;
 	if(homepage_height < 100){
 		homepage_height = 1000;
 	}
@@ -131,12 +131,12 @@ $(document).ready(function() {
 		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,20 + node[1].length*15, 30 ,2));
 		push_array( m_caption_hides, r.rect(length, 135 + depth*62,30+ node[4]*6, 10 ,2).attr({'fill-opacity':0}));			
 		if(node[4] == 0){
-			push_array( m_caption_rect, r.rect(length, 135 + depth*62 ,30, 10 ,2).attr({'fill-opacity':0}));			
+			push_array( m_caption_rect, r.rect(length, 135 + depth*62 ,30, 10 ,2));			
 			push_array( caption_array, r.text(length+10, 148 + depth*62 + i*30 ,"").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );						
 		}else{
-			push_array( m_caption_rect, r.rect(length, 135 + depth*62,30+ node[4]*6, node[5].length*30 ,2).attr({'fill-opacity':0}));			
+			push_array( m_caption_rect, r.rect(length, 135 + depth*62,30+ node[4]*6, node[5].length*20 ,2));			
 			for( var i=0 ; i<node[5].length ; i++ ){
-				push_array( caption_array, r.text(length+10, 148 + depth*62 + i*30 ," : "+ node[5][i]).attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );			
+				push_array( caption_array, r.text(length+10, 145 + depth*62 + i*20 ," "+ node[5][i]).attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );			
 			}			
 		}
 		m_caption.push(caption_array);
@@ -161,13 +161,15 @@ $(document).ready(function() {
 	};	
 	var mouseon = function(i){
 		return function(){
-			m_caption_rect[i/2].attr({'fill-opacity':1}).show().toFront();
+			m_caption_hides[i/2].hide();			
+			m_caption_rect[i/2].attr({'fill-opacity':0.7}).show().toFront();
 			m_caption[i/2].show().toFront();			
 		}
 	}
 	var mouseout = function(i){
 		return function(){
 			m_caption_rect[i/2].attr({'fill-opacity':0}).hide();
+			m_caption_hides[i/2].show();			
 			m_caption[i/2].hide();	
 		}
 	}
@@ -202,9 +204,9 @@ $(document).ready(function() {
 	/*----------------------- Push -----------------------*/
 	push_array( m_shapes, r.rect(25, 100, 120, 30 ,5) );
 	push_array( m_texts, r.text(85, 117, "document").attr({font: "25px Helvetica", opacity: 0.5}).attr({fill: "#000",cursor: "pointer"	}));
-	push_array( m_caption_rect, r.rect(25, 135, 80, 15,5)  );
+	push_array( m_caption_rect, r.rect(25, 135, 80, 20, 2)  );
 	push_array( m_caption_hides, r.rect(25, 135, 80, 10,2)  );
-	push_array( m_caption, r.text(60, 142, "caption").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000"}));
+	push_array( m_caption, r.text(60, 145, "caption").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000"}));
 	push_array( m_detail_shapes, r.rect(50, 150, 50, 50 ,5).attr({fill: m_shapes[0].attrs.fill, stroke: 0, "fill-opacity": 0, "stroke-width": 2}));
 
 	for( var m = 0 ,list_length = make_list_node.length;  m < list_length ; m++ ){
@@ -283,10 +285,10 @@ $(document).ready(function() {
 	 } 
 	 var moveShape = function (dx, dy) {
 		 this.attr({cx: this.ox + dx, cy: this.oy + dy});
-		 this.data("enclosedText").attr({x: this.ox + dx + 2, y: this.oy + dy + 10});
+		 this.data("enclosedText").attr({x: this.ox + dx + 5, y: this.oy + dy + 15});
 		 this.data("enclosedShape").attr({x: this.ox + dx , y: this.oy + dy + 35});
 		 this.data("enclosedDetailShape").attr({x: this.ox + dx , y: this.oy + dy + 35});
-		 this.data("enclosedDetail").attr({x: this.ox + dx , y: this.oy + dy + 50});
+		 this.data("enclosedDetail").attr({x: this.ox + dx + 10 , y: this.oy + dy + 45});
 	 }
 	 var upShape = function () {
 	 }       

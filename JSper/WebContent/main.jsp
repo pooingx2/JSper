@@ -41,10 +41,8 @@ window.onload = function(){
 		
 		switch (n) {
 			case 1:
-				//Diagram ?뺣? 
 				break;
 			case 2:
-				//Diagram 異뺤냼 
 				break;
 			case 3:
 				var t  = parseFloat(codeBtn.style.fontSize);
@@ -76,8 +74,11 @@ window.onload = function(){
 	<div class="outer-west">
 	<div class="textCode"></div>
 		<div id="editor">
+/*this is test foo*/
 function foo(items) {
+	/*this is test test*/
 	function test(){};
+	/*this is test test1*/
 	function test1(){
 		function test2(){}
 	}
@@ -103,16 +104,27 @@ function foo(items) {
 
 <script type="text/javascript" src="JS/ace/ace.js" charset="utf-8"></script>
 <script type="text/javascript" src="JS/ace/ace-controll.js" charset="utf-8"></script>
+
 <script>
-	var gender = [];
 	var test_gender = [];
 </script>
 <c:set var="i" value="0" />
 <c:forEach var="function" items="${fList}">
 	<c:if test="${i < fList.size()}">
-		<script type="text/javascript">
-//		 [0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"]], 
-        test_gender.push(["<c:out value="${fList.get(i).depth}"/>","<c:out value="${fList.get(i).name}"/>","<c:out value="${fList.get(i).parent}"/>","<c:out value="${fList.get(i).parent}"/>","<c:out value="${fList.get(i).maxLength}"/>",<c:out value="${fList.get(i).lines}"/>,[0,0]]);
+		<c:set var="j" value="0" />
+		<script>
+		var gender = [];
+		</script>
+		<c:forEach var="function" items="${fList}">
+			<c:if test="${j < fList.get(i).lines.size()}">
+				<script type="text/javascript">		
+					gender.push( "<c:out value="${fList.get(i).lines.get(j)}"/>" );
+				</script>
+			</c:if>
+			<c:set var="j" value="${j + 1}" />
+		</c:forEach>		
+		<script type="text/javascript">		
+        test_gender.push(["<c:out value="${fList.get(i).depth}"/>","<c:out value="${fList.get(i).name}"/>","<c:out value="${fList.get(i).parent}"/>","<c:out value="${fList.get(i).parent}"/>","<c:out value="${fList.get(i).maxLength}"/>",gender,[0,0]]);
         </script>
 	</c:if>
 	<c:set var="i" value="${i + 1}" />

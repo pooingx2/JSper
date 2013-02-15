@@ -21,18 +21,22 @@ $(document).ready(function () {
 	$('body').layout({
 		center__paneSelector:	".outer-center"
 	,	west__paneSelector:		".outer-west"
-	//,	east__paneSelector:		".outer-east"
 	,	west__size:				350
-	//,	east__size:				125
-	//,	north__size:			80
 	,	south__size:			80
-	,	spacing_open:			10  // ALL panes
 	,   south__spacing_open:	10
+	//,	south__maxSize:			80
+	//,	south__minSize:			80
+	,   south__fxName:           "none"
+	,	south__togglerLength_open:  0
+	//,	south__initClosed: true
+	,	south__closable : false
+	, 	south__resizable : false
 	,	spacing_closed:			20 // ALL panes
-	//,	north__maxSize:			200
-	,	south__maxSize:			80
+	,	spacing_open:			10  // ALL panes
 	});
+
 });
+
 var setSize;
 window.onload = function(){
 	var codeBtn = document.getElementById('editor');
@@ -107,6 +111,7 @@ function foo(items) {
 
 <script>
 	var test_gender = [];
+	var test_ajax;
 </script>
 <c:set var="i" value="0" />
 <c:forEach var="function" items="${fList}">
@@ -140,6 +145,7 @@ function foo(items) {
 			   url: "main",   
 			   data: "param="+k,   //&a=xxx ?앹쑝濡??섏샂
 			   success: function(value) {
+				   test_ajax = value;
 				   console.log('success');
 				   $("#allpage").html(value);
 				   editor.setValue(k);

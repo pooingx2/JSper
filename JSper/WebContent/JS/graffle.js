@@ -14,7 +14,7 @@
 //		 ];
 	var make_list_node = test_gender;
 	/*----------------------- Var Declaration -----------------------*/
-	var homepage_height = make_list_node.length * 150;
+	var homepage_height = make_list_node.length * 130;
 	if(homepage_height < 100){
 		homepage_height = 1000;
 	}
@@ -29,6 +29,7 @@
 	var m_detail_shapes = r.set();
 	var m_detail_text = r.set();
 	var m_show_detail = true;
+	var m_show_caption = true;
 	var m_caption_hides = r.set();
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	
@@ -129,7 +130,7 @@ $(document).ready(function() {
 		var caption_array = r.set();
 		length = m_shapes[index].attrs.x+m_shapes[index].attrs.width+40;
 		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,20 + node[1].length*15, 30 ,2));
-		push_array( m_caption_hides, r.rect(length, 135 + depth*62,30+ node[4]*6, 10 ,2).attr({'fill-opacity':0}));			
+		push_array( m_caption_hides, r.rect(length, 135 + depth*62,20+ node[1].length*15, 10 ,2).attr({'fill-opacity':0}));			
 		if(node[4] == 0){
 			push_array( m_caption_rect, r.rect(length, 135 + depth*62 ,30, 10 ,2));			
 			push_array( caption_array, r.text(length+10, 148 + depth*62 + i*30 ,"").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );						
@@ -173,7 +174,24 @@ $(document).ready(function() {
 			m_caption[i/2].hide();	
 		}
 	}
-
+	
+	var clickFuncCaptionAll = function(){
+		return function(){
+			if(m_show_caption){
+				for(var i = 1 ; count = m_texts.length, i<count; i++){
+					m_detail_shapes[i*2].attr({'fill-opacity':1}).show();
+					m_detail_shapes[i*2-1].attr({'fill-opacity':1}).show();
+//					m_texts[i].attr({'fill':'#333'});
+					m_shapes[i].attr({'fill-opacity':'2.0'});
+				}
+				m_show_detail = false;				
+			}
+			else{
+				m_show_detail = true;								
+			}
+		}
+	}
+	
 	var clickFuncAll = function(){
 		return function(){
 			if(m_show_detail){
@@ -205,7 +223,7 @@ $(document).ready(function() {
 	push_array( m_shapes, r.rect(25, 100, 120, 30 ,5) );
 	push_array( m_texts, r.text(85, 117, "document").attr({font: "25px Helvetica", opacity: 0.5}).attr({fill: "#000",cursor: "pointer"	}));
 	push_array( m_caption_rect, r.rect(25, 135, 80, 20, 2)  );
-	push_array( m_caption_hides, r.rect(25, 135, 80, 10,2)  );
+	push_array( m_caption_hides, r.rect(25, 135, 120, 10,2)  );
 	push_array( m_caption, r.text(60, 145, "caption").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000"}));
 	push_array( m_detail_shapes, r.rect(50, 150, 50, 50 ,5).attr({fill: m_shapes[0].attrs.fill, stroke: 0, "fill-opacity": 0, "stroke-width": 2}));
 
@@ -248,29 +266,10 @@ $(document).ready(function() {
 //		m_texts[i].click( clickFunc( i*2 ) ).mouseover( mouseon( i*2 ) ).mouseout( mouseout( i*2 ) );
 	};	
 //	m_texts[0].click(clickFuncAll());
-	
 //	$("#holder").draggable();
-	$('#holder').css({'background-color': '#fff'});
-	
-	 var dragger = function () {
-		 this.ox = this.type == "rect" ? this.attr("x") : this.attr("cx");
-		 this.oy = this.type == "rect" ? this.attr("y") : this.attr("cy");
-	 };
-	 var move = function (dx, dy) {
-		 var att = this.type == "rect" ? {x: this.ox + dx, y: this.oy + dy} : {cx: this.ox + dx, cy: this.oy + dy};
-		 this.attr(att);
-		 for (var i = m_connection.length; i--;) {
-			 r.connection(m_connection[i]);
-		 }
-		 r.safari();
-	 };
-	 var up = function () {
-	 };
-	 for (var i = 0, ii = m_shapes.length; i < ii; i++) {
-		 m_shapes[i].drag(move, dragger, up);
-	 }
+//	m_caption_hides[0].click(clickFuncCaptionAll());
+//	$('#holder').css({'background-color': '#fff'});
 
-	 
 	 for(var k = 0;k<m_shapes.length;k++){
 		 m_shapes[k].data("enclosedText",m_texts[k]);
 		 m_shapes[k].data("enclosedShape",m_caption_hides[k]);
@@ -278,17 +277,20 @@ $(document).ready(function() {
 		 m_shapes[k].data("enclosedDetail",m_caption[k]);		 
 	 }
 
-
 	 var dragShape = function () {
-		 this.ox = this.attr("cx");
-		 this.oy = this.attr("cy");
+		 this.ox = this.attr("x");
+		 this.oy = this.attr("y");
 	 } 
 	 var moveShape = function (dx, dy) {
-		 this.attr({cx: this.ox + dx, cy: this.oy + dy});
+		 this.attr({x: this.ox + dx, y: this.oy + dy});
 		 this.data("enclosedText").attr({x: this.ox + dx + 5, y: this.oy + dy + 15});
 		 this.data("enclosedShape").attr({x: this.ox + dx , y: this.oy + dy + 35});
 		 this.data("enclosedDetailShape").attr({x: this.ox + dx , y: this.oy + dy + 35});
 		 this.data("enclosedDetail").attr({x: this.ox + dx + 10 , y: this.oy + dy + 45});
+		 for (var i = m_connection.length; i--;) {
+			 r.connection(m_connection[i]);
+		 }
+		 r.safari();
 	 }
 	 var upShape = function () {
 	 }       

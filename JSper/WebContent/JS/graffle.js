@@ -12,10 +12,10 @@
 //		 [2,"ifun","hfun",17,["this is caption8"],[0,0]], 
 //		 [0,"jfunction","0",17,["this is caption9"],[0,0]] 
 //		 ];
-	var make_list_node = test_gender;
+	var make_list_node = [[0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"]]];
 	/*----------------------- Var Declaration -----------------------*/
-	var homepage_height = make_list_node.length * 130;
-	if(homepage_height < 100){
+	var homepage_height = 60 + make_list_node.length * 120;
+	if(homepage_height < 200){
 		homepage_height = 1000;
 	}
 	$('#holder').height(homepage_height);
@@ -89,8 +89,24 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 		};
 	}
 };
-
-$(document).ready(function() {
+function darw_raphael( make_list_node ){
+	var homepage_height = 60 + make_list_node.length * 120;;
+	if(homepage_height < 200){
+		homepage_height = 1000;
+	}
+	$('#holder').height(homepage_height);
+	r = Raphael("holder", 1800, homepage_height);
+	m_connection = [];
+	font = r.getFont("whoa");
+	m_shapes = r.set();
+	m_texts = r.set();
+	m_caption_rect = r.set();
+	m_caption = r.set();
+	m_detail_shapes = r.set();
+	m_detail_text = r.set();
+	m_show_detail = true;
+	m_show_caption = true;
+	m_caption_hides = r.set();
 
 	/*----------------------- Common Function -----------------------*/
 	function push_array( array ,shape ){ array.push( shape ); };
@@ -130,14 +146,15 @@ $(document).ready(function() {
 		var caption_array = r.set();
 		length = m_shapes[index].attrs.x+m_shapes[index].attrs.width+40;
 		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,20 + node[1].length*15, 30 ,2));
-		push_array( m_caption_hides, r.rect(length, 135 + depth*62,20+ node[1].length*15, 10 ,2).attr({'fill-opacity':0}));			
-		if(node[4] == 0){
-			push_array( m_caption_rect, r.rect(length, 135 + depth*62 ,30, 10 ,2));			
+		if(node[3] == 0){
+			push_array( m_caption_hides, r.rect(length, 135 + depth*62,20+ node[1].length*15, 0 ,2).attr({'fill-opacity':0}));			
+			push_array( m_caption_rect, r.rect(length, 135 + depth*62 ,20+ node[1].length*15, 0 ,2));			
 			push_array( caption_array, r.text(length+10, 148 + depth*62 + i*30 ,"").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );						
 		}else{
-			push_array( m_caption_rect, r.rect(length, 135 + depth*62,30+ node[4]*6, node[5].length*20 ,2));			
-			for( var i=0 ; i<node[5].length ; i++ ){
-				push_array( caption_array, r.text(length+10, 145 + depth*62 + i*20 ," "+ node[5][i]).attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );			
+			push_array( m_caption_hides, r.rect(length, 135 + depth*62,20+ node[1].length*15, 5 ,2).attr({'fill-opacity':0}));			
+			push_array( m_caption_rect, r.rect(length, 135 + depth*62,30+ node[3]*6, node[4].length*20 ,2));			
+			for( var i=0 ; i<node[4].length ; i++ ){
+				push_array( caption_array, r.text(length+10, 145 + depth*62 + i*20 ," "+ node[4][i]).attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );			
 			}			
 		}
 		m_caption.push(caption_array);
@@ -223,7 +240,7 @@ $(document).ready(function() {
 	push_array( m_shapes, r.rect(25, 100, 120, 30 ,5) );
 	push_array( m_texts, r.text(85, 117, "document").attr({font: "25px Helvetica", opacity: 0.5}).attr({fill: "#000",cursor: "pointer"	}));
 	push_array( m_caption_rect, r.rect(25, 135, 80, 20, 2)  );
-	push_array( m_caption_hides, r.rect(25, 135, 120, 10,2)  );
+	push_array( m_caption_hides, r.rect(25, 135, 120, 5,2)  );
 	push_array( m_caption, r.text(60, 145, "caption").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000"}));
 	push_array( m_detail_shapes, r.rect(50, 150, 50, 50 ,5).attr({fill: m_shapes[0].attrs.fill, stroke: 0, "fill-opacity": 0, "stroke-width": 2}));
 
@@ -266,9 +283,8 @@ $(document).ready(function() {
 //		m_texts[i].click( clickFunc( i*2 ) ).mouseover( mouseon( i*2 ) ).mouseout( mouseout( i*2 ) );
 	};	
 //	m_texts[0].click(clickFuncAll());
-//	$("#holder").draggable();
-//	m_caption_hides[0].click(clickFuncCaptionAll());
-//	$('#holder').css({'background-color': '#fff'});
+	$("#holder").draggable();
+
 
 	 for(var k = 0;k<m_shapes.length;k++){
 		 m_shapes[k].data("enclosedText",m_texts[k]);
@@ -278,6 +294,7 @@ $(document).ready(function() {
 	 }
 
 	 var dragShape = function () {
+		 $("#holder").draggable("destroy");
 		 this.ox = this.attr("x");
 		 this.oy = this.attr("y");
 	 } 
@@ -293,10 +310,12 @@ $(document).ready(function() {
 		 r.safari();
 	 }
 	 var upShape = function () {
+		 $("#holder").draggable();
 	 }       
-	 for(var k = 0;k<m_shapes.length;k++){
+	 for(var k = 1;k<m_shapes.length;k++){
 		 m_shapes[k].drag(moveShape, dragShape, upShape);
-	 }
+	 }	
+}
+$(document).ready(function() {
+	darw_raphael(make_list_node);
 });
-
-

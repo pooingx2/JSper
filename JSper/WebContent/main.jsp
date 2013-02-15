@@ -113,27 +113,6 @@ function foo(items) {
 	var test_gender = [];
 	var test_ajax;
 </script>
-<c:set var="i" value="0" />
-<c:forEach var="function" items="${fList}">
-	<c:if test="${i < fList.size()}">
-		<c:set var="j" value="0" />
-		<script>
-		var gender = [];
-		</script>
-		<c:forEach var="function" items="${fList}">
-			<c:if test="${j < fList.get(i).lines.size()}">
-				<script type="text/javascript">		
-					gender.push( "<c:out value="${fList.get(i).lines.get(j)}"/>" );
-				</script>
-			</c:if>
-			<c:set var="j" value="${j + 1}" />
-		</c:forEach>		
-		<script type="text/javascript">		
-        test_gender.push(["<c:out value="${fList.get(i).depth}"/>","<c:out value="${fList.get(i).name}"/>","<c:out value="${fList.get(i).parent}"/>","<c:out value="${fList.get(i).parent}"/>","<c:out value="${fList.get(i).maxLength}"/>",gender,[0,0]]);
-        </script>
-	</c:if>
-	<c:set var="i" value="${i + 1}" />
-</c:forEach>
 
 <script src="JS/raphael-min.js"></script>
 <script src="JS/graffle.js"></script>
@@ -144,12 +123,14 @@ function foo(items) {
 			   type: "POST",  
 			   url: "main",   
 			   data: "param="+k,   //&a=xxx ?앹쑝濡??섏샂
-			   success: function(value) {
-				   test_ajax = value;
-				   console.log('success');
-				   $("#allpage").html(value);
-				   editor.setValue(k);
-				   alert(value);
+			   success: function(response) {
+				   test_gender = [];
+				   console.log('succeess');
+				   test_ajax = jQuery.parseJSON(response);
+				   for(var i=0,length = test_ajax.fList.length; i< length ; i++){
+				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0]]);					   
+				   }
+				   darw_raphael(test_gender);
 			   },
 			   error:function() {
 				   console.log('error');

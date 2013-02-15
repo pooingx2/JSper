@@ -35,7 +35,12 @@
 	}
 
 	/* remove padding & scrolling from panes that are 'containers' for nested layouts */
-	.outer-center ,
+	.outer-center {
+		border:			0; /* cosmetic */
+		padding:		0;
+		overflow:		hidden;
+		overflow: scroll;
+	}
 	.middle-center {
 		border:			0; /* cosmetic */
 		padding:		0;

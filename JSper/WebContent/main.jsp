@@ -129,6 +129,7 @@ function foo(items) {
 				   console.log('success');
 				   $("#allpage").html(value);
 				   editor.setValue(k);
+				   alert(value);
 			   },
 			   error:function() {
 				   console.log('error');

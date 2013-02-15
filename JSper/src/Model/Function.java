@@ -4,10 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * @author 박주영
- *
- */
 public class Function implements Serializable{
 	
 	private String name;

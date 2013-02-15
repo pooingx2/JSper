@@ -1,6 +1,7 @@
 package Controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -13,11 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.antlr.runtime.ANTLRStringStream;
 import org.antlr.runtime.CommonTokenStream;
 import org.antlr.runtime.RecognitionException;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import Antlr.JSLexer;
 import Antlr.JSParser;
 import Model.Function;
-
 
 @WebServlet("/main")
 public class MainController extends HttpServlet {
@@ -46,12 +49,13 @@ public class MainController extends HttpServlet {
 
 		CommonTokenStream tokens = new CommonTokenStream(lex);
 		JSParser g = new JSParser(tokens);
-
+		
 		try {
 			g.init();
 			g.program();
 
 			List<Function> fList = g.getFlist();
+			JSONObject obj = new JSONObject();
 			
 			for(Function function : fList) {
 				System.out.println("getName : " + function.getName());
@@ -62,12 +66,21 @@ public class MainController extends HttpServlet {
 				System.out.println("getLength : " + function.getLength());
 				System.out.println("getMaxLength : " + function.getMaxLength()+"\n");
 			}
-			request.setAttribute("fList", fList);
+			
+			JSONArray jsonArray = new JSONArray(fList.toArray());
+			obj.put("fList", jsonArray);
+			PrintWriter writer = response.getWriter();
+			writer.write(obj.toString());
+			
+//			request.setAttribute("fList", fList);
+			
 		} catch (RecognitionException e) {
 			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
 		}
-		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
-		dispatcher.forward(request,  response);
+//		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
+//		dispatcher.forward(request,  response);
 	}
 
 }

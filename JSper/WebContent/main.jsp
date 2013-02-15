@@ -107,13 +107,12 @@ function foo(items) {
 	var gender = [];
 	var test_gender = [];
 </script>
-${fList.get(0).maxLength}"
 <c:set var="i" value="0" />
 <c:forEach var="function" items="${fList}">
 	<c:if test="${i < fList.size()}">
 		<script type="text/javascript">
 //		 [0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"]], 
-        test_gender.push(["<c:out value="${fList.get(i).depth}"/>","<c:out value="${fList.get(i).name}"/>","<c:out value="${fList.get(i).parent}"/>","<c:out value="${fList.get(i).comment}"/>",[0,0]]);
+        test_gender.push(["<c:out value="${fList.get(i).depth}"/>","<c:out value="${fList.get(i).name}"/>","<c:out value="${fList.get(i).parent}"/>","<c:out value="${fList.get(i).parent}"/>","<c:out value="${fList.get(i).maxLength}"/>",<c:out value="${fList.get(i).lines}"/>,[0,0]]);
         </script>
 	</c:if>
 	<c:set var="i" value="${i + 1}" />

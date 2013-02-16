@@ -43,20 +43,27 @@ public class MainController extends HttpServlet {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 
+		//Ajax을 통해서 코드를 받는다.
 		String code = request.getParameter("param");
 		ANTLRStringStream input = new ANTLRStringStream(code);
+		
+		//받은 코드를 Lexer를 사용해서 토큰을 나눈다.
 		JSLexer lex = new JSLexer(input);
 
+		//생성된 토큰을 사용해서 파서를 생성한다.
 		CommonTokenStream tokens = new CommonTokenStream(lex);
 		JSParser g = new JSParser(tokens);
 		
 		try {
+			//파서를 초기화하고 실행한다.
 			g.init();
 			g.program();
 
+			//"Function"자료형 리스트를 만든다. 
 			List<Function> fList = g.getFlist();
 			JSONObject obj = new JSONObject();
 			
+			//반환값을 출력하여 확인 
 			for(Function function : fList) {
 				System.out.println("getName : " + function.getName());
 				System.out.println("getType : " + function.getType());
@@ -67,6 +74,7 @@ public class MainController extends HttpServlet {
 				System.out.println("getMaxLength : " + function.getMaxLength()+"\n");
 			}
 			
+			//출력된 정보를 Ajax를 통해서 JSON형식으로 다시 보낸다.
 			JSONArray jsonArray = new JSONArray(fList.toArray());
 			obj.put("fList", jsonArray);
 			PrintWriter writer = response.getWriter();

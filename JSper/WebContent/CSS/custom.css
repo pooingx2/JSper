@@ -1,3 +1,21 @@
+    .skinSelector{
+    	position: absolute;
+    	background-color: #FFF;
+    	right:20px;
+    	bottom:60px;
+    	width:80px;
+/*    	height:20px;*/
+    	text-align:center
+    }
+    .drawSelector{
+    	position: absolute;
+    	background-color: #FFF;
+    	right:20px;
+    	bottom:60px;
+    	width:80px;
+    	text-align:center
+    }
+
     .zoomBG{
     	position: absolute;
     	background-color: #EEE;
@@ -26,6 +44,7 @@
 
     .ace_content, .ace_scrollbar{
     	height: 100% !important;
+    	margin-top: 5px !important;
     }
 
     .ui-layout-south {
@@ -35,18 +54,14 @@
     .button {
         position: relative;
         border: 1px solid #aaa;
-        /*border-left: 1px solid #999;
-        border-right: 1px solid #999;*/
         left:26px;
-        top: 15px;
+        top: 10px;
         margin-left: 20px;
         display: inline-block;
-        line-height: 50px;
+        line-height: 60px;
         text-align: center;
-        height: 50px;
+        height: 60px;
         width: 300px;
-        /*background: #333;
-        color: #fff;*/
         background: #ffffff;
         color: #1B3E71;
         font-size: 22px;
@@ -54,5 +69,5 @@
         text-decoration: none;
         -webkit-border-radius: 15px;
         -moz-border-radius: 15px;
-        border-radius: 0px;
+        border-radius: 15px;
     }

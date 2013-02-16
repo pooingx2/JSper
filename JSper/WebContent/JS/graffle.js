@@ -104,9 +104,9 @@ function darw_raphael( make_list_node ){
 	m_caption = r.set();
 	m_detail_shapes = r.set();
 	m_detail_text = r.set();
+	m_caption_hides = r.set();
 	m_show_detail = true;
 	m_show_caption = true;
-	m_caption_hides = r.set();
 
 	/*----------------------- Common Function -----------------------*/
 	function push_array( array ,shape ){ array.push( shape ); };
@@ -146,12 +146,11 @@ function darw_raphael( make_list_node ){
 		var caption_array = r.set();
 		length = m_shapes[index].attrs.x+m_shapes[index].attrs.width+40;
 		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,10 + node[1].length*15, 30 ,2));
+		push_array( m_caption_hides, r.rect(length, 135 + depth*62,10+ node[1].length*15, 5 ,2).attr({'fill-opacity':0}));			
 		if(node[3] == 0){
-			push_array( m_caption_hides, r.rect(length, 135 + depth*62,20+ node[1].length*15, 0 ,2).attr({'fill-opacity':0}));			
 			push_array( m_caption_rect, r.rect(length, 135 + depth*62 ,20+ node[1].length*15, 0 ,2));			
 			push_array( caption_array, r.text(length+10, 148 + depth*62 + i*30 ,"").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );						
 		}else{
-			push_array( m_caption_hides, r.rect(length, 135 + depth*62,20+ node[1].length*15, 5 ,2).attr({'fill-opacity':0}));			
 			push_array( m_caption_rect, r.rect(length, 135 + depth*62,30+ node[3]*6, node[4].length*20 ,2));			
 			for( var i=0 ; i<node[4].length ; i++ ){
 				push_array( caption_array, r.text(length+10, 145 + depth*62 + i*20 ," "+ node[4][i]).attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );			
@@ -297,7 +296,7 @@ function darw_raphael( make_list_node ){
 	m_caption_hides[0].attr({cursor: "pointer"}).click(clickFuncCaptionAll());
 	m_caption[0].attr({cursor: "pointer"}).click(unclickFuncCaptionAll());
 	$("#holder").draggable();
-
+	$("#holder").attr({cursor: "move"})
 
 	 for(var k = 0;k<m_shapes.length;k++){
 		 m_shapes[k].data("enclosedText",m_texts[k]);
@@ -316,7 +315,10 @@ function darw_raphael( make_list_node ){
 		 this.data("enclosedText").attr({x: this.ox + dx + 5, y: this.oy + dy + 15});
 		 this.data("enclosedShape").attr({x: this.ox + dx , y: this.oy + dy + 35});
 		 this.data("enclosedDetailShape").attr({x: this.ox + dx , y: this.oy + dy + 35});
-		 this.data("enclosedDetail").attr({x: this.ox + dx + 10 , y: this.oy + dy + 45});
+		 for(var i=0;i<this.data("enclosedDetail").length;i++){
+			 this.data("enclosedDetail")[i].attr({x: this.ox + dx + 10 , y: this.oy + dy + 45+i*20});			 
+		 }
+		 
 		 for (var i = m_connection.length; i--;) {
 			 r.connection(m_connection[i]);
 		 }
@@ -328,6 +330,28 @@ function darw_raphael( make_list_node ){
 	 for(var k = 1;k<m_shapes.length;k++){
 		 m_shapes[k].drag(moveShape, dragShape, upShape);
 	 };	
+}
+function changeColor(argu){
+	if(argu == "Simple"){
+		m_shapes.attr({"stroke":"#999","stroke-width": 2})
+		m_shapes.attr({"fill":"white"})
+		m_caption_rect.attr({"fill":"white"})
+		m_caption_rect.attr({"stroke":"#999","stroke-width": 2})
+		m_caption_hides.attr({"fill":"#ddd"})
+		m_caption_hides.attr({"stroke":"#999","stroke-width": 2})
+	}
+	else if(argu == "Divide"){
+		
+	}
+	else if(argu == "Colorful"){
+		for(var i = 0 , count = m_shapes.length; i<count;i++){
+			var color = Raphael.getColor();
+			m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 4});	
+			m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.7, "stroke-width": 2});
+			m_caption_hides[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});			
+		};
+
+	}
 }
 
 $(document).ready(function() {

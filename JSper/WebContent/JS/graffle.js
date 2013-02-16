@@ -15,8 +15,8 @@
 	var make_list_node = [[0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"]]];
 	/*----------------------- Var Declaration -----------------------*/
 	var homepage_height = 60 + make_list_node.length * 120;
-	if(homepage_height < 200){
-		homepage_height = 1000;
+	if(homepage_height < 500){
+		homepage_height = 800;
 	}
 	$('#holder').height(homepage_height);
 	var	r = Raphael("holder", 1800, homepage_height);
@@ -28,9 +28,10 @@
 	var m_caption = r.set();
 	var m_detail_shapes = r.set();
 	var m_detail_text = r.set();
+	var m_caption_hides = r.set();
 	var m_show_detail = true;
 	var m_show_caption = true;
-	var m_caption_hides = r.set();
+	var m_colorful ="Colorful";
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	
 	if (obj1.line && obj1.from && obj1.to) {
@@ -91,8 +92,8 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 };
 function darw_raphael( make_list_node ){
 	var homepage_height = 60 + make_list_node.length * 120;;
-	if(homepage_height < 200){
-		homepage_height = 1000;
+	if(homepage_height < 500){
+		homepage_height = 800;
 	}
 	$('#holder').height(homepage_height);
 	r.clear();
@@ -263,13 +264,29 @@ function darw_raphael( make_list_node ){
 			}
 		}
 	};
-
-	for(var i = 0 , count = m_shapes.length; i<count;i++){
-		var color = Raphael.getColor();
-		m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 4});	
-		m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.7, "stroke-width": 2});
-		m_caption_hides[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});			
-	};
+	if(m_colorful == "Colorful"){
+		for(var i = 0 , count = m_shapes.length; i<count;i++){
+			var color = Raphael.getColor();
+			m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 4});	
+			m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.7, "stroke-width": 2});
+			m_caption_hides[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});			
+		};		
+	}
+	else if(m_colorful == "Simple"){
+		for(var i = 0 , count = m_shapes.length; i<count;i++){
+			m_shapes[i].attr({fill: "#fff", stroke: "#999", "stroke-width": 2});	
+			m_caption_rect[i].attr({fill: "#fff", stroke: "#999", "stroke-width": 2});
+			m_caption_hides[i].attr({fill: "#fff", stroke: "#999", "stroke-width": 2});			
+		};		
+	}
+	else if(m_colorful == "Divide"){
+		for(var i = 0 , count = m_shapes.length; i<count;i++){
+			var color = Raphael.getColor();
+			m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 4});	
+			m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.7, "stroke-width": 2});
+			m_caption_hides[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});			
+		};				
+	}
 
 	/*----------------------- Left Chart -----------------------*/
 	for( var m = 0 ,list_length = make_list_node.length ; m < list_length ; m++ ){
@@ -332,13 +349,11 @@ function darw_raphael( make_list_node ){
 	 };	
 }
 function changeColor(argu){
+	m_colorful = argu;
 	if(argu == "Simple"){
-		m_shapes.attr({"stroke":"#999","stroke-width": 2})
-		m_shapes.attr({"fill":"white"})
-		m_caption_rect.attr({"fill":"white"})
-		m_caption_rect.attr({"stroke":"#999","stroke-width": 2})
-		m_caption_hides.attr({"fill":"#ddd"})
-		m_caption_hides.attr({"stroke":"#999","stroke-width": 2})
+		m_shapes.attr({"stroke":"#999","stroke-width": 2,"fill":"white"});
+		m_caption_rect.attr({"fill":"white","stroke":"#999","stroke-width": 2});
+		m_caption_hides.attr({"stroke":"#999","stroke-width": 2,"fill":"#ddd"});
 	}
 	else if(argu == "Divide"){
 		

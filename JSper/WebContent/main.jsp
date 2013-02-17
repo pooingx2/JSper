@@ -34,6 +34,7 @@
 	<div class="outer-west">
 	<div class="textCode"></div>
 		<div id="editor">
+
 /*this is test foo*/
 function foo(items) {
 	/*this is test test*/
@@ -47,6 +48,20 @@ function foo(items) {
 	var x = "All this is syntax highlighted"; 
 	var k = 0;
 }
+		/*this is test foo*/
+function fo3o(items) {
+    /*this is test test*/
+	function test(){}
+	/*this is test test1*/
+	function test1(){
+		function test2(){}
+		/*this is ANONYMOUS function*/
+		(function() {})()
+	}
+	var x = "All this is syntax highlighted"; 
+	var k = 0;
+}
+		
 		</div>
 		<div class="zoomBG">
 			<div><a href="#" onClick="setSize(3); return false;">+</a></div>
@@ -135,8 +150,10 @@ window.onload = function(){
 		
 		switch (n) {
 			case 1:
+				scaleLarge();
 				break;
 			case 2:
+				scaleSmall();
 				break;
 			case 3:
 				var t  = parseFloat(codeBtn.style.fontSize);

@@ -51,7 +51,6 @@ public class Function implements Serializable{
 	public void setType(String type) {
 		this.type = type;
 	}
-	
 	public int getDepth() {
 		return depth;
 	}

@@ -1,4 +1,4 @@
-grammar JS;
+grammar JS1;
 
 options
 {
@@ -94,14 +94,13 @@ statementBlock
 statementList
  	: statement (LT!* statement)*
 	;
-
+	
 variableStatement
-	: 'var' LT!* { stmType = "variable"; System.out.println("stmType = "+stmType); stmText = "var "; } variableDeclarationList { stmText = stmText+";"; System.out.println("stmText = "+stmText);}(LT | ';')!
+	: 'var' LT!* variableDeclarationList (LT | ';')!
 	;
-
 	
 variableDeclarationList
-	: variableDeclaration (LT!* ',' { stmText = stmText+","; } LT!* variableDeclaration)*
+	: variableDeclaration (LT!* ',' LT!* variableDeclaration)*
 	;
 	
 variableDeclarationListNoIn
@@ -111,7 +110,6 @@ variableDeclarationListNoIn
 variableDeclaration
 	//: Identifier LT!* initialiser?
 	: variableName LT!* initialiser?
-	//: variableName LT!* initialization?
 	;
 	
 variableName
@@ -120,35 +118,34 @@ variableName
 		{
 			String variable;
 			variable = $Identifier.text;
-			stmText = stmText + variable + " ";
-			//System.out.println("stmType = "+stmType);
-			//System.out.println("stmText = "+stmText);
+			System.out.println("name = " + variable);
+			System.out.println("expression");
+			//System.out.println("depth = " + depth);
+			//insertFunction();
+			//initData();
 		}
 	;
 	
 variableDeclarationNoIn
-	:  LT!* initialiserNoIn?
-	//:  LT!* variableName?
+	//:  LT!* initialiserNoIn?
+	:  LT!* variableName?
 	;
 	
 initialiser
-	: '=' LT!* assignmentExpression
-	//: '=' LT!* initialization
+	//: '=' LT!* assignmentExpression
+	: '=' LT!* expressionString
 	;
-	
 
-initialization
-	: 
-	( Identifier )
+expressionString
+ 	:
+ 	( Identifier )
 		{
-			String initialization;
-			initialization = $Identifier.text;
-			stmText = stmText + initialization;
-			System.out.println("initialization = "+initialization);
+			String expression;
+			expression = $Identifier.text;
+			System.out.println("expression = " + expression);
 		}
-	;
-
-
+ 	;
+	
 initialiserNoIn
 	: '=' LT!* assignmentExpressionNoIn
 	;
@@ -159,7 +156,6 @@ emptyStatement
 	
 expressionStatement
 	: expression (LT | ';')!
-	//: expressionString (LT | ';')!
 	;
 	
 ifStatement

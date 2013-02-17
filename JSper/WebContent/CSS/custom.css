@@ -4,22 +4,18 @@
     	right:20px;
     	bottom:60px;
     	width:80px;
-/*    	height:20px;*/
     	text-align:center
     }
-<<<<<<< HEAD
+
     .drawSelector{
-    	position: absolute;
+    	position: fixed;
     	background-color: #FFF;
     	right:20px;
-    	bottom:60px;
+    	bottom:110px;
     	width:80px;
     	text-align:center
     }
 
-=======
-    
->>>>>>> tt
     .zoomBG{
     	position: absolute;
     	background-color: #EEE;

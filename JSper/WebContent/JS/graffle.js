@@ -147,7 +147,10 @@ function darw_raphael( make_list_node ){
 		var caption_array = r.set();
 		length = m_shapes[index].attrs.x+m_shapes[index].attrs.width+40;
 		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,10 + node[1].length*15, 30 ,2));
+<<<<<<< HEAD
 		push_array( m_caption_hides, r.rect(length, 135 + depth*62,10+ node[1].length*15, 5 ,2).attr({'fill-opacity':0}));			
+=======
+>>>>>>> tt
 		if(node[3] == 0){
 			push_array( m_caption_rect, r.rect(length, 135 + depth*62 ,20+ node[1].length*15, 0 ,2));			
 			push_array( caption_array, r.text(length+10, 148 + depth*62 + i*30 ,"").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );						
@@ -264,6 +267,7 @@ function darw_raphael( make_list_node ){
 			}
 		}
 	};
+<<<<<<< HEAD
 	if(m_colorful == "Colorful"){
 		for(var i = 0 , count = m_shapes.length; i<count;i++){
 			var color = Raphael.getColor();
@@ -287,6 +291,15 @@ function darw_raphael( make_list_node ){
 			m_caption_hides[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});			
 		};				
 	}
+=======
+
+	for(var i = 0 , count = m_shapes.length; i<count;i++){
+		var color = Raphael.getColor();
+		m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 4});	
+		m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.7, "stroke-width": 2});
+		m_caption_hides[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});			
+	};
+>>>>>>> tt
 
 	/*----------------------- Left Chart -----------------------*/
 	for( var m = 0 ,list_length = make_list_node.length ; m < list_length ; m++ ){
@@ -347,6 +360,7 @@ function darw_raphael( make_list_node ){
 	 for(var k = 1;k<m_shapes.length;k++){
 		 m_shapes[k].drag(moveShape, dragShape, upShape);
 	 };	
+<<<<<<< HEAD
 }
 function changeColor(argu){
 	m_colorful = argu;
@@ -401,7 +415,10 @@ function scaleSmall(){
 	scaleWithByRule(r,m_caption_hides,0.9, 0.9, 0, 0, 0, size);
 	scaleWithByRule(r,m_caption_rect,0.9, 0.9, 0, 0, 0, size);
 	scaleWithByRule(r,m_caption,0.9, 0.9, 0, 0, 10, size);	
+=======
+>>>>>>> tt
 }
+
 $(document).ready(function() {
 	darw_raphael(make_list_node);
 });

@@ -108,7 +108,7 @@ function fo3o(items) {
 				   console.log('succeess');
 				   test_ajax = jQuery.parseJSON(response);
 				   for(var i=0,length = test_ajax.fList.length; i< length ; i++){
-				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0]]);					   
+				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0],test_ajax.fList[i].type]);					   
 				   }
 				   darw_raphael(test_gender);
 			   },

@@ -29,6 +29,7 @@
 	var m_detail_shapes = r.set();
 	var m_detail_text = r.set();
 	var m_caption_hides = r.set();
+	var m_type = [];
 	var m_show_detail = true;
 	var m_show_caption = true;
 	var m_colorful ="Colorful";
@@ -106,6 +107,7 @@ function darw_raphael( make_list_node ){
 	m_detail_shapes = r.set();
 	m_detail_text = r.set();
 	m_caption_hides = r.set();
+	m_type = [];
 	m_show_detail = true;
 	m_show_caption = true;
 
@@ -254,9 +256,10 @@ function darw_raphael( make_list_node ){
 	push_array( m_caption_hides, r.rect(25, 135, 120, 5,2)  );
 	push_array( m_caption, r.text(60, 145, "caption").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000"}));
 	push_array( m_detail_shapes, r.rect(50, 150, 50, 50 ,5).attr({fill: m_shapes[0].attrs.fill, stroke: 0, "fill-opacity": 0, "stroke-width": 2}));
-
+	push_array( m_type, "document" );
 	for( var m = 0 ,list_length = make_list_node.length;  m < list_length ; m++ ){
 		var list_node_text = make_list_node[m];
+		push_array( m_type, list_node_text[6] );		
 		if(list_node_text[2] == "0"){ push_arrays( 0, list_node_text, m ); }
 		else{
 			for( var k = m - 1 ; k >= 0 ; k-- ){
@@ -356,7 +359,6 @@ function changeColor(argu){
 		m_caption_hides.attr({"stroke":"#999","stroke-width": 2,"fill":"#ddd"});
 	}
 	else if(argu == "Divide"){
-		
 	}
 	else if(argu == "Colorful"){
 		for(var i = 0 , count = m_shapes.length; i<count;i++){
@@ -370,37 +372,32 @@ function changeColor(argu){
 }
 function scaleWith(paper,cb,scaleWidth,scaleHeight,scalecx,scalecy)
 {
-	set1 = paper.set();
 	for(var i=0;i < cb.length;i++)
 	{
-		set1.push(cb[i]);
+		cb[i].scale(scaleWidth,scaleHeight,scalecx,scalecy).translate( (-1*cb[i].getBBox().x + 30) ,(-1*cb[i].getBBox().y + 30));
 	}
-	set1.scale(scaleWidth,scaleHeight,scalecx,scalecy); 
-	set1.translate( (-1*set1.getBBox().x+30) ,(-1*set1.getBBox().y+30));
 }
-function scaleWithByRule(paper,cb,scaleWidth,scaleHeight,scalecx,scalecy,ruleX,ruleY)
+function scaleWithByRule(paper,cb,scaleWidth,scaleHeight,scalecx,scalecy,rule)
 {
-	set1 = paper.set();
 	for(var i=0;i < cb.length;i++)
 	{
-		set1.push(cb[i]);
+		cb[i].scale(scaleWidth,scaleHeight,scalecx,scalecy).translate(( cb[i].attrs.x - rule[i].attrs.x ) ,( cb[i].attrs.y - rule[i].attrs.y - rule[i].attrs.height )); 
 	}
-	set1.scale(scaleWidth,scaleHeight,scalecx,scalecy); 
-	set1.translate( (-1*set1.getBBox().x + ruleX+30) ,(-1*set1.getBBox().y + ruleY+30));
+	
 }
 function scaleLarge(){
 	scaleWith(r,m_shapes,1.1, 1.1, 0, 0);
 	scaleWith(r,m_texts,1.1, 1.1, 0, 0);
-	scaleWithByRule(r,m_caption_hides,1.1, 1.1, 0, 0, 0, size);
-	scaleWithByRule(r,m_caption_rect,1.1, 1.1, 0, 0, 0, size);
-	scaleWithByRule(r,m_caption,1.1, 1.1, 0, 0, 10, size);
+	scaleWithByRule(r,m_caption_hides,1.1, 1.1, 0, 0, m_shapes);
+//	scaleWithByRule(r,m_caption_rect,1.1, 1.1, 0, 0, m_shapes);
+//	scaleWithByRule(r,m_caption,1.1, 1.1, 0, 0, m_shapes);
 }
 function scaleSmall(){
 	scaleWith(r,m_shapes,0.9, 0.9, 0, 0);
 	scaleWith(r,m_texts,0.9, 0.9, 0, 0);
-	scaleWithByRule(r,m_caption_hides,0.9, 0.9, 0, 0, 0, size);
-	scaleWithByRule(r,m_caption_rect,0.9, 0.9, 0, 0, 0, size);
-	scaleWithByRule(r,m_caption,0.9, 0.9, 0, 0, 10, size);	
+	scaleWithByRule(r,m_caption_hides,0.9, 0.9, 0, 0, m_shapes);
+//	scaleWithByRule(r,m_caption_rect,0.9, 0.9, 0, 0, m_shapes);
+//	scaleWithByRule(r,m_caption,0.9, 0.9, 0, 0, m_shapes);	
 }
 $(document).ready(function() {
 	darw_raphael(make_list_node);

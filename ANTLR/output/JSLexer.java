@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-18 03:08:02
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-18 03:17:52
 
 import org.antlr.runtime.*;
 import java.util.Stack;
@@ -30,12 +30,12 @@ public class JSLexer extends Lexer {
     public static final int UnicodeCombiningMark=28;
     public static final int UnicodeDigit=26;
     public static final int T__80=80;
-    public static final int NumericLiteral=8;
+    public static final int NumericLiteral=9;
     public static final int T__81=81;
     public static final int T__82=82;
     public static final int T__83=83;
     public static final int IdentifierStart=23;
-    public static final int DoubleStringCharacter=9;
+    public static final int DoubleStringCharacter=7;
     public static final int T__85=85;
     public static final int T__84=84;
     public static final int T__87=87;
@@ -99,7 +99,7 @@ public class JSLexer extends Lexer {
     public static final int T__101=101;
     public static final int T__100=100;
     public static final int DecimalLiteral=20;
-    public static final int StringLiteral=7;
+    public static final int StringLiteral=8;
     public static final int T__31=31;
     public static final int T__32=32;
     public static final int T__33=33;

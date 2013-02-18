@@ -13,25 +13,7 @@
 //		 [0,"jfunction","0",17,["this is caption9"],[0,0]] 
 //		 ];
 	var make_list_node = [[0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"]]];
-	/*----------------------- Var Declaration -----------------------*/
-	var homepage_height = 60 + make_list_node.length * 120;
-	if(homepage_height < 500){
-		homepage_height = 800;
-	}
-	$('#holder').height(homepage_height);
-	var	r = Raphael("holder", 1800, homepage_height);
-	var m_connection = [];
-	var font = r.getFont("whoa");
-	var m_shapes = r.set();
-	var m_texts = r.set();
-	var m_caption_rect = r.set();
-	var m_caption = r.set();
-	var m_detail_shapes = r.set();
-	var m_detail_text = r.set();
-	var m_caption_hides = r.set();
-	var m_show_detail = true;
-	var m_show_caption = true;
-	var m_colorful ="Colorful";
+	
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	
 	if (obj1.line && obj1.from && obj1.to) {
@@ -91,11 +73,11 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	}
 };
 function darw_raphael( make_list_node ){
-	var homepage_height = 60 + make_list_node.length * 120;;
-	if(homepage_height < 500){
-		homepage_height = 800;
-	}
+	var homepage_height = 300 + make_list_node.length * 70;;
 	$('#holder').height(homepage_height);
+	$('#holder').html('');
+	
+	var r = Raphael("holder", "100%", "100%");
 	r.clear();
 	m_connection = [];
 	font = r.getFont("whoa");
@@ -108,7 +90,8 @@ function darw_raphael( make_list_node ){
 	m_caption_hides = r.set();
 	m_show_detail = true;
 	m_show_caption = true;
-
+	m_colorful ="Colorful";
+	
 	/*----------------------- Common Function -----------------------*/
 	function push_array( array ,shape ){ array.push( shape ); };
 	function push_num_array( array, shapes, num ){
@@ -147,7 +130,9 @@ function darw_raphael( make_list_node ){
 		var caption_array = r.set();
 		length = m_shapes[index].attrs.x+m_shapes[index].attrs.width+40;
 		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,10 + node[1].length*15, 30 ,2));
+
 		push_array( m_caption_hides, r.rect(length, 135 + depth*62,10+ node[1].length*15, 5 ,2).attr({'fill-opacity':0}));			
+
 		if(node[3] == 0){
 			push_array( m_caption_rect, r.rect(length, 135 + depth*62 ,20+ node[1].length*15, 0 ,2));			
 			push_array( caption_array, r.text(length+10, 148 + depth*62 + i*30 ,"").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );						
@@ -264,6 +249,7 @@ function darw_raphael( make_list_node ){
 			}
 		}
 	};
+
 	if(m_colorful == "Colorful"){
 		for(var i = 0 , count = m_shapes.length; i<count;i++){
 			var color = Raphael.getColor();
@@ -347,6 +333,7 @@ function darw_raphael( make_list_node ){
 	 for(var k = 1;k<m_shapes.length;k++){
 		 m_shapes[k].drag(moveShape, dragShape, upShape);
 	 };	
+
 }
 function changeColor(argu){
 	m_colorful = argu;
@@ -401,7 +388,9 @@ function scaleSmall(){
 	scaleWithByRule(r,m_caption_hides,0.9, 0.9, 0, 0, 0, size);
 	scaleWithByRule(r,m_caption_rect,0.9, 0.9, 0, 0, 0, size);
 	scaleWithByRule(r,m_caption,0.9, 0.9, 0, 0, 10, size);	
+
 }
+
 $(document).ready(function() {
 	darw_raphael(make_list_node);
 });

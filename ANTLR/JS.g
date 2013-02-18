@@ -132,17 +132,17 @@ variableDeclarationNoIn
 	;
 	
 initialiser
-	: '=' LT!* assignmentExpression
-	//: '=' LT!* initialization
+	//: '=' LT!* assignmentExpression
+	: '=' LT!* initialization
 	;
 	
 
 initialization
 	: 
-	( Identifier )
+	( DoubleStringCharacter )
 		{
 			String initialization;
-			initialization = $Identifier.text;
+			initialization = $DoubleStringCharacter.text;
 			stmText = stmText + initialization;
 			System.out.println("initialization = "+initialization);
 		}

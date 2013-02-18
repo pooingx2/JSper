@@ -19,16 +19,11 @@
  <body id="allpage">
 	<div class="outer-center">
  		<div id="holder"></div>
- 		<div class="zoomBG">
- 			<div><a href="#" onClick="setSize(1); return false;">+</a></div>
- 			<div><a href="#" onClick="setSize(2); return false;">-</a></div> 			
- 		</div>
  		<select class="drawSelector" onChange = "javascript:selectDraw(this)">
 			  <option value="Colorful">Colorful</option>
 			  <option value="Simple">Simple</option>
 			  <option value="Divide">Divide</option> 
 		</select>
-
 	</div>
 
 	<div class="outer-west">

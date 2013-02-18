@@ -19715,5 +19715,4 @@ public class JSParser extends Parser {
     public static final BitSet FOLLOW_LT_in_synpred297_JS2532 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_LT_in_synpred300_JS2547 = new BitSet(new long[]{0x0000000000000002L});
     public static final BitSet FOLLOW_LT_in_synpred310_JS2627 = new BitSet(new long[]{0x0000000000000002L});
-
 }

@@ -12,37 +12,18 @@
 //		 [2,"ifun","hfun",17,["this is caption8"],[0,0]], 
 //		 [0,"jfunction","0",17,["this is caption9"],[0,0]] 
 //		 ];
-	var make_list_node = [[0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"]]];
-	/*----------------------- Var Declaration -----------------------*/
-	var homepage_height = 60 + make_list_node.length * 120;
-	if(homepage_height < 500){
-		homepage_height = 800;
-	}
-	$('#holder').height(homepage_height);
-	var	r = Raphael("holder", 1800, homepage_height);
-	var m_connection = [];
-	var font = r.getFont("whoa");
-	var m_shapes = r.set();
-	var m_texts = r.set();
-	var m_caption_rect = r.set();
-	var m_caption = r.set();
-	var m_detail_shapes = r.set();
-	var m_detail_text = r.set();
-	var m_caption_hides = r.set();
-	var m_type = [];
-	var m_show_detail = true;
-	var m_show_caption = true;
-	var m_colorful ="Colorful";
+var m_colorful ="Colorful";
+var divide_color = [];
+var make_list_node = [[0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"]]];
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
-	
 	if (obj1.line && obj1.from && obj1.to) {
 		line = obj1;
 		obj1 = line.from;
 		obj2 = line.to;
-	}
-	
+	};	
 	var bb1 = obj1.getBBox(),
 	bb2 = obj2.getBBox(),
+
 	p = [{x: bb1.x + bb1.width / 2, y: bb1.y - 1},
 	     {x: bb1.x + bb1.width / 2, y: bb1.y + bb1.height + 1},
 	     {x: bb1.x - 1, y: bb1.y + bb1.height / 2},
@@ -51,7 +32,9 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	     {x: bb2.x + bb2.width / 2, y: bb2.y + bb2.height + 1},
 	     {x: bb2.x - 1, y: bb2.y + bb2.height / 2},
 	     {x: bb2.x + bb2.width + 1, y: bb2.y + bb2.height / 2}],
-	     d = {}, dis = [];
+	     d = {}, 
+	     dis = [];
+	
 	for (var i = 0; i < 4; i++) {
 		for (var j = 4; j < 8; j++) {
 			var dx = Math.abs(p[i].x - p[j].x),
@@ -62,11 +45,13 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 			}
 		}
 	}
+	
 	if (dis.length == 0) {
 		var res = [0, 4];
 	} else {
 		res = d[Math.min.apply(Math, dis)];
 	}
+	
 	var x1 = p[res[0]].x,
 	y1 = p[res[0]].y,
 	x4 = p[res[1]].x,
@@ -78,6 +63,7 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	x3 = [0, 0, 0, 0, x4, x4, x4 - dx, x4 + dx][res[1]].toFixed(3),
 	y3 = [0, 0, 0, 0, y1 + dy, y1 - dy, y4, y4][res[1]].toFixed(3);
 	var path = ["M", x1.toFixed(3), y1.toFixed(3), "C", x2, y2, x3, y3, x4.toFixed(3), y4.toFixed(3)].join(",");
+	
 	if (line && line.line) {
 		line.bg && line.bg.attr({path: path});
 		line.line.attr({path: path});
@@ -91,12 +77,13 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 		};
 	}
 };
+
 function darw_raphael( make_list_node ){
-	var homepage_height = 60 + make_list_node.length * 120;;
-	if(homepage_height < 500){
-		homepage_height = 800;
-	}
+	var homepage_height = 300 + make_list_node.length * 70;;
 	$('#holder').height(homepage_height);
+	$('#holder').html('');
+	
+	var r = Raphael("holder", "100%", "100%");
 	r.clear();
 	m_connection = [];
 	font = r.getFont("whoa");
@@ -110,7 +97,7 @@ function darw_raphael( make_list_node ){
 	m_type = [];
 	m_show_detail = true;
 	m_show_caption = true;
-
+	
 	/*----------------------- Common Function -----------------------*/
 	function push_array( array ,shape ){ array.push( shape ); };
 	function push_num_array( array, shapes, num ){
@@ -149,7 +136,9 @@ function darw_raphael( make_list_node ){
 		var caption_array = r.set();
 		length = m_shapes[index].attrs.x+m_shapes[index].attrs.width+40;
 		line_to_line(m_shapes[index], r.rect(length, 100 + depth*62,10 + node[1].length*15, 30 ,2));
+
 		push_array( m_caption_hides, r.rect(length, 135 + depth*62,10+ node[1].length*15, 5 ,2).attr({'fill-opacity':0}));			
+
 		if(node[3] == 0){
 			push_array( m_caption_rect, r.rect(length, 135 + depth*62 ,20+ node[1].length*15, 0 ,2));			
 			push_array( caption_array, r.text(length+10, 148 + depth*62 + i*30 ,"").attr({font: "12px Helvetica", opacity: 0.5}).attr({fill: "#000","text-anchor": "start"}) );						
@@ -186,7 +175,7 @@ function darw_raphael( make_list_node ){
 				m_caption_rect[i/2].show().toFront();
 				m_caption[i/2].show().toFront();							
 			}
-		}
+		};
 	}
 	var mouseout = function(i){
 		return function(){
@@ -195,7 +184,7 @@ function darw_raphael( make_list_node ){
 				m_caption_hides[i/2].show();			
 				m_caption[i/2].hide();					
 			}
-		}
+		};
 	}
 	var unclickFuncCaptionAll = function(){
 		return function(){
@@ -207,7 +196,7 @@ function darw_raphael( make_list_node ){
 				}
 				m_show_caption = true;								
 			}			
-		}
+		};
 	}
 	var clickFuncCaptionAll = function(){
 		return function(){
@@ -219,7 +208,7 @@ function darw_raphael( make_list_node ){
 				}
 				m_show_caption = false;				
 			}
-		}
+		};
 	}
 	
 	var clickFuncAll = function(){
@@ -267,6 +256,7 @@ function darw_raphael( make_list_node ){
 			}
 		}
 	};
+
 	if(m_colorful == "Colorful"){
 		for(var i = 0 , count = m_shapes.length; i<count;i++){
 			var color = Raphael.getColor();
@@ -277,18 +267,36 @@ function darw_raphael( make_list_node ){
 	}
 	else if(m_colorful == "Simple"){
 		for(var i = 0 , count = m_shapes.length; i<count;i++){
-			m_shapes[i].attr({fill: "#fff", stroke: "#999", "stroke-width": 2});	
-			m_caption_rect[i].attr({fill: "#fff", stroke: "#999", "stroke-width": 2});
-			m_caption_hides[i].attr({fill: "#fff", stroke: "#999", "stroke-width": 2});			
-		};		
-	}
-	else if(m_colorful == "Divide"){
-		for(var i = 0 , count = m_shapes.length; i<count;i++){
 			var color = Raphael.getColor();
 			m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 4});	
 			m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.7, "stroke-width": 2});
 			m_caption_hides[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});			
-		};				
+		};	
+	}
+	else if(m_colorful == "Divide"){
+		divide_color = [];
+		divide_color.push(Raphael.getColor());
+		divide_color.push(Raphael.getColor());	
+		divide_color.push(Raphael.getColor());
+		divide_color.push(Raphael.getColor());
+		m_shapes[0].attr({fill: divide_color[3], stroke: divide_color[3], "fill-opacity": 0.9, "stroke-width": 4});	
+		m_caption_rect[0].attr({fill: divide_color[3], stroke: divide_color[3], "fill-opacity": 0.7, "stroke-width": 2});
+		m_caption_hides[0].attr({fill: divide_color[3], stroke: divide_color[3], "fill-opacity": 0.5, "stroke-width": 2});			
+		for(var i = 1 , count = m_shapes.length-1; i<count;i++){
+			var color; 
+			if(test_gender[i-1][6] == "Expression"){
+				color = divide_color[0];
+			}else if(test_gender[i-1][6] == "Anonymous"){
+				color = divide_color[1];				
+			}else if(test_gender[i-1][6] == "Declaration"){
+				color = divide_color[2];				
+			}else{
+				color = divide_color[3];				
+			}
+			m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 4});	
+			m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.7, "stroke-width": 2});
+			m_caption_hides[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});			
+		}			
 	}
 
 	/*----------------------- Left Chart -----------------------*/
@@ -350,6 +358,7 @@ function darw_raphael( make_list_node ){
 	 for(var k = 1;k<m_shapes.length;k++){
 		 m_shapes[k].drag(moveShape, dragShape, upShape);
 	 };	
+
 }
 function changeColor(argu){
 	m_colorful = argu;
@@ -358,7 +367,30 @@ function changeColor(argu){
 		m_caption_rect.attr({"fill":"white","stroke":"#999","stroke-width": 2});
 		m_caption_hides.attr({"stroke":"#999","stroke-width": 2,"fill":"#ddd"});
 	}
-	else if(argu == "Divide"){
+	else if(argu == "Divide"){	
+		divide_color = [];
+		divide_color.push(Raphael.getColor());
+		divide_color.push(Raphael.getColor());	
+		divide_color.push(Raphael.getColor());
+		divide_color.push(Raphael.getColor());
+		m_shapes[0].attr({fill: divide_color[3], stroke: divide_color[3], "fill-opacity": 0.9, "stroke-width": 4});	
+		m_caption_rect[0].attr({fill: divide_color[3], stroke: divide_color[3], "fill-opacity": 0.7, "stroke-width": 2});
+		m_caption_hides[0].attr({fill: divide_color[3], stroke: divide_color[3], "fill-opacity": 0.5, "stroke-width": 2});			
+		for(var i = 1 , count = m_shapes.length; i<count;i++){
+			var color; 
+			if(test_gender[i-1][6]=="Expression"){
+				color = divide_color[0];
+			}else if(test_gender[i-1][6]=="Anonymous"){
+				color = divide_color[1];				
+			}else if(test_gender[i-1][6]=="Declaration"){
+				color = divide_color[2];				
+			}else{
+				color = divide_color[3];				
+			}
+			m_shapes[i].attr({fill: color, stroke: color, "fill-opacity": 0.9, "stroke-width": 4});	
+			m_caption_rect[i].attr({fill: color, stroke: color, "fill-opacity": 0.7, "stroke-width": 2});
+			m_caption_hides[i].attr({fill: color, stroke: color, "fill-opacity": 0.5, "stroke-width": 2});			
+		};		
 	}
 	else if(argu == "Colorful"){
 		for(var i = 0 , count = m_shapes.length; i<count;i++){
@@ -399,6 +431,7 @@ function scaleSmall(){
 //	scaleWithByRule(r,m_caption_rect,0.9, 0.9, 0, 0, m_shapes);
 //	scaleWithByRule(r,m_caption,0.9, 0.9, 0, 0, m_shapes);	
 }
+
 $(document).ready(function() {
 	darw_raphael(make_list_node);
 });

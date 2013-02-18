@@ -12,6 +12,11 @@
 //		 [2,"ifun","hfun",17,["this is caption8"],[0,0]], 
 //		 [0,"jfunction","0",17,["this is caption9"],[0,0]] 
 //		 ];
+var make_diagram = 
+	[
+	 [0,"if( a < 10 )",0],[1,"if( k < 8 )",1],[2,"for(var i = 0 ; i < 4 ; i++ )",0],[3,"a++",0],[1,"else if( a > 28 )",1],[2,"a--",0],[1,"else",1],[2,"a = a+9",0],[0,"a = a + 3",0],
+	 []
+	 ];
 var m_colorful ="Colorful";
 var divide_color = [];
 var make_list_node = [[0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"]]];
@@ -97,6 +102,9 @@ function darw_raphael( make_list_node ){
 	m_type = [];
 	m_show_detail = true;
 	m_show_caption = true;
+	m_diagram_text = r.set();
+	m_diagram_rect = r.set();
+	m_diagram_line = r.set();
 	
 	/*----------------------- Common Function -----------------------*/
 	function push_array( array ,shape ){ array.push( shape ); };
@@ -282,7 +290,7 @@ function darw_raphael( make_list_node ){
 		m_shapes[0].attr({fill: divide_color[3], stroke: divide_color[3], "fill-opacity": 0.9, "stroke-width": 4});	
 		m_caption_rect[0].attr({fill: divide_color[3], stroke: divide_color[3], "fill-opacity": 0.7, "stroke-width": 2});
 		m_caption_hides[0].attr({fill: divide_color[3], stroke: divide_color[3], "fill-opacity": 0.5, "stroke-width": 2});			
-		for(var i = 1 , count = m_shapes.length-1; i<count;i++){
+		for(var i = 1 , count = m_shapes.length; i<count;i++){
 			var color; 
 			if(test_gender[i-1][6] == "Expression"){
 				color = divide_color[0];
@@ -431,7 +439,14 @@ function scaleSmall(){
 //	scaleWithByRule(r,m_caption_rect,0.9, 0.9, 0, 0, m_shapes);
 //	scaleWithByRule(r,m_caption,0.9, 0.9, 0, 0, m_shapes);	
 }
-
+function drawDiagram(){
+	/*
+	 * m_diagram_rect = r.set(); m_diagram_line = r.set();
+	 */
+	//[0,"if( a < 10 )",0],[1,"if( k < 8 )",1],[2,"for(var i = 0 ; i < 4 ; i++ )",0],[3,"a++",0],[1,"else if( a > 28 )",1],[2,"a--",0],[1,"else",1],[2,"a = a+9",0],[0,"a = a + 3",0]
+	for( var k=0; k<make_diagram[0].length ;k++ ){
+	}
+}
 $(document).ready(function() {
 	darw_raphael(make_list_node);
 });

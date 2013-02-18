@@ -139,12 +139,11 @@ initialiser
 
 initialization
 	: 
-	( DoubleStringCharacter )
+	( assinmentString )
 		{
 			String initialization;
-			initialization = $DoubleStringCharacter.text;
-			stmText = stmText + initialization;
-			System.out.println("initialization = "+initialization);
+			initialization = $assinmentString.text;
+			stmText = stmText + " = " + initialization;
 		}
 	;
 
@@ -433,6 +432,16 @@ literal
 	| 'false'
 	| StringLiteral
 	| NumericLiteral
+	;
+	
+assinmentString
+	: 'null'
+	| 'true'
+	| 'false'
+	| StringLiteral
+	| NumericLiteral
+	| conditionalExpression
+	| leftHandSideExpression LT!* assignmentOperator LT!* assignmentExpression
 	;
 	
 // lexer rules.

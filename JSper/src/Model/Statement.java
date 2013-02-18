@@ -6,19 +6,19 @@ import java.util.List;
 
 public class Statement implements Serializable{
 	
-	private String name;
+	private String type;
 	private String statement;
 	
 	public Statement(){}
-	public Statement(String name, String statement){
-		this.name = name;
+	public Statement(String type, String statement){
+		this.type = type;
 		this.statement = statement;
 	}
-	public String getName() {
-		return name;
+	public String getType() {
+		return type;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setType(String type) {
+		this.type = type;
 	}
 	public String getStatement() {
 		return statement;

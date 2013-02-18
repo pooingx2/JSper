@@ -64,15 +64,15 @@ public class MainController extends HttpServlet {
 			JSONObject obj = new JSONObject();
 			
 			//반환값을 출력하여 확인 
-			for(Function function : fList) {
-				System.out.println("getName : " + function.getName());
-				System.out.println("getType : " + function.getType());
-				System.out.println("getDepth : " + function.getDepth());
-				System.out.println("getParent : " + function.getParent());
-				System.out.println("getComment : " + function.getComment());
-				System.out.println("getLength : " + function.getLength());
-				System.out.println("getMaxLength : " + function.getMaxLength()+"\n");
-			}
+//			for(Function function : fList) {
+//				System.out.println("getName : " + function.getName());
+//				System.out.println("getType : " + function.getType());
+//				System.out.println("getDepth : " + function.getDepth());
+//				System.out.println("getParent : " + function.getParent());
+//				System.out.println("getComment : " + function.getComment());
+//				System.out.println("getLength : " + function.getLength());
+//				System.out.println("getMaxLength : " + function.getMaxLength()+"\n");
+//			}
 			
 			//출력된 정보를 Ajax를 통해서 JSON형식으로 다시 보낸다.
 			JSONArray jsonArray = new JSONArray(fList.toArray());

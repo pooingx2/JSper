@@ -94,13 +94,14 @@ statementBlock
 statementList
  	: statement (LT!* statement)*
 	;
-	
+
 variableStatement
-	: 'var' LT!* variableDeclarationList (LT | ';')!
+	: 'var' LT!* { stmType = "variable"; System.out.println("stmType = "+stmType); stmText = "var "; } variableDeclarationList { stmText = stmText+";"; System.out.println("stmText = "+stmText);}(LT | ';')!
 	;
+
 	
 variableDeclarationList
-	: variableDeclaration (LT!* ',' LT!* variableDeclaration)*
+	: variableDeclaration (LT!* ',' { stmText = stmText+","; } LT!* variableDeclaration)*
 	;
 	
 variableDeclarationListNoIn
@@ -108,17 +109,45 @@ variableDeclarationListNoIn
 	;
 	
 variableDeclaration
-	: Identifier LT!* initialiser?
+	//: Identifier LT!* initialiser?
+	: variableName LT!* initialiser?
+	//: variableName LT!* initialization?
+	;
+	
+variableName
+	:
+	( Identifier )
+		{
+			String variable;
+			variable = $Identifier.text;
+			stmText = stmText + variable + " ";
+			//System.out.println("stmType = "+stmType);
+			//System.out.println("stmText = "+stmText);
+		}
 	;
 	
 variableDeclarationNoIn
-	: Identifier LT!* initialiserNoIn?
+	:  LT!* initialiserNoIn?
+	//:  LT!* variableName?
 	;
 	
 initialiser
-	: '=' LT!* assignmentExpression
+	//: '=' LT!* assignmentExpression
+	: '=' LT!* initialization
 	;
 	
+
+initialization
+	: 
+	( assinmentString )
+		{
+			String initialization;
+			initialization = $assinmentString.text;
+			stmText = stmText + " = " + initialization;
+		}
+	;
+
+
 initialiserNoIn
 	: '=' LT!* assignmentExpressionNoIn
 	;
@@ -129,6 +158,7 @@ emptyStatement
 	
 expressionStatement
 	: expression (LT | ';')!
+	//: expressionString (LT | ';')!
 	;
 	
 ifStatement
@@ -402,6 +432,16 @@ literal
 	| 'false'
 	| StringLiteral
 	| NumericLiteral
+	;
+	
+assinmentString
+	: 'null'
+	| 'true'
+	| 'false'
+	| StringLiteral
+	| NumericLiteral
+	| conditionalExpression
+	| leftHandSideExpression LT!* assignmentOperator LT!* assignmentExpression
 	;
 	
 // lexer rules.

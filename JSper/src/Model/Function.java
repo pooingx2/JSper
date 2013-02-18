@@ -1,20 +1,21 @@
 package Model;
 
+import java.beans.Statement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Function implements Serializable{
 	
-	private String name;		// 함수 이름
-	private String type;		// 합수 타입 : Declation, Expression, Anominous
-	private int depth;			// 함수의 깊이 
-	private String parent;		// 부모 함수의 이름
-	private String comment;		// 전체 길이의 주석
+	private String name;		//
+	private String type;		// 
+	private int depth;			// 
+	private String parent;		// 
+	private String comment;		// 
 	private int length;
-	private List<String> lines;	// 주석을 여러줄로 입력 했을때 라인별로 List에 저장
-	private int maxLength;		// 주석 List의 가장 긴 문자열 길이
-	private List<Statement> stmList;	// 함수 내부의 statement List
+	private List<String> lines;	// 
+	private int maxLength;		// 
+	private List<Statement> stmList;	//
 	
 	public Function(){}
 	public Function(String name, int depth, String parent, String comment){

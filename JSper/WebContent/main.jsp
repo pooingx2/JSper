@@ -20,9 +20,9 @@
 	<div class="outer-center">
  		<div id="holder"></div>
  		<select class="drawSelector" onChange = "javascript:selectDraw(this)">
+ 			  <option value="Divide">Divide</option>
 			  <option value="Colorful">Colorful</option>
-			  <option value="Simple">Simple</option>
-			  <option value="Divide">Divide</option> 
+			  <option value="Simple">Simple</option> 
 		</select>
 	</div>
 
@@ -32,8 +32,8 @@
 
 /*this is test foo*/
 function foo(items) {
-	/*this is test test*/
-	function test(){}
+	/*this is test test 함수 표현식*/
+	var text = function(){}
 	/*this is test test1*/
 	function test1(){
 		function test2(){}
@@ -103,7 +103,7 @@ function fo3o(items) {
 				   console.log('succeess');
 				   test_ajax = jQuery.parseJSON(response);
 				   for(var i=0,length = test_ajax.fList.length; i< length ; i++){
-				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0]]);					   
+				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0],test_ajax.fList[i].type]);					   
 				   }
 				   darw_raphael(test_gender);
 			   },

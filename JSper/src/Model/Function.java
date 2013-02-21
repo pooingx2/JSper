@@ -1,5 +1,6 @@
 package Model;
 
+import java.beans.Statement;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
  *
  */
 public class Function implements Serializable{
-	
+
 	private String name;		// 함수 이름
 	private String type;		// 합수 타입 : Declation, Expression, Anominous
 	private int depth;			// 함수의 깊이 

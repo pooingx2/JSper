@@ -8,7 +8,7 @@ options
 	memoize=true;
 }
 program
-	: {System.out.println("ANTLR start");}
+	: {System.out.println(" ----- ANTLR Function Parser Start! ----- ");}
 	LT!* sourceElements LT!* EOF!
 	;
 	
@@ -23,15 +23,16 @@ sourceElement
 	
 // functions
 functionDeclaration
-	: functionComment* LT!* 'function' LT!* functionName {fList.get(fList.size()-1).setType("Declaration");} LT!* formalParameterList LT!* functionBody
+	: functionComment* LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
 	;
 
 functionExpression
-	: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	//: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	: functionComment* LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
 	;
 
 functionAnonymous
-	: functionComment* '(' LT!* 'function' {fList.get(fList.size()-1).setType("Anonymous");} LT!* formalParameterList LT!* functionBody LT!* ')'
+	: functionComment* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
 	;
 	
 functionName
@@ -39,10 +40,7 @@ functionName
 	( Identifier )
 		{
 			name = $Identifier.text;
-			//System.out.println("functionName = " + name);
-			//System.out.println("depth = " + depth);
-			insertFunction();
-			//initData();
+			//insertFunction();
 		}
 	;
 
@@ -51,14 +49,7 @@ functionComment
 	( Comment LT!* )
 		{
 			comment = $Comment.text;
-			//System.out.println("comment = " + comment);
 		}
-		/*
-	|( LineComment LT!* )
-		{
-			comment = $LineComment.text;
-			System.out.println("comment = " + comment);
-		}*/
 	;
 	 
 formalParameterList
@@ -66,7 +57,15 @@ formalParameterList
 	;
 
 functionBody
-	: '{' {depth++;} LT!* sourceElements? LT!* {depth--;}'}'
+	//: '{' {depth++;} LT!* sourceElements? LT!* {depth--;}'}'
+	: '{' {insertFunction(); depth++; } LT!* functionCode? LT!* {depth--; cList.add(new CodeMap(depth,code));}'}'
+	;
+
+functionCode
+	: ( sourceElements ) 
+	{
+		code = $sourceElements.text;
+	}
 	;
 
 // statements
@@ -96,12 +95,12 @@ statementList
 	;
 
 variableStatement
-	: 'var' LT!* { stmType = "variable"; System.out.println("stmType = "+stmType); stmText = "var "; } variableDeclarationList { stmText = stmText+";"; System.out.println("stmText = "+stmText);}(LT | ';')!
+	: 'var' LT!* variableDeclarationList (LT | ';')!
 	;
 
 	
 variableDeclarationList
-	: variableDeclaration (LT!* ',' { stmText = stmText+","; } LT!* variableDeclaration)*
+	: variableDeclaration (LT!* ',' LT!* variableDeclaration)*
 	;
 	
 variableDeclarationListNoIn
@@ -109,44 +108,16 @@ variableDeclarationListNoIn
 	;
 	
 variableDeclaration
-	//: Identifier LT!* initialiser?
-	: variableName LT!* initialiser?
-	//: variableName LT!* initialization?
+	: Identifier LT!* initialiser?
 	;
-	
-variableName
-	:
-	( Identifier )
-		{
-			String variable;
-			variable = $Identifier.text;
-			stmText = stmText + variable + " ";
-			//System.out.println("stmType = "+stmType);
-			//System.out.println("stmText = "+stmText);
-		}
-	;
-	
+
 variableDeclarationNoIn
 	:  LT!* initialiserNoIn?
-	//:  LT!* variableName?
 	;
 	
 initialiser
-	//: '=' LT!* assignmentExpression
-	: '=' LT!* initialization
+	: '=' LT!* assignmentExpression
 	;
-	
-
-initialization
-	: 
-	( assinmentString )
-		{
-			String initialization;
-			initialization = $assinmentString.text;
-			stmText = stmText + " = " + initialization;
-		}
-	;
-
 
 initialiserNoIn
 	: '=' LT!* assignmentExpressionNoIn
@@ -158,7 +129,6 @@ emptyStatement
 	
 expressionStatement
 	: expression (LT | ';')!
-	//: expressionString (LT | ';')!
 	;
 	
 ifStatement

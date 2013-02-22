@@ -655,7 +655,7 @@ function drawDiagram(diagram){
 				if(index!="ifN"&&index!="forN"&&index!="elifN"&&index!="ifY"&&index!="forY"&&index!="elifY"){
 					logical.push(r.rect( 100 + j * 80, 120 + i * 90, 60, 60, 5 ));
 					if(index == "if" || index == "for"||index == "elif"||index == "else"){
-						r.text(100 + j * 80, 150 + i * 90 ,datas[i][j]).attr({font: "12px Helvetica", opacity: 1.0,fill:"black"});											
+						r.text(105 + j * 80, 150 + i * 90 ,datas[i][j]).attr({font: "12px Helvetica", opacity: 1.0,fill:"black"});											
 					}else{
 						r.text(120 + j * 80, 150 + i * 90 ,datas[i][j]).attr({font: "12px Helvetica", opacity: 1.0,fill:"black"});											
 					}

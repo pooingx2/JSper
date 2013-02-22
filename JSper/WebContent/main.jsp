@@ -34,7 +34,8 @@
 
 /*this is test foo*/
 function foo(items) {
-	/*this is test test 함수 표현식*/
+	/*this is test test 
+	function expression*/
 	var text = function(){}
 	/*this is test test1*/
 	function test1(){
@@ -109,11 +110,11 @@ function fo3o(items) {
 <script src="JS/graffle.js"></script>
 <script type="text/javascript">
 	$("#runBtn").click(function userViewSub(){
-		  var k = editor.getValue();
 		  $.ajax({   
 			   type: "POST",  
 			   url: "main",   
-			   data: "option=total&code="+k,
+			   data: "param="+editor.getValue(),
+//			   data: "option=total&code="+k,
 			   success: function(response) {
 				   test_gender = [];
 				   console.log('succeess');

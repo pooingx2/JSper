@@ -113,7 +113,7 @@ function fo3o(items) {
 		  $.ajax({   
 			   type: "POST",  
 			   url: "main",   
-			   data: "param="+k,
+			   data: "option=total&code="+k,
 			   success: function(response) {
 				   test_gender = [];
 				   console.log('succeess');

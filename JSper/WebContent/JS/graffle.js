@@ -16,7 +16,7 @@
 var m_colorful ="Divide";
 var divide_color = ["#111","#222","#333","#444","#555","#666","#777","#888","#999"];
 graphs = [];
-
+test_graphs = [];
 var make_list = [[0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"]]];
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	if (obj1.line && obj1.from && obj1.to) {
@@ -363,15 +363,14 @@ function darw_raphael( make_list_node ){
 			$.ajax({   
 				type: "POST",  
 				url: "main",   
-				data: "param="+k,
+				data: "option=function&code="+k,
 				success: function(response) {
-					test_gender = [];
 					console.log('succeess');
-					test_ajax = jQuery.parseJSON(response);
-					for(var i=0,length = test_ajax.fList.length; i< length ; i++){
-						test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0],test_ajax.fList[i].type]);					   
-					}
-					darw_raphael(test_gender);
+//					test_ajax = jQuery.parseJSON(response);
+//					for(var i=0,length = test_ajax.fList.length; i< length ; i++){
+//						test_graphs.push("");					   
+//					}
+//					darw_raphael(test_gender);
 				},
 				error:function() {
 					console.log('error');

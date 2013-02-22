@@ -6,24 +6,34 @@ import java.util.List;
 
 public class Statement implements Serializable{
 	
-	private String type;
-	private String statement;
+	private String stmtype;
+	private String stmText;
+	private int stmDepth;
 	
 	public Statement(){}
-	public Statement(String type, String statement){
-		this.type = type;
-		this.statement = statement;
+	public Statement(String stmtype, String stmText, int stmDepth){
+		
+		this.stmtype = stmtype;
+		this.stmText = stmText;
+		this.stmDepth = stmDepth;
 	}
-	public String getType() {
-		return type;
+	public String getStmtype() {
+		return stmtype;
 	}
-	public void setType(String type) {
-		this.type = type;
+	public void setStmtype(String stmtype) {
+		this.stmtype = stmtype;
 	}
-	public String getStatement() {
-		return statement;
+	public String getStmText() {
+		return stmText;
 	}
-	public void setStatement(String statement) {
-		this.statement = statement;
+	public void setStmText(String stmText) {
+		this.stmText = stmText;
 	}
+	public int getStmDepth() {
+		return stmDepth;
+	}
+	public void setStmDepth(int stmDepth) {
+		this.stmDepth = stmDepth;
+	}
+	
 }

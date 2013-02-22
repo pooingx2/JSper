@@ -22,9 +22,9 @@
 	<div class="outer-center">
  		<div id="holder"></div>
  		<select class="drawSelector" onChange = "javascript:selectDraw(this)">
+ 			  <option value="Divide">Divide</option>
 			  <option value="Colorful">Colorful</option>
-			  <option value="Simple">Simple</option>
-			  <option value="Divide">Divide</option> 
+			  <option value="Simple">Simple</option> 
 		</select>
 	</div>
 
@@ -34,8 +34,8 @@
 
 /*this is test foo*/
 function foo(items) {
-	/*this is test test*/
-	function test(){}
+	/*this is test test 함수 표현식*/
+	var text = function(){}
 	/*this is test test1*/
 	function test1(){
 		function test2(){}

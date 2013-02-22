@@ -1,6 +1,8 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,6 +60,16 @@ function fo3o(items) {
 }
 		
 		</div>
+		<div class="findBG">
+			<div>
+				<input class="findInput" id="searchFor" type="text" placeholder=" Search for"></input>
+				<a id="findBtn_1" href="#">Find</a>
+			</div>
+			<div>
+				<input class="findInput" id="replaceWith" type="text" placeholder=" Replace with"></input>
+				<a id="findBtn_2" href="#">Replace</a>
+			</div>
+		</div>
 		<div class="zoomBG">
 			<div><a href="#" onClick="setSize(3); return false;">+</a></div>
  			<div><a href="#" onClick="setSize(4); return false;">-</a></div>
@@ -77,9 +89,13 @@ function fo3o(items) {
 
 <!-- <div class="ui-layout-north">Outer North</div> -->
 	<div class="ui-layout-south">
-		<a class="button" id="sendForm" href="#"> 
-		<img src="./img/btnRun.png" style="position: absolute; left: 103px; width: 20px; height: 20px; margin-top: 20px" />
+		<a class="button" id="runBtn" href="#"> 
+		<img src="img/btnRun.png" style="position: absolute; left: 102px; width: 23px; height: 23px; margin-top: 18px" />
 		Run
+		</a>
+		<a class="button" id="findBtn" href="#"> 
+		<img src="img/btnFind.png" style="left: 23px; width: 20px; height: 20px; margin-top: 20px" />
+		 
 		</a>
 	</div>
 </body>
@@ -92,7 +108,7 @@ function fo3o(items) {
 <script src="JS/raphael-min.js"></script>
 <script src="JS/graffle.js"></script>
 <script type="text/javascript">
-	$("#sendForm").click(function userViewSub(){
+	$("#runBtn").click(function userViewSub(){
 		  var k = editor.getValue();
 		  $.ajax({   
 			   type: "POST",  
@@ -103,7 +119,7 @@ function fo3o(items) {
 				   console.log('succeess');
 				   test_ajax = jQuery.parseJSON(response);
 				   for(var i=0,length = test_ajax.fList.length; i< length ; i++){
-				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0],test_ajax.fList[i].type]);					   
+				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0]]);					   
 				   }
 				   darw_raphael(test_gender);
 			   },
@@ -113,13 +129,35 @@ function fo3o(items) {
 		  });
 	});
 
+
+	$("#findBtn").click(function userViewSub(){
+		if($('.findBG').css('display') == 'none' ){
+			$('.findBG').show('slow');
+		} else {
+			$('.findBG').hide('slow');
+		}
+	});
+
+	$("#findBtn_1").click(function openFindBox(){
+		var a = $("#searchFor").val();
+		editor.find(a);
+	});
+
+	$("#findBtn_2").click(function closeFindBox(){
+		var a = $("#searchFor").val();
+			b = $("#replaceWith").val();
+
+		editor.find(a);
+		editor.replace(b, a);
+	});
+
 $(document).ready(function () {
 
 	// OUTER-LAYOUT
 	$('body').layout({
 		center__paneSelector:	".outer-center"
 	,	west__paneSelector:		".outer-west"
-	,	west__size:				350
+	,	west__size:				470
 	,	south__size:			80
 	,   south__spacing_open:	10
 	//,	south__maxSize:			80

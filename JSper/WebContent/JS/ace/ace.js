@@ -10045,9 +10045,12 @@ exports.commands = [{
 }, {
     name: "find",
     bindKey: bindKey("Ctrl-F", "Command-F"),
-    exec: function(editor) {
-        config.loadModule("ace/ext/searchbox", function(e) {e.Search(editor)});
+    exec:  function(editor) {
+        document.getElementById('findBtn').click();
     },
+    // exec:  function(editor) {
+    //     config.loadModule("ace/ext/searchbox", function(e) {e.Search(editor)});
+    // },
     readOnly: true
 }, {
     name: "overwrite",
@@ -11241,6 +11244,7 @@ var VirtualRenderer = function(container, theme) {
             this.session.setScrollLeft(scrollLeft);
 
             this.scroller.className = this.scrollLeft == 0 ? "ace_scroller" : "ace_scroller ace_scroll-left";
+            //this.scroller.className = "ace_scroller ace_scroll-left";
         }
         if (changes & this.CHANGE_FULL) {
             this.$textLayer.checkForSizeChanges();

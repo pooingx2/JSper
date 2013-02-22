@@ -8,7 +8,7 @@ options
 	memoize=true;
 }
 program
-	: {System.out.println(" ----- ANTLR Function Parser Start! ----- ");}
+	: {System.out.println(" ----- ANTLR Total Parser Start! ----- ");}
 	LT!* sourceElements LT!* EOF!
 	;
 	

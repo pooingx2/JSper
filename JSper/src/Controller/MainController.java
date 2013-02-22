@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.naming.ldap.SortControl;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,6 +21,8 @@ import org.json.JSONObject;
 
 import Antlr.JSLexer;
 import Antlr.JSParser;
+import Antlr.fCodeLexer;
+import Antlr.fCodeParser;
 import Model.CodeMap;
 import Model.Function;
 
@@ -70,12 +71,24 @@ public class MainController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
+		
+		//Ajax를 통해서 옵션과 코드를 받는다.
+		String option = request.getParameter("option");
+		String code = request.getParameter("code");
+		
+		// option 별로 다른 parser를 실행한다.
+		option = "function";
+		if(option.equals("total"))
+			TotalParser(code, request, response);
+		else if(option.equals("function"))
+			functionParser(code, request, response);
+	}
 
-		//Ajax를 통해서 코드를 받는다.
-		String code = request.getParameter("param");
-		ANTLRStringStream input = new ANTLRStringStream(code);
 
+	protected void TotalParser(String code, HttpServletRequest request, HttpServletResponse response) 
+																			throws ServletException, IOException {
 		//받은 코드를 Lexer를 사용해서 토큰을 나눈다.
+		ANTLRStringStream input = new ANTLRStringStream(code);
 		JSLexer lex = new JSLexer(input);
 
 		//생성된 토큰을 사용해서 파서를 생성한다.
@@ -124,8 +137,26 @@ public class MainController extends HttpServlet {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-//		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
-//		dispatcher.forward(request,  response);
+	}
+	
+	private void functionParser(String code, HttpServletRequest request, HttpServletResponse response) {
+		// TODO Auto-generated method stub
+				
+		//받은 코드를 Lexer를 사용해서 토큰을 나눈다.
+		ANTLRStringStream input = new ANTLRStringStream(code);
+		fCodeLexer lex = new fCodeLexer(input);
 
+		//생성된 토큰을 사용해서 파서를 생성한다.
+		CommonTokenStream tokens = new CommonTokenStream(lex);
+		fCodeParser g = new fCodeParser(tokens);
+
+		try {
+			g.init();
+			g.program();
+			
+			
+		} catch (RecognitionException e) {
+			e.printStackTrace();
+		}
 	}
 }

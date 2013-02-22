@@ -1,0 +1,21 @@
+
+
+    private int stmDepth;
+    private String stmType;
+    private String stmText;
+    private List<Statement> stmList;
+    
+    public List<Statement> getStmList() {
+    	return stmList;
+	}
+	
+	public void setStmList(List<Statement> stmList) {
+		this.stmList = stmList;
+	}
+	
+    public void init(){
+    	stmDepth = 0;
+    	stmText = "0";
+    	stmType = "0";
+    	stmList = new ArrayList<Statement>();
+    }

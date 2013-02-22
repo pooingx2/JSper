@@ -11,10 +11,16 @@ public class Statement implements Serializable{
 	private int stmDepth;
 	
 	public Statement(){}
-	public Statement(String stmtype, String stmText, int stmDepth){
-		
+	public Statement(int stmDepth, String stmtype, String stmText){
+
+		this.stmDepth = stmDepth;
 		this.stmtype = stmtype;
 		this.stmText = stmText;
+	}
+	public int getStmDepth() {
+		return stmDepth;
+	}
+	public void setStmDepth(int stmDepth) {
 		this.stmDepth = stmDepth;
 	}
 	public String getStmtype() {
@@ -28,12 +34,6 @@ public class Statement implements Serializable{
 	}
 	public void setStmText(String stmText) {
 		this.stmText = stmText;
-	}
-	public int getStmDepth() {
-		return stmDepth;
-	}
-	public void setStmDepth(int stmDepth) {
-		this.stmDepth = stmDepth;
 	}
 	
 }

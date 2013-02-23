@@ -23,7 +23,7 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	     {x: bb2.x + bb2.width + 1, y: bb2.y + bb2.height / 2}],
 	     d = {}, 
 	     dis = [];
-	
+
 	for (var i = 0; i < 4; i++) {
 		for (var j = 4; j < 8; j++) {
 			var dx = Math.abs(p[i].x - p[j].x),
@@ -145,7 +145,7 @@ Raphael.fn.connectionsleft = function (obj1, obj2, line, bg) {
 	     d = {}, 
 	     dis = [];
 
-	var i=3;
+	var i=0;
 	var j=6; 
 	var dx = Math.abs(p[i].x - p[j].x),
 	dy = Math.abs(p[i].y - p[j].y);
@@ -187,7 +187,7 @@ Raphael.fn.connectionsleft = function (obj1, obj2, line, bg) {
 };
 
 
-function darw_raphael( make_list_node ){
+function draw_raphael( make_list_node ){
 	
 	make_list = make_list_node;		
 	if( typeof(make_list_node) == "undefined" ){
@@ -342,20 +342,18 @@ function darw_raphael( make_list_node ){
 	
 	var clickAjax = function(i){
 		return function(){
-//			make_list[i];
 			var k = editor.getValue();
 			$.ajax({   
 				type: "POST",  
 				url: "main",   
-				data:"param="+k,
-//				data: "option=function&code="+k,
+				data: "option=function&code="+make_list[i][5],
 				success: function(response) {
 					console.log('succeess');
-//					test_ajax = jQuery.parseJSON(response);
-//					for(var i=0,length = test_ajax.fList.length; i< length ; i++){
-//						test_graphs.push("");					   
-//					}
-//					darw_raphael(test_gender);
+					if($('.flowBG').css('display') == 'none' ){
+						$('.flowBG').show('slow');
+					} else {
+						$('.flowBG').hide('slow');
+					}
 				},
 				error:function() {
 					console.log('error');
@@ -488,6 +486,62 @@ function changeColor(argu){
 
 	}
 }
+Raphael.fn.rhombus = function (x,y,color){
+	var rhombus = this.path("M "+x+" "+y+" l60 -25 l60 25 l-60 25 l-60 -25").attr("fill",color);
+	rhombus.data("x",rhombus.attrs.path[0][1]);
+	rhombus.data("y",rhombus.attrs.path[0][2]);
+	rhombus.data("height",rhombus.attrs.path[4][2] - rhombus.attrs.path[1][2]);
+	rhombus.data("width",rhombus.attrs.path[1][1] - rhombus.attrs.path[0][1]);
+	return rhombus;
+}
+
+Raphael.fn.arrow = function (x1, y1, x2, y2, size , color) {
+    var angle = Math.atan2(x1-x2,y2-y1);
+    angle = (angle / (2 * Math.PI)) * 360;
+    var arrowPath = this.path("M" + x2 + " " + y2 + " L" + (x2 - size) + " " + (y2 - size) + " L" + (x2 - size) + " " + (y2 + size) + " L" + x2 + " " + y2 ).attr({"fill":color,"stroke":color}).rotate((90+angle),x2,y2);
+    var linePath = this.path("M" + x1 + " " + y1 + " L" + x2 + " " + y2).attr ("stroke", color);
+    return [linePath,arrowPath];
+}
+function DrawGraphLine(paper,start,end,type,color){
+	var startPosX;
+	var startPosY;
+	var endPosX;
+	var endPosY;
+	if(type == "right"){
+		startPosX = start.attrs.x + start.attrs.width;
+		startPosY = start.attrs.y + start.attrs.height/2; 
+		endPosX = end.attrs.x;
+		endPosY = end.attrs.y + end.attrs.height/2;		
+	}else if(type == "down"){
+		startPosX = start.attrs.x + start.attrs.width/2;
+		startPosY = start.attrs.y + start.attrs.height; 
+		endPosX = end.attrs.x + end.attrs.width/2;
+		endPosY = end.attrs.y;		
+	}else{
+		
+	}
+	paper.arrow(startPosX,startPosY,endPosX,endPosY,0,color);
+}
+function DrawGraphArrow(paper,start,end,type,color){
+	var startPosX;
+	var startPosY;
+	var endPosX;
+	var endPosY;
+	if(type == "right"){
+		startPosX = start.attrs.x + start.attrs.width;
+		startPosY = start.attrs.y + start.attrs.height/2; 
+		endPosX = end.attrs.x;
+		endPosY = end.attrs.y + end.attrs.height/2;		
+	}else if(type == "down"){
+		startPosX = start.attrs.x + start.attrs.width/2;
+		startPosY = start.attrs.y + start.attrs.height; 
+		endPosX = end.attrs.x + end.attrs.width/2;
+		endPosY = end.attrs.y;		
+	}else{
+		
+	}
+	paper.arrow(startPosX,startPosY,endPosX,endPosY,5,color);
+}
 function drawDiagram(){
 	$('#holder').height(5000);
 	var DiagramRaphael = Raphael("holder", "100%", "100%");
@@ -498,73 +552,137 @@ function drawDiagram(){
 	};
 	var startnode;
 	var endnode;
+	var widthSize = 90;
+	var heightSize = 30;
 	var datas=
 		[
-		[ "if", "0", "0", "0", "0", "0", "0"],
-		[ "ifN", "if", "0", "0", "0", "0", "0"],
-		[ "0", "ifN", "var", "0", "0", "0", "0"],
-		[ "0", "0", "textN", "0", "0", "0", "0"],
-		[ "0", "0", "while", "0", "0", "0", "0"],
-		[ "0", "0", "whileN", "var", "0", "0", "0"],
-		[ "0", "0", "0", "textN", "0", "0", "0"],
-		[ "0", "0", "0", "var", "0", "0", "0"],
-		[ "0", "0", "0", "textN", "0", "0", "0"],
-		[ "0", "0", "line", "line", "0", "0", "0"],
-		[ "0", "0", "var", "0", "0", "0", "0"],
-		[ "0", "0", "textN", "0", "0", "0", "0"],
-		[ "0", "0", "if", "0", "0", "0", "0"],
-		[ "0", "0", "ifN", "var", "0", "0", "0"],
-		[ "0", "0", "0", "textN", "0", "0", "0"],
-		[ "0", "line", "line", "line", "0", "0", "0"],
-		[ "0", "elif", "0", "0", "0", "0", "0"],
-		[ "0", "elifN", "if", "0", "0", "0", "0"],
-		[ "0", "0", "ifN", "var", "0", "0", "0"],
-		[ "0", "0", "0", "textN", "0", "0", "0"],
-		[ "0", "line", "line", "line", "0", "0", "0"],
-		[ "0", "elif", "0", "0", "0", "0", "0"],
-		[ "0", "elifN", "var", "0", "0", "0", "0"],
-		[ "0", "0", "textN", "0", "0", "0", "0"],
-		[ "0", "line", "line", "0", "0", "0", "0"],
-		[ "0", "else", "0", "0", "0", "0", "0"],
-		[ "0", "elseN", "var", "0", "0", "0", "0"],
-		[ "0", "0", "textN", "0", "0", "0", "0"],
-		[ "0", "line", "line", "0", "0", "0", "0"],
-		[ "0", "var", "0", "0", "0", "0", "0"],
-		[ "0", "textN", "0", "0", "0", "0", "0"],
-		[ "line", "line", "0", "0", "0", "0", "0"],
-		[ "elif", "0", "0", "0", "0", "0", "0"],
-		[ "elifN", "elifY", "0", "0", "0", "0", "0"],
-		[ "else", "0", "0", "0", "0", "0", "0"],
-		[ "elseN", "var", "0", "0", "0", "0", "0"],
-		[ "0", "textN", "0", "0", "0", "0", "0"],
-		[ "line", "line", "0", "0", "0", "0", "0"]
-		];	
-	startnode = DiagramRaphael.rect(100, 10, 80, 80, 5).attr({fill: "white", stroke: "black", "stroke-width": 2});
-	DiagramRaphael.text(120, 50 ,"start").attr({font: "12px Helvetica", opacity: 1.0,fill:"black",});											
+
+["if","R","0","0","0","0"],
+["ifN","switch","0","0","0","0"],
+["0","swN","0","0","0","0"],
+["0","case","R","0","0","0"],
+["0","caseN","1","0","0","0"],
+["0","0","textN","0","0","0"],
+["0","line","line","0","0","0"],
+["0","case","R","0","0","0"],
+["0","caseN","1","0","0","0"],
+["0","0","textN","0","0","0"],
+["0","0","break","0","0","0"],
+["0","line","line","0","0","0"],
+["0","if","R","0","0","0"],
+["0","ifN","1","0","0","0"],
+["0","0","textN","0","0","0"],
+["0","0","do","0","0","0"],
+["0","0","doN","1","0","0"],
+["0","0","0","textN","0","0"],
+["0","0","line","line","0","0"],
+["0","0","while","R","0","0"],
+["0","0","whileN","whileY","0","0"],
+["0","0","1","0","0","0"],
+["0","0","textN","0","0","0"],
+["0","0","if","R","0","0"],
+["0","0","ifN","1","0","0"],
+["0","0","0","textN","0","0"],
+["0","line","line","line","0","0"],
+["0","elif","R","0","0","0"],
+["0","elifN","if","R","0","0"],
+["0","0","ifN","1","0","0"],
+["0","0","0","textN","0","0"],
+["0","line","line","line","0","0"],
+["0","elif","R","0","0","0"],
+["0","elifN","1","0","0","0"],
+["0","0","textN","0","0","0"],
+["0","line","line","0","0","0"],
+["0","else","R","0","0","0"],
+["0","elseN","1","0","0","0"],
+["0","0","textN","0","0","0"],
+["0","line","line","0","0","0"],
+["0","1","0","0","0","0"],
+["0","textN","0","0","0","0"],
+["line","line","0","0","0","0"],
+["elif","R","0","0","0","0"],
+["elifN","elifY","0","0","0","0"],
+["else","R","0","0","0","0"],
+["elseN","1","0","0","0","0"],
+["0","textN","0","0","0","0"],
+["line","line","0","0","0","0"],
+["while","R","0","0","0","0"],
+["whileN","1","0","0","0","0"],
+["line","line","0","0","0","0"]
+];
+	var realdata = 
+		[
+
+["if(m>2)","0","0","0","0","0"],
+["0","switch(n)","0","0","0","0"],
+["0","0","0","0","0","0"],
+["0","case 1:","0","0","0","0"],
+["0","0","m++","0","0","0"],
+["0","0","0","0","0","0"],
+["0","0","0","0","0","0"],
+["0","case 2:","0","0","0","0"],
+["0","0","l--","0","0","0"],
+["0","0","0","0","0","0"],
+["0","0","break","0","0","0"],
+["0","0","0","0","0","0"],
+["0","if(m>5)","0","0","0","0"],
+["0","0","k = 3","0","0","0"],
+["0","0","0","0","0","0"],
+["0","0","do","0","0","0"],
+["0","0","0","n++","0","0"],
+["0","0","0","0","0","0"],
+["0","0","0","0","0","0"],
+["0","0","while(true)","0","0","0"],
+["0","0","0","0","0","0"],
+["0","0","k = 2","0","0","0"],
+["0","0","0","0","0","0"],
+["0","0","if(m<4)","0","0","0"],
+["0","0","0"," k = 3","0","0"],
+["0","0","0","0","0","0"],
+["0","0","0","0","0","0"],
+["0","else if(m>39)","0","0","0","0"],
+["0","0","if(l<4)","0","0","0"],
+["0","0","0","k=3","0","0"],
+["0","0","0","0","0","0"],
+["0","0","0","0","0","0"],
+["0","else if(m>54)","0","0","0","0"],
+["0","0","m++","0","0","0"],
+["0","0","0","0","0","0"],
+["0","0","0","0","0","0"],
+["0","else","0","0","0","0"],
+["0","0","var l--","0","0","0"],
+["0","0","0","0","0","0"],
+["0","0","0","0","0","0"],
+["0","l--","0","0","0","0"],
+["0","0","0","0","0","0"],
+["0","0","0","0","0","0"],
+["else if(ef<3)","0","0","0","0","0"],
+["0","0","0","0","0","0"],
+["else","0","0","0","0","0"],
+["0","var k = 3","0","0","0","0"],
+["0","0","0","0","0","0"],
+["0","0","0","0","0","0"],
+["while(dlkwj)","0","0","0","0","0"],
+["0","j++","0","0","0","0"],
+["0","0","0","0","0","0"]
+];
+	startnode = DiagramRaphael.rect(100, 55, 50, 50, 5).attr({fill: "white", stroke: "black", "stroke-width": 2});
+	DiagramRaphael.text(120, 80 ,"start").attr({font: "10px Helvetica", opacity: 1.0,fill:"black",});											
 	for(var i=0 ; i < datas.length ; i++){
 		var logical = [];
 		for(var j=0 ; j < datas[0].length ; j++){
 			var index = datas[i][j];
 			if(index!="0"){
-				if(index!="line"&&index!="ifN"&&index!="forN"&&index!="elifN"&&index!="ifY"&&index!="forY"&&index!="elifY"&&index!="whileN"&&index!="whileY"&&index!="textN"&&index!="textY"){
-					if(index == "if"){
-						logical.push(DiagramRaphael.rect( 100 + j * 80, 120 + i * 105, 80, 80, 5 ));
-						DiagramRaphael.text(105 + j * 80, 150 + i * 105 ,datas[i][j]).attr({font: "12px Helvetica", opacity: 1.0,fill:"black"});											
-					}
-					else if(index == "for"||index == "elif"||index == "else"){
-						logical.push(DiagramRaphael.rect( 100 + j * 80, 120 + i * 105, 80, 80, 5 ));
-						DiagramRaphael.text(105 + j * 80, 150 + i * 105 ,datas[i][j]).attr({font: "12px Helvetica", opacity: 1.0,fill:"black"});											
-					}
-					else if(index == "while"){
-						logical.push(DiagramRaphael.rect( 100 + j * 80, 120 + i * 105, 80, 80, 5 ));
-						DiagramRaphael.text(105 + j * 80, 150 + i * 105 ,datas[i][j]).attr({font: "12px Helvetica", opacity: 1.0,fill:"black"});											
-					}
-					else{
-						logical.push(DiagramRaphael.rect( 100 + j * 80, 120 + i * 105, 80, 80, 5 ));
-						DiagramRaphael.text(120 + j * 80, 150 + i * 105 ,datas[i][j]).attr({font: "12px Helvetica", opacity: 1.0,fill:"black"});											
-					}
+				if(index=="if"||index=="elif"||index=="else"||index=="for"||index=="while"||index=="do"||index=="switch"){
+					logical.push(DiagramRaphael.rect( 124 + j * widthSize, 150 + i * heightSize, 1, 1, 5 ));
+					DiagramRaphael.rhombus(65 + j * widthSize, 145 + i * heightSize,"white");
+				}
+				else if(index=="1"||index=="case"||index=="func"){
+					logical.push(DiagramRaphael.rect( 89 + j * widthSize, 135 + i * heightSize, 70, 40, 5 ));					
+				}else if(index=="R"){
+					logical.push(DiagramRaphael.rect( 124 + j * widthSize, 154 + i * heightSize, 0, 0, 5 ));						
 				}else{
-					logical.push(DiagramRaphael.rect( 138 + j * 80, 135 + i * 105, 5, 5, 5 ));	
+					logical.push(DiagramRaphael.rect( 124 + j * widthSize, 160 + i * heightSize, 1, 1, 5 ));	
 				}
 			}else{
 				logical.push("");				
@@ -572,11 +690,16 @@ function drawDiagram(){
 		}graphs.push(logical);
 		
 		if(i==datas.length-1){
-			endnode = DiagramRaphael.rect(100, 210 + i * 105, 80, 80, 5).attr({fill: "white", stroke: "black", "stroke-width": 2});
-			DiagramRaphael.text(120, 240 + i * 105 ,"end").attr({font: "12px Helvetica", opacity: 1.0,fill:"black"});											
+			endnode = DiagramRaphael.rect(100, 160 + i * heightSize, 50, 50, 5).attr({fill: "white", stroke: "black", "stroke-width": 2});
+			DiagramRaphael.text(120, 180 + i * heightSize ,"end").attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});											
 		}
 	}
+	
+	try{}
+	catch(err){
+//		DrawGraphLine(DiagramRaphael, graphs[i][j], graphs[i+1][j], "down","red");
 
+	}
 	for(var i=0 ; i < datas.length ; i++){
 		for(var j=0 ; j < datas[0].length ; j++){
 			var argu = datas[i][j];
@@ -584,23 +707,27 @@ function drawDiagram(){
 				if(datas[i][j+1]=="line"){
 					DiagramRaphael.connections(graphs[i][j+1] , graphs[i][j], "black");					
 				}
-				if(i+1<datas.length&&datas[i+1][j]!="0"){
+				if(i+1<datas.length&&datas[i+1][j]!="0"&&datas[i+1][j]!="R"){
 					DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");										
 				}
 				for(var k=i-1;k>0;k--){
 					if(datas[k][j]!="0"){
-						DiagramRaphael.connections(graphs[k][j] , graphs[i][j], "black");										
+						if(datas[k][j]!="swN"){
+							DiagramRaphael.connections(graphs[k][j] , graphs[i][j], "black");																	
+						}
 						break;
 					}
 				}
 			}
 			if(argu=="if"){
-				if(i>0&&graphs[i-1][j]!=""){
+				if(i>0&&datas[i-1][j]!="0"&&datas[i-1][j]!="R"){
 					DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
 				}
 				DiagramRaphael.connections(graphs[i+1][j], graphs[i][j] , "red");
-				DiagramRaphael.connections(graphs[i+1][j+1] ,graphs[i][j] , "green");
-				graphs[i][j].rotate(45);
+				DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
+				DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
+				DiagramRaphael.text(100 + j * widthSize, 180 + i * heightSize ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+				DiagramRaphael.text(190 + j * widthSize, 135 + i * heightSize ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 			}
 			else if(argu=="elif"){
 				for(var i1 = i-1;i1>0;i1--){
@@ -610,49 +737,97 @@ function drawDiagram(){
 					}
 				}
 				DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");
-				DiagramRaphael.connections(graphs[i+1][j+1] , graphs[i][j], "green");				
-				graphs[i][j].rotate(45);
+				DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
+				DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
+				DiagramRaphael.text(100 + j * widthSize, 180 + i * heightSize ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+				DiagramRaphael.text(190 + j * widthSize, 135 + i * heightSize ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 			}
 			else if(argu=="elifN"){
 				if(datas[i+1][j]!="0"){
 					DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");					
 				}
-			}			
-			else if(argu=="for"){
-				graphs[i][j].rotate(45);
+			}else if(argu=="do"){
+				if(i>0&&graphs[i-1][j]!=""){
+					DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+				}
+				DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");
+				DiagramRaphael.connections(graphs[i+1][j+1] ,graphs[i][j] , "black");
+			}else if(argu=="for"){
 				if(i>0&&graphs[i-1][j]!=""){
 					DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
 				}
 				DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");
 				DiagramRaphael.connections(graphs[i+1][j+1] , graphs[i][j], "green");
 				DiagramRaphael.connectionsleft(graphs[i+1][j+1] ,graphs[i][j], "black");				
-			}	
-			else if(argu=="while"){
-				graphs[i][j].rotate(45);
+				DiagramRaphael.text(100 + j * widthSize, 180 + i * heightSize ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+				DiagramRaphael.text(190 + j * widthSize, 135 + i * heightSize ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
+			}else if(argu=="case"){
 				if(i>0&&graphs[i-1][j]!=""){
 					DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
 				}
-				DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");
-				DiagramRaphael.connections(graphs[i+1][j+1] , graphs[i][j], "green");
-				DiagramRaphael.connectionsleft(graphs[i+1][j+1] ,graphs[i][j], "black");				
+				DiagramRaphael.connections(graphs[i+1][j], graphs[i][j] , "red");
+				DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i][j+1],"right","green");
+				DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i+1][j+1],"down","green");
+				DiagramRaphael.text(100 + j * widthSize, 180 + i * heightSize ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+				DiagramRaphael.text(190 + j * widthSize, 135 + i * heightSize ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
+				if((datas[i-1][j+1]=="line"&&datas[i-2][j+1]!="break")||datas[i-1][j+1]=="caseY"){
+					DiagramRaphael.connections(graphs[i+1][j+1], graphs[i-2][j+1], "black");					
+				}
+			}else if(argu==""){
+				
+			}else if(argu=="func"){
+				if(i>0&&graphs[i-1][j]!=""){
+					DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+				}
+				DiagramRaphael.connections(graphs[i+1][j], graphs[i][j] , "black");
+			}else if(argu=="switch"){
+				if(i>0&&graphs[i-1][j]!=""){
+					DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+				}
+				DiagramRaphael.connections(graphs[i+1][j] ,graphs[i][j] , "black");				
+			}else if(argu=="while"){
+				if(datas[i+1][j+1]=="whileY"){
+					if(i>0&&graphs[i-1][j]!=""){
+						DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "green");
+					}
+					DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");
+				}else{
+					if(i>0&&graphs[i-1][j]!=""){
+						DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+					}
+					DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");
+					DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
+					DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
+					DiagramRaphael.connectionsleft(graphs[i+1][j+1] ,graphs[i][j], "black");
+					DiagramRaphael.text(100 + j * widthSize, 180 + i * heightSize ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+					DiagramRaphael.text(190 + j * widthSize, 135 + i * heightSize ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
+				}
+				if(graphs[i+2][j]!=""){
+					DiagramRaphael.connections(graphs[i+2][j] ,graphs[i+1][j] , "black");					
+				}
 			}	
 			else if(argu=="else"){
-				graphs[i][j].rotate(45);
+
 				for(var i1 = i-1;i1>0;i1--){
 					if(datas[i1][j]=="if"||datas[i1][j]=="elif"){
 						DiagramRaphael.connections(graphs[i1+1][j] , graphs[i][j], "black");																	
 						break;
 					}
 				}
-				DiagramRaphael.connections(graphs[i+1][j+1] , graphs[i][j], "green");
+				DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
+				DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
 				DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");																	
+				DiagramRaphael.text(100 + j * widthSize, 180 + i * heightSize ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+				DiagramRaphael.text(190 + j * widthSize, 135 + i * heightSize ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 
-			}else if(argu=="var"){
+			}
+			else if(argu=="1"){
 				DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");
 				if(i+2<datas.length&&datas[i+2][j]!="0"){
 					DiagramRaphael.connections(graphs[i+2][j] , graphs[i][j], "black");					
 				}
-			}else if(argu=="ifY"||argu=="elifY"||argu=="elseY"){
+			}
+			else if(argu=="ifY"||argu=="elifY"||argu=="elseY"||argu=="doY"||argu=="caseY"){
 				DiagramRaphael.connections(graphs[i][j-1] , graphs[i][j], "black");
 			}
 			if( graphs[i][j]!="" ){
@@ -662,6 +837,24 @@ function drawDiagram(){
 	}
 	DiagramRaphael.connections(graphs[0][0], startnode , "black");
 	DiagramRaphael.connections(graphs[datas.length-1][0] ,endnode ,"black")
+	
+	for(var i=0;i<realdata.length;i++){
+		for(var j=0;j<realdata[0].length;j++){
+			var index = datas[i][j];
+			var text = realdata[i][j];
+			if(text!="0"){	
+				if(index == "for"||index == "if"||index == "elif"||index == "else"||index=="do"||index=="switch"||index == "while"){
+					DiagramRaphael.text(125 + j * widthSize, 147 + i * heightSize ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																
+				}else if(index=="func"){
+					DiagramRaphael.text(125 + j * widthSize, 155 + i * heightSize ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																					
+				}else if(index=="break"){
+					
+				}else{
+					DiagramRaphael.text(125 + j * widthSize, 155 + i * heightSize ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});
+				}
+			}
+		}
+	}
 }
 
 $(document).ready(function() {

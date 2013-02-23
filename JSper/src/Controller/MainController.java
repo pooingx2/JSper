@@ -79,8 +79,7 @@ public class MainController extends HttpServlet {
 		String code = request.getParameter("code");
 		
 		// option 별로 다른 parser를 실행한다.
-		if(!code.equals("") || code != null) {
-			option = "function";
+		if(!(code.equals("0")) && !(code.equals("")) && code != null ) {
 			if(option.equals("total"))
 				TotalParser(code, request, response);
 			else if(option.equals("function"))
@@ -89,8 +88,7 @@ public class MainController extends HttpServlet {
 	}
 
 
-	protected void TotalParser(String code, HttpServletRequest request, HttpServletResponse response) 
-																			throws ServletException, IOException {
+	protected void TotalParser(String code, HttpServletRequest request, HttpServletResponse response) {
 		//받은 코드를 Lexer를 사용해서 토큰을 나눈다.
 		ANTLRStringStream input = new ANTLRStringStream(code);
 		JSLexer lex = new JSLexer(input);
@@ -104,7 +102,7 @@ public class MainController extends HttpServlet {
 			g.init();
 			g.program();
 
-			//"Function"자료형 리스트를 만든다. 
+			//"Function"자료형 리스트와 JSON 객체를 만든다. 
 			List<Function> fList = g.getFlist();
 			JSONObject obj = new JSONObject();
 
@@ -125,20 +123,21 @@ public class MainController extends HttpServlet {
 				System.out.println("getDepth : " + function.getDepth());
 				System.out.println("getParent : " + function.getParent());
 				System.out.println("getComment : " + function.getComment());
-				System.out.println("getLength : " + function.getLength());
-				System.out.println("getMaxLength : " + function.getMaxLength());
 				System.out.println("getCode : " + function.getCode()+"\n");
 			}
 			
 			//출력된 정보를 Ajax를 통해서 JSON형식으로 다시 보낸다.
 			JSONArray jsonArray = new JSONArray(fList.toArray());
 			obj.put("fList", jsonArray);
+			
 			PrintWriter writer = response.getWriter();
 			writer.write(obj.toString());
 			
 		} catch (RecognitionException e) {
 			e.printStackTrace();
 		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
@@ -155,19 +154,47 @@ public class MainController extends HttpServlet {
 		fCodeParser g = new fCodeParser(tokens);
 
 		try {
+			//파서를 초기화하고 실행한다.
 			g.init();
 			g.program();
-			
+
+			int maxDepth=0;
+			JSONObject obj = new JSONObject();
 			List<Stment> stmList = g.getStmList();
 			
+			// flow chart의 가장 깊은 depth를 구한다.
+			for(Stment stm : stmList) {
+				if(stm.getStmDepth() > maxDepth) {
+					maxDepth = stm.getStmDepth();
+					break;
+				}
+			}
+			
+			System.out.println("maxDepth : " + maxDepth);
+			
+			//반환값을 출력하여 확인 
 			for(Stment stm : stmList) {
 				System.out.println("getStmDepth : " + stm.getStmDepth());
 				System.out.println("getStmType : " + stm.getStmType());
 				System.out.println("getStmText : " + stm.getStmText()+"\n");
 			}
 			
+			//출력된 정보를 Ajax를 통해서 JSON형식으로 다시 보낸다.
+			JSONObject jsonObj = new JSONObject(maxDepth);
+			JSONArray jsonArray = new JSONArray(stmList.toArray());
+			
+			System.out.println(jsonArray.toString());
+			obj.put("maxDepth", jsonObj);
+			obj.put("stmList", jsonArray);
+			
+			PrintWriter writer = response.getWriter();
+			writer.write(obj.toString());
 			
 		} catch (RecognitionException e) {
+			e.printStackTrace();
+		} catch (JSONException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}

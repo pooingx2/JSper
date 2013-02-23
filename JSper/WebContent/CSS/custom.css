@@ -122,3 +122,19 @@
         left: 55px;
         width: 135px;
     }
+    
+    .outer-center{
+    	overflow: auto;
+    }
+    
+    .flowBG{
+        position: fixed;
+        display: none;
+        background-color: #EEE;
+        border:#BBBBBB solid 1px;
+        top:10px;
+        bottom:20px;
+        width:280px;
+        height:58px;
+        z-index: 3;
+    }

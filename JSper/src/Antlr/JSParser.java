@@ -1,4 +1,4 @@
-// $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-22 00:52:06
+// $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g 2013-02-22 15:03:41
 package Antlr;
 
 import java.util.ArrayList;
@@ -139,7 +139,7 @@ public class JSParser extends Parser {
     private String type;
     private String code;
     private List<Function> fList;
-    public List<CodeMap> cList;
+    private List<CodeMap> cList;
 
     public void init(){
     	depth=0;
@@ -240,7 +240,7 @@ public class JSParser extends Parser {
             root_0 = (Object)adaptor.nil();
 
             if ( state.backtracking==0 ) {
-              System.out.println(" ----- ANTLR Function Parser Start! ----- ");
+              System.out.println(" ----- ANTLR Total Parser Start! ----- ");
             }
             // D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\JS.g:12:4: ( LT )*
             loop1:

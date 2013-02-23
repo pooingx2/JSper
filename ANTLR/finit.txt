@@ -1,0 +1,26 @@
+    private int fDepth;
+    private int stmDepth;
+    private String stmType;
+    private String stmText;
+    private List<Stment> stmList;
+    
+    public List<Stment> getStmList() {
+    	return stmList;
+	}
+	
+	public void setStmList(List<Stment> stmList) {
+		this.stmList = stmList;
+	}
+	
+    public void init(){
+    	fDepth = 0;
+    	stmDepth = 0;
+    	stmType = "0";
+    	stmText = "0";
+    	stmList = new ArrayList<Stment>();
+    }
+    
+    public void insertStment(){
+    	if(fDepth < 1) stmList.add(new Stment(stmDepth,stmType,stmText));
+    	
+    }

@@ -1,13 +1,26 @@
 // $ANTLR 3.2 Sep 23, 2009 12:02:23 D:\\Study\\SSM\\23-1\\SSM_1\\ANTLR\\fCode.g 2013-02-23 17:23:33
+package Antlr;
 
-import org.antlr.runtime.*;
-import java.util.Stack;
-import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.List;
 
-import org.antlr.runtime.tree.*;
+import org.antlr.runtime.BaseRecognizer;
+import org.antlr.runtime.BitSet;
+import org.antlr.runtime.DFA;
+import org.antlr.runtime.IntStream;
+import org.antlr.runtime.MismatchedSetException;
+import org.antlr.runtime.NoViableAltException;
+import org.antlr.runtime.Parser;
+import org.antlr.runtime.ParserRuleReturnScope;
+import org.antlr.runtime.RecognitionException;
+import org.antlr.runtime.RecognizerSharedState;
+import org.antlr.runtime.Token;
+import org.antlr.runtime.TokenStream;
+import org.antlr.runtime.tree.CommonTreeAdaptor;
+import org.antlr.runtime.tree.TreeAdaptor;
+
+import Model.Stment;
 
 public class fCodeParser extends Parser {
     public static final String[] tokenNames = new String[] {
@@ -118,6 +131,33 @@ public class fCodeParser extends Parser {
     public static final int HexIntegerLiteral=21;
     public static final int NonEscapeCharacter=16;
 
+    private int fDepth;
+    private int stmDepth;
+    private String stmType;
+    private String stmText;
+    private List<Stment> stmList;
+    
+    public List<Stment> getStmList() {
+    	return stmList;
+	}
+	
+	public void setStmList(List<Stment> stmList) {
+		this.stmList = stmList;
+	}
+	
+    public void init(){
+    	fDepth = 0;
+    	stmDepth = 0;
+    	stmType = "0";
+    	stmText = "0";
+    	stmList = new ArrayList<Stment>();
+    }
+    
+    public void insertStment(){
+    	if(fDepth < 1) stmList.add(new Stment(stmDepth,stmType,stmText));
+    	
+    }
+    
     // delegates
     // delegators
 

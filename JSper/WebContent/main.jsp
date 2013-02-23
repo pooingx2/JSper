@@ -113,8 +113,7 @@ function fo3o(items) {
 		  $.ajax({   
 			   type: "POST",  
 			   url: "main",   
-//			   data: "param="+editor.getValue(),
-			   data: "option=total&code="+editor.getValue(),
+			   data: "option=total&code="+encodeURIComponent(editor.getValue()),
 			   success: function(response) {
 				   test_gender = [];
 				   console.log('succeess');

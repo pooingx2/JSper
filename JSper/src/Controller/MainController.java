@@ -2,6 +2,7 @@ package Controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -78,11 +79,13 @@ public class MainController extends HttpServlet {
 		String code = request.getParameter("code");
 		
 		// option 별로 다른 parser를 실행한다.
-		//option = "function";
-		if(option.equals("total"))
-			TotalParser(code, request, response);
-		else if(option.equals("function"))
-			functionParser(code, request, response);
+		if(!code.equals("") || code != null) {
+			option = "function";
+			if(option.equals("total"))
+				TotalParser(code, request, response);
+			else if(option.equals("function"))
+				functionParser(code, request, response);
+		}
 	}
 
 

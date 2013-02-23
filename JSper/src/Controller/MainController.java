@@ -25,6 +25,7 @@ import Antlr.fCodeLexer;
 import Antlr.fCodeParser;
 import Model.CodeMap;
 import Model.Function;
+import Model.Stment;
 
 @WebServlet("/main")
 public class MainController extends HttpServlet {
@@ -153,6 +154,14 @@ public class MainController extends HttpServlet {
 		try {
 			g.init();
 			g.program();
+			
+			List<Stment> stmList = g.getStmList();
+			
+			for(Stment stm : stmList) {
+				System.out.println("getStmDepth : " + stm.getStmDepth());
+				System.out.println("getStmType : " + stm.getStmType());
+				System.out.println("getStmText : " + stm.getStmText()+"\n");
+			}
 			
 			
 		} catch (RecognitionException e) {

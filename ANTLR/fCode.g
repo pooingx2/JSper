@@ -32,7 +32,7 @@ functionExpression
 	;
 
 functionAnonymous
-	: functionComment* '(' LT!* 'function' {stmType="function";} LT!* formalParameterList LT!* functionBody LT!* ')'
+	: functionComment* '(' LT!* 'function' {stmType="function"; stmText="function Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
 	;
 	
 functionName
@@ -56,12 +56,12 @@ formalParameterList
 	;
 
 functionBody
-	: '{'{System.out.println("stmDepth : "+stmDepth + "\nstmType : "+stmType + "\nstmText : "+stmText);} LT!* sourceElements? LT!*'}'
+	: '{'{insertStment(); fDepth++;} LT!* sourceElements? {fDepth--; } LT!*'}'
 	;
 
 // statements
 statement
-	: { stmDepth++; } (statementBlock
+	: statementBlock
 	| variableStatement
 	| emptyStatement
 	| expressionStatement
@@ -74,7 +74,7 @@ statement
 	| labelledStatement
 	| switchStatement
 	| throwStatement
-	| tryStatement) { stmDepth--; }
+	| tryStatement
 	;
 	
 statementBlock
@@ -86,7 +86,7 @@ statementList
 	;
 
 variableStatement
-	: 'var' LT!* { stmType = "var"; stmText = "var "; } variableDeclarationList { stmText = stmText+";";}(LT | ';')!
+	: 'var'? LT!* { stmType = "var"; stmText = "var "; } variableDeclarationList { stmText = stmText+";"; insertStment();}(LT | ';')!
 	;
 
 	
@@ -126,7 +126,6 @@ initialization
 	( assinmentString )
 		{
 			stmText = stmText + " = " + $assinmentString.text;
-			System.out.println("depth : "+stmDepth + "\nstmType : "+stmType + "\nstmText : "+stmText);
 		}
 	;
 
@@ -144,7 +143,7 @@ expressionStatement
 	;
 	
 ifStatement
-	: 'if' LT!* '(' LT!* expression LT!* ')' LT!* statement (LT!* 'else' LT!* statement)?
+	: 'if' LT!* '(' LT!* expression LT!* ')' LT!* {stmType="if";stmText="if("+$expression.text; stmText+=")"; insertStment(); stmDepth++;} statement {stmDepth--;}(LT!* 'else' LT!* statement)?
 	;
 	
 iterationStatement
@@ -236,6 +235,16 @@ finallyClause
 expression
 	: assignmentExpression (LT!* ',' LT!* assignmentExpression)*
 	;
+
+/*
+expressionString
+	:
+		( expression )
+		{
+			stmText = stmText + $expression.text;
+		}
+	;
+*/
 	
 expressionNoIn
 	: assignmentExpressionNoIn (LT!* ',' LT!* assignmentExpressionNoIn)*

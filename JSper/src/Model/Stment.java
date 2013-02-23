@@ -4,17 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Statement implements Serializable{
-	
-	private String stmtype;
-	private String stmText;
+public class Stment implements Serializable{
+
 	private int stmDepth;
+	private String stmType;
+	private String stmText;
 	
-	public Statement(){}
-	public Statement(int stmDepth, String stmtype, String stmText){
+	public Stment(){}
+	public Stment(int stmDepth, String stmType, String stmText){
 
 		this.stmDepth = stmDepth;
-		this.stmtype = stmtype;
+		this.stmType = stmType;
 		this.stmText = stmText;
 	}
 	public int getStmDepth() {
@@ -23,11 +23,11 @@ public class Statement implements Serializable{
 	public void setStmDepth(int stmDepth) {
 		this.stmDepth = stmDepth;
 	}
-	public String getStmtype() {
-		return stmtype;
+	public String getStmType() {
+		return stmType;
 	}
-	public void setStmtype(String stmtype) {
-		this.stmtype = stmtype;
+	public void setStmType(String stmType) {
+		this.stmType = stmType;
 	}
 	public String getStmText() {
 		return stmText;

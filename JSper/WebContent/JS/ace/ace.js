@@ -9993,11 +9993,16 @@ function bindKey(win, mac) {
 }
 
 exports.commands = [{
+    name: "RUN",
+    bindKey: bindKey("Ctrl-R", "Command-R"),
+    exec: function(editor) { document.getElementById("runBtn").click(); },
+    readOnly: true
+}, {
     name: "selectall",
     bindKey: bindKey("Ctrl-A", "Command-A"),
     exec: function(editor) { editor.selectAll(); },
     readOnly: true
-}, {
+},{
     name: "centerselection",
     bindKey: bindKey(null, "Ctrl-L"),
     exec: function(editor) { editor.centerSelection(); },

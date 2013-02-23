@@ -26,6 +26,8 @@
 			  <option value="Colorful">Colorful</option>
 			  <option value="Simple">Simple</option> 
 		</select>
+		
+		<div class="flowBG">ffff</div>
 	</div>
 
 	<div class="outer-west">
@@ -122,7 +124,7 @@ function fo3o(items) {
 				   for(var i=0,length = test_ajax.fList.length; i< length ; i++){
 				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0],test_ajax.fList[i].type]);					   
 				   }
-				   darw_raphael(test_gender);
+				   draw_raphael(test_gender);
 			   },
 			   error:function() {
 				   console.log('error');
@@ -133,9 +135,9 @@ function fo3o(items) {
 
 	$("#findBtn").click(function userViewSub(){
 		if($('.findBG').css('display') == 'none' ){
-			$('.findBG').show('slow');
+			$('.findBG').show(false);
 		} else {
-			$('.findBG').hide('slow');
+			$('.findBG').hide(false);
 		}
 	});
 

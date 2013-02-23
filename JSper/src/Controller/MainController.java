@@ -78,7 +78,7 @@ public class MainController extends HttpServlet {
 		String code = request.getParameter("code");
 		
 		// option 별로 다른 parser를 실행한다.
-		option = "function";
+		//option = "function";
 		if(option.equals("total"))
 			TotalParser(code, request, response);
 		else if(option.equals("function"))

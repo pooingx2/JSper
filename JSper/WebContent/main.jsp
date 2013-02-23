@@ -34,7 +34,8 @@
 
 /*this is test foo*/
 function foo(items) {
-	/*this is test test 함수 표현식*/
+	/*this is test test 
+	function expression*/
 	var text = function(){}
 	/*this is test test1*/
 	function test1(){
@@ -109,17 +110,17 @@ function fo3o(items) {
 <script src="JS/graffle.js"></script>
 <script type="text/javascript">
 	$("#runBtn").click(function userViewSub(){
-		  var k = editor.getValue();
 		  $.ajax({   
 			   type: "POST",  
 			   url: "main",   
-			   data: "option=total&code="+k,
+//			   data: "param="+editor.getValue(),
+			   data: "option=total&code="+editor.getValue(),
 			   success: function(response) {
 				   test_gender = [];
 				   console.log('succeess');
 				   test_ajax = jQuery.parseJSON(response);
 				   for(var i=0,length = test_ajax.fList.length; i< length ; i++){
-				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0]]);					   
+				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0],test_ajax.fList[i].type]);					   
 				   }
 				   darw_raphael(test_gender);
 			   },

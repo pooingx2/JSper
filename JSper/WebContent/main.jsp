@@ -115,14 +115,13 @@ function fo3o(items) {
 		  $.ajax({   
 			   type: "POST",  
 			   url: "main",   
-//			   data: "param="+editor.getValue(),
 			   data: "option=total&code="+editor.getValue(),
 			   success: function(response) {
 				   test_gender = [];
 				   console.log('succeess');
 				   test_ajax = jQuery.parseJSON(response);
 				   for(var i=0,length = test_ajax.fList.length; i< length ; i++){
-				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,[0,0],test_ajax.fList[i].type]);					   
+				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,test_ajax.fList[i].code,test_ajax.fList[i].type]);					   
 				   }
 				   draw_raphael(test_gender);
 			   },

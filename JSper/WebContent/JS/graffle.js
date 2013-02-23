@@ -342,16 +342,13 @@ function draw_raphael( make_list_node ){
 	
 	var clickAjax = function(i){
 		return function(){
-//			make_list[i];
 			var k = editor.getValue();
 			$.ajax({   
 				type: "POST",  
 				url: "main",   
-				data:"param="+k,
-//				data: "option=function&code="+k,
+				data: "option=function&code="+make_list[i][5],
 				success: function(response) {
 					console.log('succeess');
-//					$("#findBtn").click(function userViewSub(){
 					if($('.flowBG').css('display') == 'none' ){
 						$('.flowBG').show('slow');
 					} else {

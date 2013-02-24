@@ -15,24 +15,39 @@
 
 <!-- jquert.layout -->
 <script type="text/javascript" src="JS/jquery-latest.js"></script>
+<script type="text/javascript" src="JS/jquery-ui-1.10.1.custom.js"></script>
 <script type="text/javascript" src="JS/jquery-ui-latest.js"></script>
 <script type="text/javascript" src="JS/jquery.layout-latest.js"></script>
 </head>
  <body id="allpage">
 	<div class="outer-center">
  		<div id="holder"></div>
+ 		 		<!--Flowchart Div-->
+ 		<div class="flowBG">
+ 			<a id="cflowBtn" href="#"> close </a>
+			<div class="flowCont" id="flowCont">
+			</div>
+		</div>
+		
+		<!--diagramColor Div-->
+		<div class="lineBG">
+			<span style="background-color:#fff8dc; font-weight:bold"><small>Declaration</small></span>
+			<span style="background-color:#ffe4e1; font-weight:bold"><small>Expression</small></span>
+			<span style="background-color:#e6e6fa; font-weight:bold"><small>Anonymous</small></span>
+		</div>
+		 		
  		<select class="drawSelector" onChange = "javascript:selectDraw(this)">
  			  <option value="Divide">Divide</option>
-			  <option value="Colorful">Colorful</option>
+			  <option value="Colorful">Depth</option>
 			  <option value="Simple">Simple</option> 
 		</select>
-		
-		<div class="flowBG">ffff</div>
 	</div>
 
 	<div class="outer-west">
 	<div class="textCode"></div>
 		<div id="editor">
+
+
 
 /*this is test foo*/
 function foo(items) {
@@ -98,10 +113,16 @@ function fo3o(items) {
 		</a>
 		<a class="button" id="findBtn" href="#"> 
 		<img src="img/btnFind.png" style="left: 23px; width: 20px; height: 20px; margin-top: 20px" />
-		 
 		</a>
 	</div>
+	<div id="dialog-modal" title="syntax error" style="font-size:16px">
+		<p>
+		    <span class="ui-icon ui-icon-circle-check" style="float: left; margin: 0 7px 50px 0;"></span>
+		    Your code has a syntax error..  :(
+		</p>
+	</div>
 </body>
+
 
 
 <!-- ace -->
@@ -112,106 +133,132 @@ function fo3o(items) {
 <script src="JS/graffle.js"></script>
 <script type="text/javascript">
 	$("#runBtn").click(function userViewSub(){
-		  $.ajax({   
-			   type: "POST",  
-			   url: "main",   
-			   data: "option=total&code="+editor.getValue(),
-			   success: function(response) {
-				   test_gender = [];
-				   console.log('succeess');
-				   test_ajax = jQuery.parseJSON(response);
-				   for(var i=0,length = test_ajax.fList.length; i< length ; i++){
-				       test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,test_ajax.fList[i].code,test_ajax.fList[i].type]);					   
-				   }
-				   draw_raphael(test_gender);
-			   },
-			   error:function() {
-				   console.log('error');
-			   }
-		  });
-	});
+		$('.lineBG').show(false);
+		var eLine = $(".ace_error").length;
+	if ( eLine ){ 
+	$("#dialog-modal").dialog({
+		modal : true,
+		// buttons: {
+		//   Ok: function() {
+		//     $( this ).dialog( "close" );
+		//   },
+		// },
+		height : 140,
+		width : 320
+		});
+		} else {
+		$.ajax({
+		type : "POST",
+		url : "main",
+		data : "option=total&code="+ editor.getValue(),
+		success : function(response) {
+			test_gender = [];
+			console.log('succeess');
+			test_ajax = jQuery.parseJSON(response);
+			for ( var i = 0, length = test_ajax.fList.length; i < length; i++) {
+				test_gender.push([test_ajax.fList[i].depth,test_ajax.fList[i].name,test_ajax.fList[i].parent,test_ajax.fList[i].maxLength,test_ajax.fList[i].lines,test_ajax.fList[i].code,test_ajax.fList[i].type ]);
+			}
+			draw_raphael(test_gender);
+		},
+		error : function() { console.log('error'); }
+		});
+	}
+});
 
-
-	$("#findBtn").click(function userViewSub(){
-		if($('.findBG').css('display') == 'none' ){
+	$("#findBtn").click(function userViewSub() {
+		if ($('.findBG').css('display') == 'none') {
 			$('.findBG').show(false);
 		} else {
 			$('.findBG').hide(false);
 		}
 	});
 
-	$("#findBtn_1").click(function openFindBox(){
+	$("#findBtn_1").click(function openFindBox() {
 		var a = $("#searchFor").val();
 		editor.find(a);
 	});
 
-	$("#findBtn_2").click(function closeFindBox(){
+	$("#findBtn_2").click(function closeFindBox() {
 		var a = $("#searchFor").val();
-			b = $("#replaceWith").val();
+		b = $("#replaceWith").val();
 
 		editor.find(a);
 		editor.replace(b, a);
 	});
+	$("#cflowBtn").click(function closeFindBox(){
+		(function(){
+			$('.flowBG').hide('fast');
+		})();
+	});
+	$(document).ready(function() {
+		//$( ".flowBG" ).resizable({ handles: 'n, e, s, w' })
+		
+		$('.flowBG').scroll(function(){
+		    $('#cflowBtn').css('top', $(this).scrollTop());
+		    console.log('asdf');
+		});
+		
+		$( ".flowBG" ).draggable({ containment: ".outer-center", handle: ".flowCont", scroll: true });
+		
+		// OUTER-LAYOUT
+		$('body').layout({
+			center__paneSelector:	".outer-center"
+		,	west__paneSelector:		".outer-west"
+		,	west__size:				470
+		,	south__size:			80
+		,   south__spacing_open:	10
+		//,	south__maxSize:			80
+		//,	south__minSize:			80
+		,   south__fxName:           "none"
+		,	south__togglerLength_open:  0
+		//,	south__initClosed: true
+		,	south__closable : false
+		, 	south__resizable : false
+		,	spacing_closed:			20 // ALL panes
+		,	spacing_open:			10  // ALL panes
+		});
 
-$(document).ready(function () {
-
-	// OUTER-LAYOUT
-	$('body').layout({
-		center__paneSelector:	".outer-center"
-	,	west__paneSelector:		".outer-west"
-	,	west__size:				470
-	,	south__size:			80
-	,   south__spacing_open:	10
-	//,	south__maxSize:			80
-	//,	south__minSize:			80
-	,   south__fxName:           "none"
-	,	south__togglerLength_open:  0
-	//,	south__initClosed: true
-	,	south__closable : false
-	, 	south__resizable : false
-	,	spacing_closed:			20 // ALL panes
-	,	spacing_open:			10  // ALL panes
 	});
 
-});
-
-var setSize;
-var selectEvent;
-var selectDraw;
-window.onload = function(){
-	var codeBtn = document.getElementById('editor');
-		codeBtn.style.fontSize='12px';
-	setSize = function( n ) {
-		
-		switch (n) {
-			case 1:
-				scaleLarge();
-				break;
-			case 2:
-				scaleSmall();
-				break;
-			case 3:
-				var t  = parseFloat(codeBtn.style.fontSize);
-				if(t<=16) t += 2; codeBtn.style.fontSize= t + "px" ;
-				break;
-			case 4:
-				var t  = parseFloat(codeBtn.style.fontSize)
-				if(t>10) t -= 2; codeBtn.style.fontSize= t + "px" ;
-			default:
-				break;
-		}
+	var setSize;
+	var selectEvent;
+	var selectDraw;
+	window.onload = function(){
+		var codeBtn = document.getElementById('editor');
+			codeBtn.style.fontSize='12px';
+		setSize = function( n ) {
 			
+			switch (n) {
+				case 1:
+					scaleLarge();
+					break;
+				case 2:
+					scaleSmall();
+					break;
+				case 3:
+					var t  = parseFloat(codeBtn.style.fontSize);
+					if(t<=16) t += 2; codeBtn.style.fontSize= t + "px" ;
+					break;
+				case 4:
+					var t  = parseFloat(codeBtn.style.fontSize)
+					if(t>10) t -= 2; codeBtn.style.fontSize= t + "px" ;
+				default:
+					break;
+			}
+				
+		}
+		
+		selectEvent = function (selectObj) {		
+			editor.setTheme("ace/theme/" + selectObj.value);
+		}
+		selectDraw = function (selectValue) {
+				$('.lineBG').hide(false);
+			if ( selectValue.value == 'Divide'){
+				$('.lineBG').show(false);
+			}
+			changeColor(""+selectValue.value);
+		}
 	}
-	
-	selectEvent = function (selectObj) {		
-		editor.setTheme("ace/theme/" + selectObj.value);
-	}
-	selectDraw = function (selectValue) {
-		changeColor(""+selectValue.value);
-	}
-}
 
-
-
-</script>
-</html>
+	</script>
+	</html>

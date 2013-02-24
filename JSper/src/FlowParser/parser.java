@@ -22,9 +22,11 @@ public class parser {
 	}
 	
 	public static void main(String[] args){
-		String test[][] = {{"0","func","goo(input)"},{"0","func","voo(input)"},{"0","if","if(m>2)"},{"1","switch","switch(n)"},{"1","case","case 1:"},{"2","var","m++"},{"1","case","case 2:"},{"2","var","l--"},{"2","break","break"},{"1","if","if(m>5)"},{"2","var","k = 3"},{"2","do","do"},{"3","var","n++"},{"2","while","while(true)"},{"2","var","k = 2"},{"2","if","if(m<4)"},{"3","var"," k = 3"},{"1","elseif","else if(m>39)"},{"2","if","if(l<4)"},{"3","var","k=3"},{"1","elseif","else if(m>54)"},{"2","var","m++"},{"1","else","else"},{"2","var","var l--"},{"1","var","l--"},{"0","elseif","else if(ef<3)"},{"0","else","else"},{"1","var","var k = 3"},{"0","while","while(dlkwj)"},{"1","var","j++"}};
+		String test[][] = {{"0","func","goo(input)"},{"0","func","voo(input)"},{"0","if","if(m>2)"},{"1","switch","switch(n)"},{"1","case","case 1:"},{"2","var","m++"},{"1","case","case 2:"},{"2","var","l--"},{"2","break","break"},{"1","default","default"},{"2","var","l--"},{"2","break","break"},{"1","if","if(m>5)"},{"2","var","k = 3"},{"2","do","do"},{"3","var","n++"},{"2","while","while(true)"},{"2","var","k = 2"},{"2","if","if(m<4)"},{"3","var"," k = 3"},{"1","elseif","else if(m>39)"},{"2","if","if(l<4)"},{"3","var","k=3"},{"1","elseif","else if(m>54)"},{"2","var","m++"},{"1","else","else"},{"2","var","var l--"},{"1","var","l--"},{"0","elseif","else if(ef<3)"},{"0","else","else"},{"1","var","var k = 3"},{"0","for","for(int i=0;i<3;i++)"},{"1","var","j++"}};
 //		String test[][] = {{"0","if","if(m>2)"},{"0","do","do"},{"1","var","k++"},{"1","var","l--"},{"1","if","if(m>2)"},{"2","var","break"},{"0","while","while(m==0)"},{"0","else","else"},{"1","var","m++"}};
 //		String test[][] = {{"0","if","if(m>2)"},{"0","switch","switch(m)"},{"1","case","case 1:"},{"2","var","l--"},{"1","case","case 2:"},{"2","var","l++"},{"0","while","while(m==0)"},{"0","else","else"},{"1","var","m++"}};
+//		String test[][] = {{"0","func","func text"},{"0","try","try"},{"0","func","func test1"},{"0","var","var x"},{"0","var","var k = 0"},{"0","catch","catch(err)"},{"0","var","text = 4"}};
+
 		DrawChart a = new DrawChart();
 		a.CheckChart(4,test);//차트 파싱
 		
@@ -159,10 +161,34 @@ class DrawChart{
 			funcchart(mapX, mapY,name);					
 		}else if(value[indexX][1].equals("break")){
 			breakchart(mapX, mapY,name);					
+		}else if(value[indexX][1].equals("catch")){
+			catchchart(mapX, mapY,name);			
+		}else if(value[indexX][1].equals("try")){
+			trychart(mapX, mapY,name);			
+		}else if(value[indexX][1].equals("default")){
+			defaultchart(mapX, mapY,name);						
 		}else{
 			fordeclation(mapX, mapY,name);
 		}
 	}
+	private void defaultchart(int x,int y,String change){
+		chart[x][y] = "default";
+		details[x][y] = change;		
+		chart[x][y+1] = "R";
+		chart[x+1][y] = "defaultN";
+		chart[x+1][y+1] = "defaultY";		
+	}
+	private void trychart(int x,int y,String change){
+		chart[x][y] = "try";
+		chart[x+1][y] = "textN";
+		details[x][y] = change;
+	}
+	private void catchchart(int x,int y,String change){
+		chart[x][y] = "catch";
+		details[x][y] = change;
+		chart[x][y+1] = "R";
+		chart[x+1][y] = "catchN";
+		chart[x+1][y+1] = "catchY";			}
 	private void breakchart(int x,int y,String change){
 		chart[x][y] = "break";
 		details[x][y] = change;

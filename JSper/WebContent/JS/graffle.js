@@ -681,9 +681,9 @@ function drawDiagram(datas,realdata){
 								break;
 							}
 						}
-						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");
 						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
 						DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
+						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");
 						DiagramRaphael.text(65 + j * widthSize, (180 - 85) + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
 						DiagramRaphael.text(157 + j * widthSize, (135 - 65) + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 					}

@@ -131,7 +131,7 @@ class ChartSetting{
 	private void setChart(String name){
 		if(value[indexX][1].equals("if")){
 			ifchart(mapX, mapY,name);
-		}else if(value[indexX][1].equals("elseif")){
+		}else if(value[indexX][1].equals("elif")){
 			elseifchart(mapX, mapY,name);
 		}else if(value[indexX][1].equals("else")){
 			elsechart(mapX, mapY,name);

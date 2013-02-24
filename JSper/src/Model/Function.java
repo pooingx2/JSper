@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class Function implements Serializable{
 
-	private String name;		
+	private String name;
 	private String type;		
 	private int depth;			
 	private String parent;		
@@ -34,13 +34,14 @@ public class Function implements Serializable{
 		initLines();
 	}
 	
+	// comment가 줄바꿈되어 들어온경우 각각을 줄단위로 나누고 list에 저장한다.
 	private void initLines() {
         if(!(comment.equals("0"))) {
         	this.comment = comment.substring(2, comment.length()-2);
         	String[] temp = comment.split("\n");
     		for(int i=0;i<temp.length;i++){
     			lines.add(temp[i]);
-    			if(temp[i].length() > maxLength) maxLength=temp[i].length();
+    			if(temp[i].length() > maxLength) maxLength=temp[i].length();	// 가장긴 comment길이를 구함
     		}
         }
 	}

@@ -40,31 +40,8 @@ public class ChangeStmList{
 		
 		originChart = a.getRealOrigins();//첫번째 차트
 		detailChart = a.getRealDetails();//두번째 차트
-		
-//		printchart(originChart, a.realLengthX(), a.realLengthY());//첫번째 차트 출력해보려면
-//		printchart(detailChart, a.realLengthX(), a.realLengthY());//두번째 차트 출력해보려면
 	}
 	
-	public static void printchart(String chart[][],int limitX,int limitY){
-		System.out.println("[");
-		for(int i=1;i<limitX;i++){
-			System.out.print("[");
-			for(int j=0;j<limitY;j++){
-				if(j!=limitY-1){
-					System.out.print( "\""+ chart[i][j]+"\"," );					
-				}else{
-					System.out.print( "\""+ chart[i][j]+"\"" );										
-				}
-			}
-			if(i!=limitX-1){
-				System.out.println("],");				
-			}else{
-				System.out.println("]");				
-			}
-		}
-		System.out.println("];");
-	}
-
 }
 
 

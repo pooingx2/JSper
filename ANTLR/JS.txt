@@ -1,28 +1,29 @@
-    private String name;
-    private int depth;
-    private String parent;
-    private String comment;
-    private List<Function> fList;
-    private String stmType;
-    private String stmText;
-
-    public List<Function> getFlist(){
-        return fList;
-    }
-
+    // parser 실행전 init()
     public void init(){
     	depth=0;
         initData();
     	fList = new ArrayList<Function>();
+    	cList = new ArrayList<CodeMap>();
     }
     
+    // insert후 데이터 초기화
     public void initData(){
         name = "0";
         //depth = 0;
         parent = "0";
         comment = "0";
+        type = "0";
+        code = "0";
     }
+    public List<Function> getFlist(){
+        return fList;
+    }
+    public List<CodeMap> getClist(){
+        return cList;
+    }
+    
 
+    // 부모 function의 이름을 파악하여 list에 add한다.
     public void insertFunction(){
         int subDep;
         if(depth==0) parent="0";
@@ -38,6 +39,6 @@
         		}
         	}
         }
-    	fList.add(new Function(name,depth,parent,comment));
+    	fList.add(new Function(name,depth,parent,comment,type, code));
     	initData();
     }

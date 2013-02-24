@@ -1,7 +1,8 @@
 var m_colorful ="Divide";
 var divide_color = ["#ffe4e1","#e6e6fa","#b0e0e6","#fff8dc","#87ceeb","#87cefa","#4169e1","#6a5acd","#4682b4"];
 var flow_color = ["#afeeee","#fffacd","#fff8dc","#f5f5dc"];
-
+var flowDatas = [];
+var flowDetails = [];
 var make_list = [[0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"],"Expression"]];
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	if (obj1.line && obj1.from && obj1.to) {
@@ -194,7 +195,7 @@ function draw_raphael( make_list_node ){
 		make_list_node = [[0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"]]];
 	}
 
-	var homepage_height = 300 + make_list_node.length * 70;;
+	var homepage_height = 300 + make_list_node.length * 68;;
 	$('#holder').height(homepage_height);
 	$('#holder').html('');
 
@@ -338,6 +339,7 @@ function draw_raphael( make_list_node ){
 			}				
 		};
 	};
+	
 
 	var clickAjax = function(i){
 		return function(){
@@ -353,11 +355,23 @@ function draw_raphael( make_list_node ){
 				
 			}
 			$.ajax({   
-				type: "POST",  
+				type: "POST",   
 				url: "main",   
 				data: "option=function&code="+make_list[i][5],
 				success: function(response) {
 					console.log('succeess');
+					test_ajax = jQuery.parseJSON(response);
+					if(test_ajax!=null){
+						flowDatas = [];
+						flowDetails = [];
+						for ( var i = 1, length = test_ajax.stmOrgin.length; i < length; i++) {
+							flowDatas.push(test_ajax.stmOrgin[i]);
+						}
+						for ( var i = 1, length = test_ajax.stmDetail.length; i < length; i++) {
+							flowDetails.push(test_ajax.stmDetail[i]);
+						}
+						drawDiagram(flowDatas,flowDetails);						
+					}
 					(function(){
 						if($('.flowBG').css('display') == 'none' ){
 							$('.flowBG').show('fast', function(){
@@ -554,148 +568,23 @@ function DrawGraphArrow(paper,start,end,type,color){
 	}
 	paper.arrow(startPosX,startPosY,endPosX,endPosY,5,color);
 }
-function drawDiagram(){
-	var datas=
-		[
-["func","0","0","0","0","0"],
-["funcN","0","0","0","0","0"],
-["func","0","0","0","0","0"],
-["funcN","0","0","0","0","0"],
-["if","R","0","0","0","0"],
-["ifN","switch","0","0","0","0"],
-["0","swN","0","0","0","0"],
-["0","case","R","0","0","0"],
-["0","caseN","1","0","0","0"],
-["0","0","textN","0","0","0"],
-["0","line","line","0","0","0"],
-["0","case","R","0","0","0"],
-["0","caseN","1","0","0","0"],
-["0","0","textN","0","0","0"],
-["0","0","break","0","0","0"],
-["0","line","line","0","0","0"],
-["0","default","R","0","0","0"],
-["0","defaultN","1","0","0","0"],
-["0","0","textN","0","0","0"],
-["0","0","break","0","0","0"],
-["0","line","line","0","0","0"],
-["0","if","R","0","0","0"],
-["0","ifN","1","0","0","0"],
-["0","0","textN","0","0","0"],
-["0","0","do","0","0","0"],
-["0","0","doN","1","0","0"],
-["0","0","0","textN","0","0"],
-["0","0","line","line","0","0"],
-["0","0","while","R","0","0"],
-["0","0","whileN","whileY","0","0"],
-["0","0","1","0","0","0"],
-["0","0","textN","0","0","0"],
-["0","0","if","R","0","0"],
-["0","0","ifN","1","0","0"],
-["0","0","0","textN","0","0"],
-["0","line","line","line","0","0"],
-["0","elif","R","0","0","0"],
-["0","elifN","if","R","0","0"],
-["0","0","ifN","1","0","0"],
-["0","0","0","textN","0","0"],
-["0","line","line","line","0","0"],
-["0","elif","R","0","0","0"],
-["0","elifN","1","0","0","0"],
-["0","0","textN","0","0","0"],
-["0","line","line","0","0","0"],
-["0","else","R","0","0","0"],
-["0","elseN","1","0","0","0"],
-["0","0","textN","0","0","0"],
-["0","line","line","0","0","0"],
-["0","1","0","0","0","0"],
-["0","textN","0","0","0","0"],
-["line","line","0","0","0","0"],
-["elif","R","0","0","0","0"],
-["elifN","elifY","0","0","0","0"],
-["else","R","0","0","0","0"],
-["elseN","1","0","0","0","0"],
-["0","textN","0","0","0","0"],
-["line","line","0","0","0","0"],
-["for","R","0","0","0","0"],
-["forN","1","0","0","0","0"],
-["line","line","0","0","0","0"]
-];
-	var realdata = 
-		[
-["goo(input)","0","0","0","0","0"],
-["0","0","0","0","0","0"],
-["voo(input)","0","0","0","0","0"],
-["0","0","0","0","0","0"],
-["if(m>2)","0","0","0","0","0"],
-["0","switch(n)","0","0","0","0"],
-["0","0","0","0","0","0"],
-["0","case 1:","0","0","0","0"],
-["0","0","m++","0","0","0"],
-["0","0","0","0","0","0"],
-["0","0","0","0","0","0"],
-["0","case 2:","0","0","0","0"],
-["0","0","l--","0","0","0"],
-["0","0","0","0","0","0"],
-["0","0","break","0","0","0"],
-["0","0","0","0","0","0"],
-["0","default","0","0","0","0"],
-["0","0","l--","0","0","0"],
-["0","0","0","0","0","0"],
-["0","0","break","0","0","0"],
-["0","0","0","0","0","0"],
-["0","if(m>5)","0","0","0","0"],
-["0","0","k = 3","0","0","0"],
-["0","0","0","0","0","0"],
-["0","0","do","0","0","0"],
-["0","0","0","n++","0","0"],
-["0","0","0","0","0","0"],
-["0","0","0","0","0","0"],
-["0","0","while(true)","0","0","0"],
-["0","0","0","0","0","0"],
-["0","0","k = 2","0","0","0"],
-["0","0","0","0","0","0"],
-["0","0","if(m<4)","0","0","0"],
-["0","0","0"," k = 3","0","0"],
-["0","0","0","0","0","0"],
-["0","0","0","0","0","0"],
-["0","else if(m>39)","0","0","0","0"],
-["0","0","if(l<4)","0","0","0"],
-["0","0","0","k=3","0","0"],
-["0","0","0","0","0","0"],
-["0","0","0","0","0","0"],
-["0","else if(m>54)","0","0","0","0"],
-["0","0","m++","0","0","0"],
-["0","0","0","0","0","0"],
-["0","0","0","0","0","0"],
-["0","else","0","0","0","0"],
-["0","0","var l--","0","0","0"],
-["0","0","0","0","0","0"],
-["0","0","0","0","0","0"],
-["0","l--","0","0","0","0"],
-["0","0","0","0","0","0"],
-["0","0","0","0","0","0"],
-["else if(ef<3)","0","0","0","0","0"],
-["0","0","0","0","0","0"],
-["else","0","0","0","0","0"],
-["0","var k = 3","0","0","0","0"],
-["0","0","0","0","0","0"],
-["0","0","0","0","0","0"],
-["for(int i=0;i<3;i++)","0","0","0","0","0"],
-["0","j++","0","0","0","0"],
-["0","0","0","0","0","0"]
-];
-
-	graphs = [];
-	colorful_graphs = [];
-	var chartlength = 400;
-	if(datas[0].length * 70 > 100){
+function drawDiagram(datas,realdata){
+	var graphs = [];
+	var colorful_graphs = [];
+	var chartlength = 200;
+	var chartheight = 400;
+	if(datas[0].length * 70 > 200){
 		chartlength = datas[0].length * 70 + 50;
 		$('#flowCont').width(chartlength);		
 	}
-	if(datas.length * 35 >400){
-		chartlength = datas.length * 35 + 150;
-		$('#flowCont').height(chartlength);
+	if(datas.length * 50 > 400){
+		chartheight = datas.length * 50 + 150;
+		$('#flowCont').height(chartheight);
 	}		
+	$('#flowCont').width(chartlength).height(chartheight);;		
+	$('#flowCont').html('');
 	var DiagramRaphael = Raphael("flowCont", "100%", "100%");
+	DiagramRaphael.clear();
 	function dia_make_line( shapes_start, shapes_end ){ push_array( m_connection,r.connection( shapes_start, shapes_end, "#fff")); };
 	function dia_line_to_line( parent , child ){
 		m_diagram_rect.push( child );
@@ -952,5 +841,5 @@ function drawDiagram(){
 
 $(document).ready(function() {
 	//darw_raphael(make_list);
-	drawDiagram();
+	//drawDiagram();
 });

@@ -54,8 +54,6 @@ class ChartSetting{
 		chart = new String[lengthX][lengthY];
 		details = new String[lengthX][lengthY];
 
-
-
 		int startDepth = 0;
 		for(int i=0;i<lengthX;i++){
 			for(int j=0;j<lengthY;j++){
@@ -124,7 +122,7 @@ class ChartSetting{
 		realOrigins = new String[mapX+1][lengthY];
 		realDetails = new String[mapX+1][lengthY];
 		for(int i=0;i<mapX+1;i++){
-			for(int j=0;j<lengthY;j++){
+			for(int j=0;j<lengthY;j++){				
 				realOrigins[i][j] = chart[i][j];
 				realDetails[i][j] = details[i][j];
 			}
@@ -171,6 +169,7 @@ class ChartSetting{
 	}
 	private void trychart(int x,int y,String change){
 		chart[x][y] = "try";
+		chart[x][y+1] = "R";
 		chart[x+1][y] = "textN";
 		details[x][y] = change;
 	}

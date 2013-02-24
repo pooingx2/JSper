@@ -96,7 +96,7 @@ class ChartSetting{
 			int checkdown = 0;
 			boolean line = false;
 			for(int j=0;j<lengthY;j++){
-				if(chart[i][j]!="0"){
+				if(chart[i][j]!="0"&&chart[i][j]!="break"){
 					line = true;
 					break;
 				}

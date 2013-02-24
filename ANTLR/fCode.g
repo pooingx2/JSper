@@ -18,6 +18,8 @@ sourceElements
 	
 sourceElement
 	: functionDeclaration
+	| functionExpression
+	| functionAnonymous
 	| statement
 	;
 	
@@ -254,15 +256,15 @@ throwStatement
 	;
 
 tryStatement
-	: 'try' LT!* statementBlock LT!* (finallyClause | catchClause (LT!* finallyClause)?)
+	: 'try' LT!* {stmType="try"; stmText="try"; insertStment(); stmDepth++;} statementBlock {stmDepth--;} LT!* (finallyClause | catchClause (LT!* finallyClause)?)
 	;
        
 catchClause
-	: 'catch' LT!* '(' LT!* Identifier LT!* ')' LT!* statementBlock
+	: 'catch' LT!* '(' LT!* Identifier LT!* ')' LT!* {stmType="catch"; stmText="catch("+$Identifier.text; stmText+=")"; insertStment(); stmDepth++;} statementBlock {stmDepth--;}
 	;
 	
 finallyClause
-	: 'finally' LT!* statementBlock
+	: 'finally' LT!* {stmType="finally"; stmText="finally"; insertStment(); stmDepth++;} statementBlock {stmDepth--;}
 	;
 
 // expressions

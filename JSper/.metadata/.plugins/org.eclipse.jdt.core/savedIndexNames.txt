@@ -1,1 +1,0 @@
-INDEX VERSION 1.126+C:\Users\Administrator\Documents\SSM\SSM_1\JSper\.metadata\.plugins\org.eclipse.jdt.core

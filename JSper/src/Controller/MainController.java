@@ -179,13 +179,22 @@ public class MainController extends HttpServlet {
 				System.out.println("getStmText : " + stm.getStmText()+"\n");
 			}
 			
-			//출력된 정보를 Ajax를 통해서 JSON형식으로 다시 보낸다.
-			JSONObject jsonObj = new JSONObject(maxDepth);
-			JSONArray jsonArray = new JSONArray(stmList.toArray());
+			String stmOrgin[][];
+			String stmDetail[][];
+			ChangeStmList changeList = new ChangeStmList(stmList, maxDepth);
+			stmOrgin = changeList.getOriginChart();
+			stmDetail = changeList.getDetailChart();
 			
-			System.out.println(jsonArray.toString());
-			obj.put("maxDepth", jsonObj);
-			obj.put("stmList", jsonArray);
+			
+			//출력된 정보를 Ajax를 통해서 JSON형식으로 다시 보낸다.
+			JSONArray jsonArray1 = new JSONArray(stmOrgin);
+			JSONArray jsonArray2 = new JSONArray(stmDetail);
+			
+			obj.put("stmOrgin", jsonArray1);
+			obj.put("stmDetail", jsonArray2);
+			
+			System.out.println(jsonArray1.toString());
+			System.out.println(jsonArray2.toString());
 			
 			PrintWriter writer = response.getWriter();
 			writer.write(obj.toString());

@@ -40,19 +40,19 @@ public class MainController extends HttpServlet {
 	List<CodeMap> sortList;
 	
 	// 함수별 code 매칭 알고리즘
-	// (depth 재귀 호출 기준) 우선순위 : depth는 낮을수록, 같은 depth는 나눈 기준은 왼쪽 순서로!
+	// (depth 재귀 호출 기준) 우선순위 : depth는 낮을수록, 같은 depth는 나눈 기준 왼쪽 순서
 	public void sortList(List<CodeMap> cList, int n){
 		int i=0;
 		List<CodeMap> tempList = new ArrayList<CodeMap>();
-		while(cList.size() != 0 ){			//( 현재 list가 빌때까지 반복 ) depth별로 나누어 처리한다.
+		while(cList.size() != 0 ){			// 현재 list가 빌때까지 반복한다.
 			while(cList.get(i).getDepth() != n){	// 현재 depth를 나눈다.
 				tempList.add(cList.get(i));
 				i++;
 			}
-			sortList.add(cList.get(i));		 // 뽑아낸 리스트의 데이터의 오른쪽을 저장	
+			sortList.add(cList.get(i));		 // 뽑아낸 리스트의 데이터의 오른쪽을 저장한다.
 			cList.remove(cList.get(i));
 			
-			// 뽑아낸 리스트만큼 현재 리스트에서 삭제시킨다.
+			// 뽑아낸 리스트만큼 현재 리스트에서 삭제한다.
 			for(CodeMap item : tempList){
 				cList.remove(item);
 			}
@@ -126,7 +126,7 @@ public class MainController extends HttpServlet {
 				System.out.println("getCode : " + function.getCode()+"\n");
 			}
 			
-			//출력된 정보를 Ajax를 통해서 JSON형식으로 다시 보낸다.
+			// JSON JSONArray형식으로 전송한다.
 			JSONArray jsonArray = new JSONArray(fList.toArray());
 			obj.put("fList", jsonArray);
 			
@@ -160,39 +160,43 @@ public class MainController extends HttpServlet {
 
 			int maxDepth=0;
 			JSONObject obj = new JSONObject();
-			List<Stment> stmList = g.getStmList();
+			List<Stment> stmList = g.getStmList();		// Antlr paser로 뽑은 StatementList
+
+			String stmOrgin[][];		// flow chart 도형을 그리기 위한 string 배열
+			String stmDetail[][];		// flow chart 도형 내부 text를 그리기 위한 string 배열
 			
 			// flow chart의 가장 깊은 depth를 구한다.
 			for(Stment stm : stmList) {
 				if(stm.getStmDepth() > maxDepth) {
 					maxDepth = stm.getStmDepth();
-					break;
 				}
 			}
-			
-			System.out.println("maxDepth : " + maxDepth);
-			
-			//반환값을 출력하여 확인 
+				
+			//반환값을 출력하여 확인한다.
 			for(Stment stm : stmList) {
 				System.out.println("getStmDepth : " + stm.getStmDepth());
 				System.out.println("getStmType : " + stm.getStmType());
 				System.out.println("getStmText : " + stm.getStmText()+"\n");
 			}
 			
-			String stmOrgin[][];
-			String stmDetail[][];
+			// list를 string 배열로 변환한다.
 			ChangeStmList changeList = new ChangeStmList(stmList, maxDepth);
+			
+			// flow chart 도형을 그리기 위한 string 배열을 저장한다.
+			// flow chart 도형 내부 text를 그리기 위한 string 배열을 저장한다.
 			stmOrgin = changeList.getOriginChart();
 			stmDetail = changeList.getDetailChart();
 			
 			
-			//출력된 정보를 Ajax를 통해서 JSON형식으로 다시 보낸다.
+			// JSON JSONArray형식으로 전송한다.
 			JSONArray jsonArray1 = new JSONArray(stmOrgin);
 			JSONArray jsonArray2 = new JSONArray(stmDetail);
 			
+			// jsp로 보내줄 파라미터
 			obj.put("stmOrgin", jsonArray1);
 			obj.put("stmDetail", jsonArray2);
 			
+			// JSON 객체 출력
 			System.out.println(jsonArray1.toString());
 			System.out.println(jsonArray2.toString());
 			

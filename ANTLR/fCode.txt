@@ -1,8 +1,8 @@
-    private int fDepth;
-    private int stmDepth;
-    private String stmType;
-    private String stmText;
-    private List<Stment> stmList;
+    private int fDepth;				// 현재 function 깊이
+    private int stmDepth;			// statement 깊이
+    private String stmType;			// statement type (var, if, while, try, .....) 
+    private String stmText;			// 실제 flowchart에 찍힐 값
+    private List<Stment> stmList;	// statement list
     
     public List<Stment> getStmList() {
     	return stmList;
@@ -12,17 +12,20 @@
 		this.stmList = stmList;
 	}
 	
+	// parser 실행전 초기화
     public void init(){
     	fDepth = 0;
     	initData();
     	stmList = new ArrayList<Stment>();
     }
     
+    // statement insert후 데이터 초기화
     public void initData(){
     	stmType = "0";
     	stmText = "0";
     }
-    
+
+	// function Depth가 1보다 작은 경우만 add한다. (한단계 function만 저장)
     public void insertStment(){
     	if(fDepth < 1) stmList.add(new Stment(stmDepth,stmType,stmText));
     	initData();

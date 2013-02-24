@@ -132,15 +132,16 @@ public class JSParser extends Parser {
     public static final int HexIntegerLiteral=21;
     public static final int NonEscapeCharacter=16;
 
-    private String name;
-    private int depth;
-    private String parent;
-    private String comment;
-    private String type;
-    private String code;
-    private List<Function> fList;
-    private List<CodeMap> cList;
+    private String name;		// function 이름
+    private int depth;			// function 깊이
+    private String parent;		// 부모 function 이름
+    private String comment;		// function 바로 위의 주석
+    private String type;		// function Type (Declaration, Expression, Anonymous)
+    private String code;		// function 내부의 코드
+    private List<Function> fList;		// function 리스트
+    private List<CodeMap> cList;		// function 내부 코드 리스트 (Before sorting)
 
+    // parser 실행전 init()
     public void init(){
     	depth=0;
         initData();
@@ -148,6 +149,7 @@ public class JSParser extends Parser {
     	cList = new ArrayList<CodeMap>();
     }
     
+    // insert후 데이터 초기화
     public void initData(){
         name = "0";
         //depth = 0;
@@ -163,6 +165,8 @@ public class JSParser extends Parser {
         return cList;
     }
     
+
+    // 부모 function의 이름을 파악하여 list에 add한다.
     public void insertFunction(){
         int subDep;
         if(depth==0) parent="0";

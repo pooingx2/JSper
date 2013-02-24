@@ -10,15 +10,15 @@ import java.util.List;
  */
 public class Function implements Serializable{
 
-	private String name;		
-	private String type;		
-	private int depth;			
-	private String parent;		
-	private String comment;		
-	private int length;			
-	private List<String> lines;	
-	private int maxLength;		
-	private String code;		
+	private String name;		// 함수 이름
+	private String type;		// 함수 타입 (Declaration, Expression, Anonymous)
+	private int depth;			// 함수 깊이
+	private String parent;		// 부모 함수 이름
+	private String comment;		// 함수위에 있는 전체 주석
+	private int length;			// 함수의 이름 길이
+	private List<String> lines;	// 여러 라인의 주석을 라인별로 저장한 리스트
+	private int maxLength;		// 가장긴 주석 라인의 길이
+	private String code;		// 함수 내부의 코드
 	
 	public Function(){}
 	public Function(String name, int depth, String parent, String comment, String type, String code){
@@ -34,13 +34,14 @@ public class Function implements Serializable{
 		initLines();
 	}
 	
+	// comment가 줄바꿈되어 들어온경우 각각을 줄단위로 나누고 list에 저장한다.
 	private void initLines() {
         if(!(comment.equals("0"))) {
         	this.comment = comment.substring(2, comment.length()-2);
         	String[] temp = comment.split("\n");
     		for(int i=0;i<temp.length;i++){
     			lines.add(temp[i]);
-    			if(temp[i].length() > maxLength) maxLength=temp[i].length();
+    			if(temp[i].length() > maxLength) maxLength=temp[i].length();	// 가장긴 comment길이를 구함
     		}
         }
 	}

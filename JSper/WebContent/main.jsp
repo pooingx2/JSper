@@ -24,7 +24,7 @@
 	<div class="outer-center">
  		<div id="holder"></div>
  		 		<!--Flowchart Div-->
- 		<div class="flowBG">
+ 		<div class="flowBG" id="flowBG">
  			<a id="cflowBtn" href="#"> close </a>
 			<div class="flowCont" id="flowCont">
 			</div>

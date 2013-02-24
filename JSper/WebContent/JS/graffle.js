@@ -502,9 +502,9 @@ function changeColor(argu){
 		};		
 	}
 	else if(argu == "Colorful"){
-		m_shapes[0].attr({fill:"#eee8aa" , stroke: "black", "fill-opacity": 0.9, "stroke-width": 0.6});	
-		m_caption_rect[0].attr({fill: "#eee8aa", stroke: "black", "fill-opacity": 0.7, "stroke-width": 0.5});
-		m_caption_hides[0].attr({fill: "#eee8aa", stroke: "black", "fill-opacity": 0.5, "stroke-width": 0.5});			
+		m_shapes[0].attr({fill:"#f5fffa" , stroke: "black", "fill-opacity": 0.9, "stroke-width": 0.6});	
+		m_caption_rect[0].attr({fill: "#f5fffa", stroke: "black", "fill-opacity": 0.7, "stroke-width": 0.5});
+		m_caption_hides[0].attr({fill: "#f5fffa", stroke: "black", "fill-opacity": 0.5, "stroke-width": 0.5});			
 		for(var i = 1 , count = m_shapes.length; i<count;i++){
 			var color = divide_color[make_list[i-1][0]];
 			m_shapes[i].attr({fill:color , stroke: "black", "fill-opacity": 0.9, "stroke-width": 0.6});	
@@ -571,21 +571,21 @@ function DrawGraphArrow(paper,start,end,type,color){
 }
 function drawDiagram(datas,realdata){
 	if(!datas.length == 0){
-
-
 		var graphs = [];
 		var colorful_graphs = [];
-		var chartlength = 200;
-		var chartheight = 400;
+		var chartlength = 400;
+		var chartheight = 600;
 		if(datas[0].length * 100 > 150){
 			chartlength = datas[0].length * 100 + 50;
-			$('#flowCont').width(chartlength);		
+			$('#flowCont').width(chartlength);
+			$('#flowBG').width(chartlength);
 		}
-		if(datas.length * 50 > 250){
-			chartheight = datas.length * 50 + 150;
+		if(datas.length * 32 > 600){
+			chartheight = datas.length * 32 + 200;
 			$('#flowCont').height(chartheight);
+			$('#flowBG').height(chartheight);
 		}		
-		$('#flowCont').width(chartlength).height(chartheight);;		
+		$('#flowCont').width(chartlength).height(chartheight);		
 		$('#flowCont').html('');
 		var DiagramRaphael = Raphael("flowCont", "100%", "100%");
 		DiagramRaphael.clear();

@@ -145,14 +145,15 @@
 		max-width: 80%;
     }
     
-    #cflowBtn {	
-	    z-index: 100;
+    #cflowBtn {
+	    z-index : 100;
         position: absolute;
         display: inline;
         height: 20px;
         width: 40px;
         top: 0px;
-        left: 0px;    
+        left: 0px;
+        
         text-decoration: none;
         color: #555;
         font-size: 12px;

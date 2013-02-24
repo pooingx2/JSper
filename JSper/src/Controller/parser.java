@@ -1,4 +1,4 @@
-package FlowParser;
+package Controller;
 //출력값을 보면 알 수 있을꺼야
 public class parser {
 	public static void printchart(String chart[][],int limitX,int limitY){

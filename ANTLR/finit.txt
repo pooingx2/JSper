@@ -14,13 +14,16 @@
 	
     public void init(){
     	fDepth = 0;
-    	stmDepth = 0;
+    	initData();
+    	stmList = new ArrayList<Stment>();
+    }
+    
+    public void initData(){
     	stmType = "0";
     	stmText = "0";
-    	stmList = new ArrayList<Stment>();
     }
     
     public void insertStment(){
     	if(fDepth < 1) stmList.add(new Stment(stmDepth,stmType,stmText));
-    	
+    	initData();
     }

@@ -23,23 +23,23 @@ sourceElement
 	
 // functions
 functionDeclaration
-	: functionComment* LT!* 'function' LT!* functionName {stmType="function";} LT!* formalParameterList LT!* functionBody
+	: functionComment* LT!* 'function' LT!* functionName {stmType="func";} LT!* formalParameterList LT!* functionBody
 	;
 
 functionExpression
 	//: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
-	: functionComment* LT!* 'var'? LT!* functionName {stmType="function";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	: functionComment* LT!* 'var'? LT!* functionName {stmType="func";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
 	;
 
 functionAnonymous
-	: functionComment* '(' LT!* 'function' {stmType="function"; stmText="function Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
+	: functionComment* '(' LT!* 'function' {stmType="func"; stmText="func Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
 	;
 	
 functionName
 	: 	
 	( Identifier )
 		{
-			stmText = "function "+$Identifier.text;
+			stmText = "func "+$Identifier.text;
 		}
 	;
 
@@ -63,9 +63,12 @@ functionBody
 statement
 	: statementBlock
 	| variableStatement
+	| variableChangeStatement
 	| emptyStatement
 	| expressionStatement
 	| ifStatement
+	| elseifStatement
+	| elseStatement
 	| iterationStatement
 	| continueStatement
 	| breakStatement
@@ -86,12 +89,15 @@ statementList
 	;
 
 variableStatement
-	: 'var'? LT!* { stmType = "var"; stmText = "var "; } variableDeclarationList { stmText = stmText+";"; insertStment();}(LT | ';')!
+	: 'var' LT!* { stmType = "var"; stmText = "var "; } variableDeclarationList { insertStment();}(LT | ';')!
 	;
-
+	
+variableChangeStatement
+	: { stmType = "var"; stmText = ""; } expression1 LT!* { stmText +=";"; insertStment();}(LT | ';')!
+	;
 	
 variableDeclarationList
-	: variableDeclaration (LT!* ',' { stmText = stmText+","; } LT!* variableDeclaration)*
+	: variableDeclaration (LT!* ',' { stmText = stmText+","; } LT!* variableDeclaration)*  {stmText += ";"; }
 	;
 	
 variableDeclarationListNoIn
@@ -99,11 +105,8 @@ variableDeclarationListNoIn
 	;
 	
 variableDeclaration
-	//: Identifier LT!* initialiser?
 	: variableName LT!* initialiser?
-	//: variableName LT!* initialization?
 	;
-	
 variableName
 	:
 	( Identifier )
@@ -117,18 +120,10 @@ variableDeclarationNoIn
 	;
 	
 initialiser
-	: '=' LT!* initialization
+	//: '=' LT!* initialization
+	: '=' LT!* assignmentExpression { stmText += "="+$assignmentExpression.text; }
+	//: ('=' LT!* {stmText+="=";} initialization | '+=' LT!* {stmText+="+=";}initialization)
 	;
-	
-
-initialization
-	: 
-	( assinmentString )
-		{
-			stmText = stmText + " = " + $assinmentString.text;
-		}
-	;
-
 
 initialiserNoIn
 	: '=' LT!* assignmentExpressionNoIn
@@ -143,8 +138,18 @@ expressionStatement
 	;
 	
 ifStatement
-	: 'if' LT!* '(' LT!* expression LT!* ')' LT!* {stmType="if";stmText="if("+$expression.text; stmText+=")"; insertStment(); stmDepth++;} statement {stmDepth--;}(LT!* 'else' LT!* statement)?
+	: 'if' LT!* '(' LT!* expression LT!* ')' LT!* {stmType="if";stmText="if("+$expression.text; stmText+=")"; insertStment(); stmDepth++;} statement {stmDepth--;}
 	;
+	
+elseifStatement
+	: 'else' LT!* 'if' LT!* '(' LT!* expression LT!* ')' LT!* {stmType="elif";stmText="else if("+$expression.text; stmText+=")"; insertStment(); stmDepth++;} statement {stmDepth--;}
+	;
+
+elseStatement
+	: 'else' LT!* {stmType="else"; stmText="else"; insertStment(); stmDepth++;} statement {stmDepth--;}
+	;
+
+
 	
 iterationStatement
 	: doWhileStatement
@@ -154,17 +159,37 @@ iterationStatement
 	;
 	
 doWhileStatement
-	: 'do' LT!* statement LT!* 'while' LT!* '(' expression ')' (LT | ';')!
+	: 'do' LT!* {stmType="do"; stmText="do"; insertStment(); stmDepth++;} statement {stmDepth--;} LT!* 'while' LT!* '(' expression ')' {stmType="while";stmText="while("+$expression.text; stmText+=");"; insertStment();}(LT | ';')!
 	;
 	
 whileStatement
-	: 'while' LT!* '(' LT!* expression LT!* ')' LT!* statement
+	: 'while' LT!* '(' LT!* expression LT!* ')' LT!* {stmType="while";stmText="while("+$expression.text; stmText+=")"; insertStment(); stmDepth++;} statement {stmDepth--;}
 	;
 	
 forStatement
-	: 'for' LT!* '(' (LT!* forStatementInitialiserPart)? LT!* ';' (LT!* expression)? LT!* ';' (LT!* expression)? LT!* ')' LT!* statement
+	: 'for' LT!* '(' {stmType="for"; stmText="for(";} (LT!* forStatementInitialiserPart1)? LT!* ';' {stmText+= ";";}(LT!* expression1)? LT!* ';' {stmText+= ";";}(LT!* expression2)? LT!* ')' {stmText+= ")"; insertStment(); stmDepth++;} LT!* statement {stmDepth--;}
 	;
-	
+forStatementInitialiserPart1
+	: 
+	( forStatementInitialiserPart )
+		{
+			stmText += $forStatementInitialiserPart.text;
+		}
+	;
+expression1
+	: 
+	( expression )
+		{
+			stmText += $expression.text;
+		}
+	;
+expression2
+	: 
+	( expression )
+		{
+			stmText += $expression.text;
+		}
+	;
 forStatementInitialiserPart
 	: expressionNoIn
 	| 'var' LT!* variableDeclarationListNoIn
@@ -173,6 +198,15 @@ forStatementInitialiserPart
 forInStatement
 	: 'for' LT!* '(' LT!* forInStatementInitialiserPart LT!* 'in' LT!* expression LT!* ')' LT!* statement
 	;
+/*
+fluctuationStatement
+	:  LT!* fluctuationOperation (LT | ';')!
+	;
+
+fluctuationOperation
+	: '++' | '--'
+	;
+*/
 	
 forInStatementInitialiserPart
 	: leftHandSideExpression
@@ -180,11 +214,11 @@ forInStatementInitialiserPart
 	;
 
 continueStatement
-	: 'continue' Identifier? (LT | ';')!
+	: 'continue' Identifier? {stmType="continue"; stmText="continue;"; insertStment();} (LT | ';')!
 	;
 
 breakStatement
-	: 'break' Identifier? (LT | ';')!
+	: 'break' Identifier?  {stmType="break"; stmText="break;"; insertStment();} (LT | ';')!
 	;
 
 returnStatement
@@ -200,7 +234,7 @@ labelledStatement
 	;
 	
 switchStatement
-	: 'switch' LT!* '(' LT!* expression LT!* ')' LT!* caseBlock
+	: 'switch' LT!* '(' LT!* expression LT!* ')' LT!* {stmType="switch"; stmText="switch("+$expression.text; stmText+=")"; insertStment();} caseBlock {}
 	;
 	
 caseBlock
@@ -208,11 +242,11 @@ caseBlock
 	;
 
 caseClause
-	: 'case' LT!* expression LT!* ':' LT!* statementList?
+	: 'case' LT!* expression LT!* ':' LT!* {stmType="case"; stmText="case "+$expression.text; stmText+=":"; insertStment(); stmDepth++;} statementList? {stmDepth--;}
 	;
 	
 defaultClause
-	: 'default' LT!* ':' LT!* statementList?
+	: 'default' LT!* ':' LT!* {stmType="default"; stmText="default:"; insertStment(); stmDepth++;} statementList? {stmDepth--;}
 	;
 	
 throwStatement
@@ -235,21 +269,11 @@ finallyClause
 expression
 	: assignmentExpression (LT!* ',' LT!* assignmentExpression)*
 	;
-
-/*
-expressionString
-	:
-		( expression )
-		{
-			stmText = stmText + $expression.text;
-		}
-	;
-*/
 	
 expressionNoIn
 	: assignmentExpressionNoIn (LT!* ',' LT!* assignmentExpressionNoIn)*
 	;
-	
+
 assignmentExpression
 	: conditionalExpression
 	| leftHandSideExpression LT!* assignmentOperator LT!* assignmentExpression
@@ -409,7 +433,7 @@ objectLiteral
 propertyNameAndValue
 	: propertyName LT!* ':' LT!* assignmentExpression
 	;
-
+	
 propertyName
 	: Identifier
 	| StringLiteral
@@ -932,13 +956,6 @@ fragment UnicodeConnectorPunctuation	// Any character in the Unicode category "C
 Comment
 	: '/*' (options {greedy=false;} : .)* '*/' //{$channel=HIDDEN;}
 	;
-//Comment 
-	//: '/*'~(LT)*'/*'
-	//;
-
-//Comment
-//    :  '/*' .* '*/' // no need for a NEWLINE at the end
-//    ;
     
 LineComment
 	: '//' ~(LT)* //{$channel=HIDDEN;}

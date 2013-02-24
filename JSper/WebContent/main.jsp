@@ -12,6 +12,7 @@
 <link rel="stylesheet" href="CSS/layout-default.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="CSS/layout.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="CSS/custom.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="CSS/jquery-ui-1.10.1.custom.css" type="text/css" />
 
 <!-- jquert.layout -->
 <script type="text/javascript" src="JS/jquery-latest.js"></script>
@@ -150,7 +151,7 @@ function fo3o(items) {
 		$.ajax({
 		type : "POST",
 		url : "main",
-		data : "option=total&code="+ editor.getValue(),
+		   data: "option=total&code="+encodeURIComponent(editor.getValue()),
 		success : function(response) {
 			test_gender = [];
 			console.log('succeess');
@@ -164,6 +165,7 @@ function fo3o(items) {
 		});
 	}
 });
+
 
 	$("#findBtn").click(function userViewSub() {
 		if ($('.findBG').css('display') == 'none') {

@@ -192,6 +192,7 @@ public class MainController extends HttpServlet {
 			JSONArray jsonArray1 = new JSONArray(stmOrgin);
 			JSONArray jsonArray2 = new JSONArray(stmDetail);
 			
+			// jsp로 보내줄 파라미터
 			obj.put("stmOrgin", jsonArray1);
 			obj.put("stmDetail", jsonArray2);
 			

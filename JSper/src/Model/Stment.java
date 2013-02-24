@@ -6,13 +6,12 @@ import java.util.List;
 
 public class Stment implements Serializable{
 
-	private int stmDepth;
-	private String stmType;
-	private String stmText;
+	private int stmDepth;		// statement 깊이
+	private String stmType;		// statement 종류 ( if, while, for, try ...)
+	private String stmText;		// statement text ( ex: if(a<b) )
 	
 	public Stment(){}
 	public Stment(int stmDepth, String stmType, String stmText){
-
 		this.stmDepth = stmDepth;
 		this.stmType = stmType;
 		this.stmText = stmText;

@@ -1,9 +1,8 @@
 var m_colorful ="Divide";
 var divide_color = ["#ffe4e1","#e6e6fa","#b0e0e6","#fff8dc","#87ceeb","#87cefa","#4169e1","#6a5acd","#4682b4"];
 var flow_color = ["#afeeee","#fffacd","#fff8dc","#f5f5dc"];
-var flowDatas = [];
-var flowDetails = [];
 var make_list = [];
+var alltext = true;
 
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	if (obj1.line && obj1.from && obj1.to) {
@@ -343,49 +342,52 @@ function draw_raphael( make_list_node ){
 
 
 	var clickAjax = function(i){
+		
 		return function(){
-			var initWidth = parseInt($('.outer-center').css('width'));
-			var initHeight = parseInt($('.outer-center').css('height'));
-
-			var FB = document.getElementsByClassName('flowBG')[0];
-			FB.style.width = initWidth/3 + 'px';
-			FB.style.height = initHeight/2 + 'px';
-			FB.style.maxWidth = initWidth * 0.9 + 'px';
-			FB.style.maxHeight = initHeight * 0.9 + 'px';
+			var s = i;
 			$.ajax({   
 				type: "POST",   
 				url: "main",   
-				data: "option=function&code="+encodeURIComponent(make_list[i][5]),
+				data: "option=function&code="+encodeURIComponent(make_list[s][5]),
 				success: function(response) {
-					console.log('succeess');
-					test_ajax = jQuery.parseJSON(response);
-					if(test_ajax!=null){
-						if(i==-1){
-							
-						}else{							
-							flowDatas = [];
-							flowDetails = [];
-							for ( var i = 1, length = test_ajax.stmOrgin.length; i < length; i++) {
-								flowDatas.push(test_ajax.stmOrgin[i]);
-							}
-							for ( var i = 1, length = test_ajax.stmDetail.length; i < length; i++) {
-								flowDetails.push(test_ajax.stmDetail[i]);
-							}
-							drawDiagram(flowDatas,flowDetails);						
+					var flowDatas = [];
+					var flowDetails = [];					
+					var test_ajax = jQuery.parseJSON(response);
+					if(test_ajax!=null && $('.flowBG').css('display') == 'none' ){
+						var length = test_ajax.stmOrgin.length;
+						for ( var t = 1; t < length; t++) {
+							flowDatas.push(test_ajax.stmOrgin[t]);
 						}
-					}else{
-						flowDatas = [];
-						flowDetails = [];
+						for ( var t = 1; t < length; t++) {
+							flowDetails.push(test_ajax.stmDetail[t]);
+						}
 						drawDiagram(flowDatas,flowDetails);
-					}
-					(function(){
-						if($('.flowBG').css('display') == 'none' ){
-							$('.flowBG').show('fast', function(){
-							});
-						} else {
-							$('.flowBG').hide('fast');
+
+						before = s;
+						
+						$('.flowBG').show('fast', function(){});
+						
+					} else if (test_ajax!=null && $('.flowBG').css('display') == 'block' && s!=before) {
+						
+						document.getElementById('flowBG').style.display = 'none';
+						var length = test_ajax.stmOrgin.length;
+						for ( var t = 1; t < length; t++) {
+							flowDatas.push(test_ajax.stmOrgin[t]);
 						}
-					})();
+						for ( var t = 1; t < length; t++) {
+							flowDetails.push(test_ajax.stmDetail[t]);
+						}
+						drawDiagram(flowDatas,flowDetails);
+						
+						before = s;
+						
+						document.getElementById('flowBG').style.display = 'block';
+						
+					} else {
+						console.log('33');
+						//document.getElementById('flowBG').style.display = 'none';
+						$('.flowBG').hide('fast');
+					}
 				},
 				error:function() {
 					console.log('error');
@@ -558,7 +560,6 @@ function DrawGraphArrow(paper,start,end,type,color){
 	var startPosX;
 	var startPosY;
 	var endPosX;
-	var endPosY;
 	if(type == "right"){
 		startPosX = start.attrs.x + start.attrs.width;
 		startPosY = start.attrs.y + start.attrs.height/2; 
@@ -576,26 +577,33 @@ function DrawGraphArrow(paper,start,end,type,color){
 }
 function drawDiagram(datas,realdata){
 	if(!datas.length == 0){
+		var graphs_texts = [];
 		var graphs = [];
 		var colorful_graphs = [];
-		var array_heigth = datas.length;
+		var array_height = datas.length;
 		var array_width = datas[0].length;
-		var chartlength =  array_width * 90;// = 400;
-		var chartheight = array_heigth * 40 + 200;// = 600;
+		var chartlength =  array_width * 75;// = 400;
+		var chartheight = array_height * 35 + 200;// = 600;
 		var startnode;
 		var endnode;
 		var widthSize = 90;
 		var heightSize = 30;
 		$('#flowCont').html('');
-		$('#flowCont').width(chartlength).height(chartheight);		
+		$('#flowCont').width(chartlength-10).height(chartheight-10);		
 		$('#flowBG').width(chartlength).height(chartheight);
 
 		var DiagramRaphael = Raphael("flowCont", "100%", "100%");
 		DiagramRaphael.clear();
-		
+		for(var i=0;i<array_height;i++){
+			var array = [];
+			for(var j=0;j<array_width;j++){
+				array.push("0");
+			}
+			graphs_texts.push(array);
+		}
 		startnode = DiagramRaphael.rect(65, 40, 50, 50, 5).attr({fill: "white", stroke: "black", "stroke-width": 2});
 		DiagramRaphael.text(90, 35 ,"start").attr({font: "10px Helvetica", opacity: 1.0,fill:"black",});											
-		for(var i=0 ; i < array_heigth ; i++){
+		for(var i=0 ; i < array_height ; i++){
 			var logical = [];          
 			var colorful_logical=[];
 			for(var j=0 ; j < array_width ; j++){
@@ -623,13 +631,13 @@ function drawDiagram(datas,realdata){
 			graphs.push(logical);
 			colorful_graphs.push(colorful_logical);
 
-			if(i==array_heigth-1){
+			if(i==array_height-1){
 				endnode = DiagramRaphael.rect(65, 160 + i * heightSize, 50, 50, 5).attr({fill: "white", stroke: "black", "stroke-width": 2});
 				DiagramRaphael.text(90, 95 + i * (heightSize-15) ,"end").attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});											
 			}
 		}
 		try{
-			for(var i=0 ; i < array_heigth ; i++){
+			for(var i=0 ; i < array_height ; i++){
 				for(var j=0 ; j < array_width ; j++){
 					var argu = datas[i][j];
 					if(argu=="line"){
@@ -649,7 +657,7 @@ function drawDiagram(datas,realdata){
 							DiagramRaphael.connections(graphs[i][j+1] , graphs[i][j], "black");					
 						}
 
-						if(i+1<array_heigth&&datas[i+1][j]!="0"&&datas[i+1][j]!="R"){
+						if(i+1<array_height&&datas[i+1][j]!="0"&&datas[i+1][j]!="R"){
 							DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");										
 						}
 						for(var k=i-1;k>0;k--){
@@ -721,7 +729,7 @@ function drawDiagram(datas,realdata){
 					else if(argu=="break"){
 						DiagramRaphael.connections(graphs[i][j], graphs[i+1][j] , "black");						
 						DiagramRaphael.connections(graphs[i-1][j], graphs[i][j] , "black");	
-						if(i+2<array_heigth&&datas[i+2][j]!="line"&&datas[i+2][j]!="0"){
+						if(i+2<array_height&&datas[i+2][j]!="line"&&datas[i+2][j]!="0"){
 							graphs[i][j-1] = DiagramRaphael.rect( 89 + (j-1) * widthSize, 160 + i * heightSize, 1, 1, 5 );
 							DrawGraphLine(DiagramRaphael,graphs[i][j-1],graphs[i][j],"right","red");							
 						}
@@ -791,7 +799,7 @@ function drawDiagram(datas,realdata){
 					}
 					else if(argu=="1"){
 						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");
-						if(i+2<array_heigth&&datas[i+2][j]!="0"){
+						if(i+2<array_height&&datas[i+2][j]!="0"){
 							DiagramRaphael.connections(graphs[i+2][j] , graphs[i][j], "black");					
 						}
 					}
@@ -799,52 +807,43 @@ function drawDiagram(datas,realdata){
 						DiagramRaphael.connections(graphs[i][j-1] , graphs[i][j], "black");
 					}
 					if( graphs[i][j]!="" ){
-//						var index = datas[i][j];
-//						if(m_colorful == "Colorful"){
-//						graphs[i][j].attr({fill: divide_color[i], stroke: "black", "stroke-width": 2});
-//						}else if(m_colorful == "Divide"){
-//						graphs[i][j].attr({fill: "white", stroke: "black", "stroke-width": 2});
-//						if(index=="if"||index=="elif"||index=="else"){
-//						colorful_graphs[i][j].attr({fill: "white", stroke: "black", "stroke-width": 2});
-//						}else if(index=="try"||index=="catch"){
-//						colorful_graphs[i][j].attr({fill: divide_color[0], stroke: "black", "stroke-width": 2});						
-//						}else if(index=="while"||index=="do"){
-//						colorful_graphs[i][j].attr({fill: "white", stroke: "black", "stroke-width": 2});
-//						}else if(index=="for"){
-//						colorful_graphs[i][j].attr({fill: "white", stroke: "black", "stroke-width": 2});						
-//						}else if(index=="switch"){
-//						colorful_graphs[i][j].attr({fill: "white", stroke: "black", "stroke-width": 2});
-//						}else{
-//						colorful_graphs[i][j].attr({fill: "white", stroke: "black", "stroke-width": 2});
-//						}						
-//						}else if(m_colorful == "Simple"){
-//						graphs[i][j].attr({fill: "white", stroke: "black", "stroke-width": 2});
-//						}
 						graphs[i][j].attr({fill: "white", stroke: "black", "stroke-width": 2});
 					}
 				}
 			}
 			DiagramRaphael.connections(graphs[0][0], startnode , "black");
-			DiagramRaphael.connections(graphs[array_heigth-1][0] ,endnode ,"black");
+			DiagramRaphael.connections(graphs[array_height-1][0] ,endnode ,"black");
 
 			for(var i=0;i<realdata.length;i++){
 				for(var j=0;j<realdata[0].length;j++){
 					var index = datas[i][j];
 					var text = realdata[i][j];
 					if(text!="0"){	
-						if(text.length > 15){
-							
+						if(text.length > 14){
+							if(index == "for"||index == "if"||index == "elif"||index == "else"||index=="do"||index=="switch"||index == "while"||index == "try"||index == "catch"){
+								graphs_texts[i][j] = ([DiagramRaphael.text(90 + j * widthSize, 74 + i * (heightSize-15) ,text.substr(0,14)+"..").attr({font: "10px Helvetica", opacity: 1.0,fill:"black",cursor: "pointer"}).show().click(flowChartOver(graphs_texts,i,j)),
+								                       DiagramRaphael.text(90 + j * widthSize, 74 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black",cursor: "pointer"}).hide().click(flowChartUp(graphs_texts,i,j))]);																
+							}else if(index=="func"){
+								graphs_texts[i][j] = ([DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text.substr(0,14)+"..").attr({font: "10px Helvetica", opacity: 1.0,fill:"black",cursor: "pointer"}).show().click(flowChartOver(graphs_texts,i,j)),
+								                       DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black",cursor: "pointer"}).hide().click(flowChartUp(graphs_texts,i,j))]);																					
+							}else if(index=="break"){
+								graphs_texts[i][j] = ([DiagramRaphael.text(70 + j * widthSize, 88 + i * (heightSize-15) ,text.substr(0,14)+"..").attr({font: "10px Helvetica", opacity: 1.0,fill:"red",cursor: "pointer"}).show().click(flowChartOver(graphs_texts,i,j)),
+								                       DiagramRaphael.text(70 + j * widthSize, 88 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black",cursor: "pointer"}).hide().click(flowChartUp(graphs_texts,i,j))]);																					
+							}else{
+								graphs_texts[i][j] = ([DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text.substr(0,14)+"..").attr({font: "10px Helvetica", opacity: 1.0,fill:"black",cursor: "pointer"}).show().click(flowChartOver(graphs_texts,i,j)),
+								                       DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black",cursor: "pointer"}).hide().click(flowChartUp(graphs_texts,i,j))]);
+							}
 						}else{
-							
-						}
-						if(index == "for"||index == "if"||index == "elif"||index == "else"||index=="do"||index=="switch"||index == "while"||index == "try"||index == "catch"){
-							DiagramRaphael.text(90 + j * widthSize, 74 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																
-						}else if(index=="func"){
-							DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																					
-						}else if(index=="break"){
-							DiagramRaphael.text(70 + j * widthSize, 88 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});																					
-						}else{
-							DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});
+							if(index == "for"||index == "if"||index == "elif"||index == "else"||index=="do"||index=="switch"||index == "while"||index == "try"||index == "catch"){
+								DiagramRaphael.text(90 + j * widthSize, 74 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																
+							}else if(index=="func"){
+								DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																					
+							}else if(index=="break"){
+								DiagramRaphael.text(70 + j * widthSize, 88 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});																					
+							}else{
+								DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});
+							}
+
 						}
 					}
 				}
@@ -855,9 +854,18 @@ function drawDiagram(datas,realdata){
 		}	
 	}
 }
-var flowChartOver = function(i,j){
+var flowChartOver = function(array,i,j){
 	return function(){
+		array[i][j][0].hide();
+		array[i][j][1].show();
+	}
+};
+var flowChartUp= function(array,i,j){
+	return function(){
+		array[i][j][1].hide();
+		array[i][j][0].show();		
 	}
 };
 $(document).ready(function() {
+	
 });

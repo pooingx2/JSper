@@ -62,10 +62,7 @@ class ChartSetting{
 		for(int k=0;k<value.length;k++){
 			int depth = Integer.parseInt(value[indexX][0]);
 			String subname = value[indexX][2];
-			subname = subname.replaceAll("\\p{Space}", "");
-			if(subname.length()>25){
-				subname = subname.substring(0,25);
-			}
+			subname = subname.trim();
 			if( startDepth == depth){
 				mapX+=1;
 				setChart(subname);

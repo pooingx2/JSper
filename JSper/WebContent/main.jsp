@@ -25,7 +25,7 @@
  		<div id="holder"></div>
  		 
  		 <!--Flowchart Div-->
- 		<div class="flowBG">
+ 		<div class="flowBG" id="flowBG">
  			<a id="cflowBtn" href="#"> close </a>
 			<div class="flowCont" id="flowCont">
 			</div>
@@ -53,31 +53,112 @@
 
 /*this is test foo*/
 function foo(items) {
-	/*this is test test 
-	function expression*/
-	var text = function(){}
-	/*this is test test1*/
-	function test1(){
-		function test2(){}
-		/*this is ANONYMOUS function*/
-		(function() {})()
+    var text = function(){}
+    function test1(){
+        function test2(){}
+    	(function() {})()
 	}
-	var x = "All this is syntax highlighted"; 
-	var k = 0;
+    for(j=0 ; j < datas[0].length ; j++){
+    			var index = datas[i][j];
+				if(index!="0"){
+					if(index=="if"||index=="elif"||index=="else"||index=="for"||index=="while"||index=="do"||index=="switch"||index=="try"||index=="catch"){
+						colorful_logical.push(DiagramRaphael.rect( 895 ));
+					}
+				}else{
+					logical.push("");				
+					colorful_logical.push("");
+				}
+			}
+    for(i=3;i<4;i++){
+        if(i==5){
+            break;
+        }
+    }
+    for(j=0 ; j < 4 ; j++){
+        			var argu = datas[i][j];
+					if(argu=="line"){
+						var casebreak = false;
+                    break;
+					}
+                    break;
+                    var k=0;
+    }
+    switch(n){
+        case 1:
+            break;
+        case 2:
+            d++;
+            break;
+        case 3:
+            d--;
+        case 3:
+    }
 }
-		/*this is test foo*/
+
+
 function fo3o(items) {
-    /*this is test test*/
+	
+	var x = "All this is syntax highlighted"; 
+	var k = 0;
+}
+		
+		
+
+function foo(items) {
+    var text = function(){}
+    function test1(){
+        function test2(){}
+		(function() {})()
+	}
+    for(j=0 ; j < datas[0].length ; j++){
+    			var index = datas[i][j];
+				if(index!="0"){
+					if(index=="if"||index=="elif"||index=="else"||index=="for"||index=="while"||index=="do"||index=="switch"||index=="try"||index=="catch"){
+						colorful_logical.push(DiagramRaphael.rect( 895 ));
+					}
+				}else{
+					logical.push("");				
+					colorful_logical.push("");
+				}
+			}
+    for(i=3;i<4;i++){
+        if(i==5){
+            break;
+        }
+    }
+    for(j=0 ; j < 4 ; j++){
+        			var argu = datas[i][j];
+					if(argu=="line"){
+						var casebreak = false;
+                    break;
+					}
+                    break;
+                    var k=0;
+    }
+    switch(n){
+        case 1:
+            break;
+        case 2:
+            d++;
+            break;
+        case 3:
+            d--;
+        case 3:
+    }
+}
+
+
+function fo3o(items) {
 	function test(){}
-	/*this is test test1*/
 	function test1(){
 		function test2(){}
-		/*this is ANONYMOUS function*/
 		(function() {})()
 	}
 	var x = "All this is syntax highlighted"; 
 	var k = 0;
 }
+		
+		
 		
 		</div>
 		<div class="findBG">

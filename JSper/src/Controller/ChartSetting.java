@@ -11,7 +11,6 @@ class ChartSetting{
 	private int mapX, mapY;
 	private int indexX;
 	private int depthcase;
-	
 	private String realOrigins[][];
 	private String realDetails[][];
 	
@@ -21,7 +20,6 @@ class ChartSetting{
 	public String[][] getRealDetails() {
 		return realDetails;
 	}
-	
 	public int realLengthX(){
 		return mapX+1;
 	}
@@ -40,13 +38,11 @@ class ChartSetting{
 	public String[][] detailChart(){
 		return details;
 	}
-	
 	public ChartSetting(){
 		mapX = 0;
 		mapY = 0;
 		indexX = 0; 
 	}
-	
 	public void CheckChart(int depths,String array[][]){
 		depth = depths;
 		value = array;
@@ -66,14 +62,14 @@ class ChartSetting{
 		for(int k=0;k<value.length;k++){
 			int depth = Integer.parseInt(value[indexX][0]);
 			String subname = value[indexX][2];
-			if(subname.length()>16){
-				subname = subname.substring(0,16);
+			subname = subname.replaceAll("\\p{Space}", "");
+			if(subname.length()>25){
+				subname = subname.substring(0,25);
 			}
 			if( startDepth == depth){
 				mapX+=1;
 				setChart(subname);
 				depthcase = 0;
-				
 			}else if(startDepth < depth){
 				startDepth = depth;
 				mapY +=1;

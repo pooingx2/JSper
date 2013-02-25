@@ -3,7 +3,8 @@ var divide_color = ["#ffe4e1","#e6e6fa","#b0e0e6","#fff8dc","#87ceeb","#87cefa",
 var flow_color = ["#afeeee","#fffacd","#fff8dc","#f5f5dc"];
 var flowDatas = [];
 var flowDetails = [];
-var make_list = [[0,"bfunction","0",17,["this is caption1."],[10,2,"var a = 3","function b"],"Expression"]];
+var make_list = [];
+
 Raphael.fn.connection = function (obj1, obj2, line, bg) {
 	if (obj1.line && obj1.from && obj1.to) {
 		line = obj1;
@@ -568,7 +569,7 @@ function DrawGraphArrow(paper,start,end,type,color){
 		startPosY = start.attrs.y + start.attrs.height; 
 		endPosX = end.attrs.x + end.attrs.width/2;
 		endPosY = end.attrs.y;		
-	}else{
+	}else{ 
 
 	}
 	paper.arrow(startPosX,startPosY,endPosX,endPosY,5,color);
@@ -577,28 +578,28 @@ function drawDiagram(datas,realdata){
 	if(!datas.length == 0){
 		var graphs = [];
 		var colorful_graphs = [];
-		var chartlength =  datas[0].length * 100;// = 400;
-		var chartheight = datas.length * 40 + 200;// = 600;
-		$('#flowCont').html('');
-		$('#flowCont').width(chartlength).height(chartheight);		
-		$('#flowBG').width(chartlength).height(chartheight);
-		var DiagramRaphael = Raphael("flowCont", "100%", "100%");
-		DiagramRaphael.clear();
-		function dia_make_line( shapes_start, shapes_end ){ push_array( m_connection,r.connection( shapes_start, shapes_end, "#fff")); };
-		function dia_line_to_line( parent , child ){
-			m_diagram_rect.push( child );
-			m_diagram_line.push( DiagramRaphael.connection( parent, child, "#000", "#000|1") );
-		};
+		var graphs_text = [];
+		var array_heigth = datas.length;
+		var array_width = datas[0].length;
+		var chartlength =  array_width * 90;// = 400;
+		var chartheight = array_heigth * 40 + 200;// = 600;
 		var startnode;
 		var endnode;
 		var widthSize = 90;
 		var heightSize = 30;
+		$('#flowCont').html('');
+		$('#flowCont').width(chartlength).height(chartheight);		
+		$('#flowBG').width(chartlength).height(chartheight);
+
+		var DiagramRaphael = Raphael("flowCont", "100%", "100%");
+		DiagramRaphael.clear();
+		
 		startnode = DiagramRaphael.rect(65, 40, 50, 50, 5).attr({fill: "white", stroke: "black", "stroke-width": 2});
 		DiagramRaphael.text(90, 35 ,"start").attr({font: "10px Helvetica", opacity: 1.0,fill:"black",});											
-		for(var i=0 ; i < datas.length ; i++){
+		for(var i=0 ; i < array_heigth ; i++){
 			var logical = [];          
 			var colorful_logical=[];
-			for(var j=0 ; j < datas[0].length ; j++){
+			for(var j=0 ; j < array_width ; j++){
 				var index = datas[i][j];
 				if(index!="0"){
 					if(index=="if"||index=="elif"||index=="else"||index=="for"||index=="while"||index=="do"||index=="switch"||index=="try"||index=="catch"){
@@ -623,14 +624,14 @@ function drawDiagram(datas,realdata){
 			graphs.push(logical);
 			colorful_graphs.push(colorful_logical);
 
-			if(i==datas.length-1){
+			if(i==array_heigth-1){
 				endnode = DiagramRaphael.rect(65, 160 + i * heightSize, 50, 50, 5).attr({fill: "white", stroke: "black", "stroke-width": 2});
 				DiagramRaphael.text(90, 95 + i * (heightSize-15) ,"end").attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});											
 			}
 		}
 		try{
-			for(var i=0 ; i < datas.length ; i++){
-				for(var j=0 ; j < datas[0].length ; j++){
+			for(var i=0 ; i < array_heigth ; i++){
+				for(var j=0 ; j < array_width ; j++){
 					var argu = datas[i][j];
 					if(argu=="line"){
 						var casebreak = false;
@@ -645,19 +646,11 @@ function drawDiagram(datas,realdata){
 								}						
 							}
 						}
-//						if(i+1<datas.length){
-//							for(var k = 0;k<datas[0].length;k++){
-//								if(datas[i+1][k]=="line"){
-//									casebreak = true;
-//									break;
-//								}
-//							}
-//						}
 						if(!casebreak&&datas[i][j+1]=="line"){
 							DiagramRaphael.connections(graphs[i][j+1] , graphs[i][j], "black");					
 						}
 
-						if(i+1<datas.length&&datas[i+1][j]!="0"&&datas[i+1][j]!="R"){
+						if(i+1<array_heigth&&datas[i+1][j]!="0"&&datas[i+1][j]!="R"){
 							DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");										
 						}
 						for(var k=i-1;k>0;k--){
@@ -676,8 +669,8 @@ function drawDiagram(datas,realdata){
 						DiagramRaphael.connections(graphs[i+1][j], graphs[i][j] , "red");
 						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
 						DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
-						DiagramRaphael.text(65 + j * widthSize, (172 - 85) + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
-						DiagramRaphael.text(157 + j * widthSize, (135 - 65) + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
+						DiagramRaphael.text(65 + j * widthSize, 87 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 					}
 					else if(argu=="elif"){
 						for(var i1 = i-1;i1>0;i1--){
@@ -689,8 +682,8 @@ function drawDiagram(datas,realdata){
 						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
 						DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
 						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");
-						DiagramRaphael.text(65 + j * widthSize, (172 - 85) + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
-						DiagramRaphael.text(157 + j * widthSize, (135 - 65) + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
+						DiagramRaphael.text(65 + j * widthSize, 87 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 					}
 					else if(argu=="elifN"){
 						if(datas[i+1][j]!="0"){
@@ -711,8 +704,8 @@ function drawDiagram(datas,realdata){
 						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
 						DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
 						DiagramRaphael.connectionsleft(graphs[i+1][j+1] ,graphs[i][j], "black");				
-						DiagramRaphael.text(65 + j * widthSize, (172 - 85) + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
-						DiagramRaphael.text(157 + j * widthSize, (135 - 65) + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
+						DiagramRaphael.text(65 + j * widthSize, 87 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 					}else if(argu=="case"){
 						if(i>0&&graphs[i-1][j]!=""){
 							DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
@@ -720,8 +713,8 @@ function drawDiagram(datas,realdata){
 						DiagramRaphael.connections(graphs[i+1][j], graphs[i][j] , "red");
 						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i][j+1],"right","green");
 						DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i+1][j+1],"down","green");
-						DiagramRaphael.text(65 + j * widthSize, (180 - 85) + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
-						DiagramRaphael.text(157 + j * widthSize, (135 - 65) + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
+						DiagramRaphael.text(65 + j * widthSize, 95 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 						if(datas[i-1][j+1]=="line"&&datas[i-2][j+1]!="breakN"){
 							DrawGraphLine(DiagramRaphael,graphs[i-1][j+1],graphs[i][j+1],"down","black");
 						}
@@ -729,7 +722,7 @@ function drawDiagram(datas,realdata){
 					else if(argu=="break"){
 						DiagramRaphael.connections(graphs[i][j], graphs[i+1][j] , "black");						
 						DiagramRaphael.connections(graphs[i-1][j], graphs[i][j] , "black");	
-						if(i+2<datas.length&&datas[i+2][j]!="line"&&datas[i+2][j]!="0"){
+						if(i+2<array_heigth&&datas[i+2][j]!="line"&&datas[i+2][j]!="0"){
 							graphs[i][j-1] = DiagramRaphael.rect( 89 + (j-1) * widthSize, 160 + i * heightSize, 1, 1, 5 );
 							DrawGraphLine(DiagramRaphael,graphs[i][j-1],graphs[i][j],"right","red");							
 						}
@@ -741,11 +734,8 @@ function drawDiagram(datas,realdata){
 						DiagramRaphael.connections(graphs[i+1][j], graphs[i][j] , "red");
 						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i][j+1],"right","green");
 						DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i+1][j+1],"down","green");
-						DiagramRaphael.text(65 + j * widthSize, (180 - 85) + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
-						DiagramRaphael.text(157 + j * widthSize, (135 - 65) + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
-//						if((datas[i-1][j+1]=="line"&&datas[i-2][j+1]!="break")||datas[i-1][j+1]=="caseY"){
-//							DiagramRaphael.connections(graphs[i+1][j+1], graphs[i-2][j+1], "black");					
-//						}
+						DiagramRaphael.text(65 + j * widthSize, 95 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 					}else if(argu=="try"){
 						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");
 						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "black");				
@@ -778,8 +768,8 @@ function drawDiagram(datas,realdata){
 							DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
 							DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
 							DiagramRaphael.connectionsleft(graphs[i+1][j+1] ,graphs[i][j], "black");
-							DiagramRaphael.text(65 + j * widthSize, (172 - 85) + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
-							DiagramRaphael.text(157 + j * widthSize, (135 - 65) + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
+							DiagramRaphael.text(65 + j * widthSize, 87 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+							DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 						}
 						if(graphs[i+2][j]!=""){
 							DiagramRaphael.connections(graphs[i+2][j] ,graphs[i+1][j] , "black");					
@@ -796,13 +786,13 @@ function drawDiagram(datas,realdata){
 						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
 						DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
 						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");																	
-						DiagramRaphael.text(65 + j * widthSize, (172 - 85) + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
-						DiagramRaphael.text(157 + j * widthSize, (135 - 65) + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
+						DiagramRaphael.text(65 + j * widthSize, 87 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
+						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 
 					}
 					else if(argu=="1"){
 						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");
-						if(i+2<datas.length&&datas[i+2][j]!="0"){
+						if(i+2<array_heigth&&datas[i+2][j]!="0"){
 							DiagramRaphael.connections(graphs[i+2][j] , graphs[i][j], "black");					
 						}
 					}
@@ -836,33 +826,47 @@ function drawDiagram(datas,realdata){
 				}
 			}
 			DiagramRaphael.connections(graphs[0][0], startnode , "black");
-			DiagramRaphael.connections(graphs[datas.length-1][0] ,endnode ,"black");
+			DiagramRaphael.connections(graphs[array_heigth-1][0] ,endnode ,"black");
 
 			for(var i=0;i<realdata.length;i++){
 				for(var j=0;j<realdata[0].length;j++){
 					var index = datas[i][j];
 					var text = realdata[i][j];
 					if(text!="0"){	
-						if(index == "for"||index == "if"||index == "elif"||index == "else"||index=="do"||index=="switch"||index == "while"||index == "try"||index == "catch"){
-							DiagramRaphael.text(90 + j * widthSize, (149-75) + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																
-						}else if(index=="func"){
-							DiagramRaphael.text(90 + j * widthSize, (154-75) + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																					
-						}else if(index=="break"){
-							DiagramRaphael.text(70 + j * widthSize, (163-75) + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});																					
+						if(text.length > 15){
+							if(index == "for"||index == "if"||index == "elif"||index == "else"||index=="do"||index=="switch"||index == "while"||index == "try"||index == "catch"){
+								DiagramRaphael.text(90 + j * widthSize, 74 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																
+							}else if(index=="func"){
+								DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																					
+							}else if(index=="break"){
+								DiagramRaphael.text(70 + j * widthSize, 88 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});																					
+							}else{
+								DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});
+							}							
 						}else{
-							DiagramRaphael.text(90 + j * widthSize, (154-75) + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});
+							if(index == "for"||index == "if"||index == "elif"||index == "else"||index=="do"||index=="switch"||index == "while"||index == "try"||index == "catch"){
+								DiagramRaphael.text(90 + j * widthSize, 74 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																
+							}else if(index=="func"){
+								DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																					
+							}else if(index=="break"){
+								DiagramRaphael.text(70 + j * widthSize, 88 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});																					
+							}else{
+								DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});
+							}
+
 						}
 					}
 				}
 			}
 		}
 		catch(err){
-
+			
 		}	
 	}
 }
-
+var flowChartOver = function(i,j){
+	return function(){
+	}
+};
 $(document).ready(function() {
-	//darw_raphael(make_list);
-	//drawDiagram();
 });

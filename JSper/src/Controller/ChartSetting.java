@@ -10,6 +10,7 @@ class ChartSetting{
 	private String details[][];
 	private int mapX, mapY;
 	private int indexX;
+	private int depthcase;
 	
 	private String realOrigins[][];
 	private String realDetails[][];
@@ -53,7 +54,7 @@ class ChartSetting{
 		lengthY = depth+2;
 		chart = new String[lengthX][lengthY];
 		details = new String[lengthX][lengthY];
-
+		depthcase = 0;
 		int startDepth = 0;
 		for(int i=0;i<lengthX;i++){
 			for(int j=0;j<lengthY;j++){
@@ -71,10 +72,12 @@ class ChartSetting{
 			if( startDepth == depth){
 				mapX+=1;
 				setChart(subname);
+				depthcase = 0;
 			}else if(startDepth < depth){
 				startDepth = depth;
 				mapY +=1;
-				setChart(subname);				
+				setChart(subname);
+				depthcase = 1;
 			}else if(startDepth > depth){
 				for(int j=0;j<startDepth - depth;j++){
 					mapY -=1;					
@@ -82,14 +85,21 @@ class ChartSetting{
 				mapX +=2;
 				startDepth = depth;
 				setChart(subname);
+				depthcase=2;
 			}
 			mapX +=1;
 			indexX++;
-			if(k == value.length-1){
-				for(int te = 0; chart[mapX-1][te]!="0" ;te++){
-						chart[mapX][te] = "line";						
-				}
-			}
+		}
+		if( depthcase == 1 ){
+			mapX++;
+			for(int te = 0; chart[mapX-1][te]!="0"&&te<value.length ;te++){
+				chart[mapX][te] = "line";						
+			}			
+		}
+		else if( depthcase == 2||depthcase == 0 ){
+			for(int te = 0; chart[mapX-1][te]!="0"&&te<value.length ;te++){
+				chart[mapX][te] = "line";						
+			}			
 		}
 		for(int i=1;i<mapX+1;i++){
 			int checkup = 0;

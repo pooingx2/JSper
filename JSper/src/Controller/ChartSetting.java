@@ -51,7 +51,7 @@ class ChartSetting{
 		depth = depths;
 		value = array;
 		lengthX = value.length*3;
-		lengthY = depth+2;
+		lengthY = depth+3;
 		chart = new String[lengthX][lengthY];
 		details = new String[lengthX][lengthY];
 		depthcase = 0;
@@ -66,13 +66,14 @@ class ChartSetting{
 		for(int k=0;k<value.length;k++){
 			int depth = Integer.parseInt(value[indexX][0]);
 			String subname = value[indexX][2];
-			if(subname.length()>20){
-				subname = subname.substring(0,20);
+			if(subname.length()>16){
+				subname = subname.substring(0,16);
 			}
 			if( startDepth == depth){
 				mapX+=1;
 				setChart(subname);
 				depthcase = 0;
+				
 			}else if(startDepth < depth){
 				startDepth = depth;
 				mapY +=1;
@@ -90,13 +91,13 @@ class ChartSetting{
 			mapX +=1;
 			indexX++;
 		}
-		if( depthcase == 1 ){
+		if( depthcase == 2||depthcase == 1 ){
 			mapX++;
 			for(int te = 0; chart[mapX-1][te]!="0"&&te<value.length ;te++){
 				chart[mapX][te] = "line";						
 			}			
 		}
-		else if( depthcase == 2||depthcase == 0 ){
+		else if( depthcase == 0 ){
 			for(int te = 0; chart[mapX-1][te]!="0"&&te<value.length ;te++){
 				chart[mapX][te] = "line";						
 			}			
@@ -106,7 +107,7 @@ class ChartSetting{
 			int checkdown = 0;
 			boolean line = false;
 			for(int j=0;j<lengthY;j++){
-				if(chart[i][j]!="0"&&chart[i][j]!="break"){
+				if(chart[i][j]!="0"){
 					line = true;
 					break;
 				}
@@ -191,8 +192,8 @@ class ChartSetting{
 		chart[x+1][y+1] = "catchY";			}
 	private void breakchart(int x,int y,String change){
 		chart[x][y] = "break";
+		chart[x+1][y] = "breakN";
 		details[x][y] = change;
-		mapX--;
 	}
 	private void funcchart(int x,int y,String change){
 		chart[x][y] = "func";

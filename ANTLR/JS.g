@@ -24,19 +24,22 @@ sourceElement
 	;
 	
 // functions
+
 functionDeclaration
-	: functionComment? LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
+	: functionComment? LT!* 'function' LT!* functionName LT!* formalParameterList LT!* {type="Declaration";} functionBody 
 	;
 
 functionExpression
 	//: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
-	: functionComment? LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	: functionComment? LT!* 'var'? LT!* functionName LT!* '=' LT!* 'function' LT!* formalParameterList LT!* {type="Expression";} functionBody 
 	;
 
 functionAnonymous
-	: functionComment? '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
+	: functionComment? '(' LT!* 'function' LT!* formalParameterList LT!* {name="Anonymous"; type="Anonymous";} functionBody //LT!* ')'
+	//| functionComment? LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous"; System.out.println("functionAnonymous");} LT!* formalParameterList LT!* functionBody LT!* '())'
 	;
 	
+
 functionName
 	: 	
 	( Identifier )
@@ -45,9 +48,11 @@ functionName
 			//insertFunction();
 		}
 	;
+
 functionComments
 	: functionComment (LT!* functionComment)*
 	;
+	
 functionComment
 	: 	
 	( Comment LT!* )
@@ -61,8 +66,11 @@ formalParameterList
 	;
 
 functionBody
-	//: '{' {depth++;} LT!* sourceElements? LT!* {depth--;}'}'
-	: '{' {insertFunction(); depth++; System.out.println("depth++");} LT!* functionCode? LT!* {depth--; cList.add(new CodeMap(depth,code));System.out.println("depth--");}'}'
+	: '{' {insertFunction(); depth++;} LT!* sourceElements? {depth--; cList.add(new CodeMap(depth,code));} LT!*'}'
+	;
+
+functionBody1
+	: '{' LT!* functionCode? LT!*'}'
 	;
 
 functionCode
@@ -75,7 +83,7 @@ functionCode
 // statements
 statement
 	: statementBlock
-	| variableStatement
+	//| variableStatement
 	| emptyStatement
 	| expressionStatement
 	| ifStatement
@@ -89,7 +97,6 @@ statement
 	| throwStatement
 	| tryStatement
 	| LineComment
-	| Comment
 	;
 	
 statementBlock
@@ -114,7 +121,7 @@ variableDeclarationListNoIn
 	;
 	
 variableDeclaration
-	: Identifier LT!* initialiser?
+	: Identifier LT!* initialiser? { System.out.println("variableDeclaration") ;}
 	;
 
 variableDeclarationNoIn

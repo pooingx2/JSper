@@ -343,6 +343,8 @@ function draw_raphael( make_list_node ){
 
 	var clickAjax = function(i){
 		return function(){
+			
+			document.getElementById('runBtn').click();
 			var initWidth = parseInt($('.outer-center').css('width'));
 			var initHeight = parseInt($('.outer-center').css('height'));
 
@@ -382,8 +384,12 @@ function draw_raphael( make_list_node ){
 							$('.flowBG').show('fast', function(){
 							});
 						} else {
-							$('.flowBG').hide('fast');
+							if(i == before){
+								$('.flowBG').hide('fast');
+							}
 						}
+						
+						before = i;
 					})();
 				},
 				error:function() {

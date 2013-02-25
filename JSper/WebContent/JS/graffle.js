@@ -312,9 +312,9 @@ function draw_raphael( make_list_node ){
 					m_caption.show();
 				}
 				m_show_caption = false;				
-			}
+			};
 		};
-	}
+	};
 
 	var clickFuncAll = function(){
 		return function(){
@@ -336,19 +336,23 @@ function draw_raphael( make_list_node ){
 					m_shapes[i].attr({'fill-opacity':'0.9'});
 				}	
 				m_show_detail = true;
-			}				
+			};			
 		};
 	};
 
 
 	var clickAjax = function(i){
-		
 		return function(){
-			var s = i;
+			var argu;
+			if(i<0){
+				argu = editor.getValue();
+			}else{
+				argu = make_list[i][5];
+			}
 			$.ajax({   
 				type: "POST",   
 				url: "main",   
-				data: "option=function&code="+encodeURIComponent(make_list[s][5]),
+				data: "option=function&code="+encodeURIComponent(argu),
 				success: function(response) {
 					var flowDatas = [];
 					var flowDetails = [];					
@@ -362,12 +366,10 @@ function draw_raphael( make_list_node ){
 							flowDetails.push(test_ajax.stmDetail[t]);
 						}
 						drawDiagram(flowDatas,flowDetails);
-
-						before = s;
-						
+						before = i;		
 						$('.flowBG').show('fast', function(){});
 						
-					} else if (test_ajax!=null && $('.flowBG').css('display') == 'block' && s!=before) {
+					} else if (test_ajax!=null && $('.flowBG').css('display') == 'block' && i!=before) {
 						
 						document.getElementById('flowBG').style.display = 'none';
 						var length = test_ajax.stmOrgin.length;
@@ -377,22 +379,18 @@ function draw_raphael( make_list_node ){
 						for ( var t = 1; t < length; t++) {
 							flowDetails.push(test_ajax.stmDetail[t]);
 						}
-						drawDiagram(flowDatas,flowDetails);
-						
-						before = s;
-						
+						drawDiagram(flowDatas,flowDetails);						
+						before = i;
 						document.getElementById('flowBG').style.display = 'block';
 						
 					} else {
-						console.log('33');
-						//document.getElementById('flowBG').style.display = 'none';
 						$('.flowBG').hide('fast');
 					}
 				},
 				error:function() {
 					console.log('error');
 				}
-			})
+			});
 		};
 	};
 
@@ -440,12 +438,12 @@ function draw_raphael( make_list_node ){
 	};	
 	for(var i = 1, count = m_texts.length ; i < count ; i++){
 		m_texts[i].click( clickAjax(i-1) )
-	}
-	//m_texts[i].click(clickAjax(-1));
+	};
+	m_texts[0].click(clickAjax(-1));
 	m_caption_hides[0].attr({cursor: "pointer"}).click(clickFuncCaptionAll());
 	m_caption[0].attr({cursor: "pointer"}).click(unclickFuncCaptionAll());
 	$("#holder").draggable();
-	$("#holder").attr({cursor: "move"})
+	$("#holder").attr({cursor: "move"});
 
 	for(var k = 0;k<m_shapes.length;k++){
 		m_shapes[k].data("enclosedText",m_texts[k]);
@@ -858,13 +856,13 @@ var flowChartOver = function(array,i,j){
 	return function(){
 		array[i][j][0].hide();
 		array[i][j][1].show();
-	}
+	};
 };
 var flowChartUp= function(array,i,j){
 	return function(){
 		array[i][j][1].hide();
 		array[i][j][0].show();		
-	}
+	};
 };
 $(document).ready(function() {
 	

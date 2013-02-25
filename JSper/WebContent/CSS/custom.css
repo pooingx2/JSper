@@ -145,6 +145,11 @@
 		max-width: 80%;
     }
     
+    .flowCont{
+    	width: 100%;
+    	height: 900%;
+    }
+    
     #cflowBtn {
 	    z-index : 100;
         position: absolute;

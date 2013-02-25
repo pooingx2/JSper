@@ -4,7 +4,6 @@ options
 {
 	output=AST;
 	backtrack=true;
-	//k = 1;
 	memoize=true;
 }
 program

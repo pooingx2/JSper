@@ -4,7 +4,6 @@ options
 {
 	output=AST;
 	backtrack=true;
-	//k = 1;
 	memoize=true;
 }
 program
@@ -22,19 +21,20 @@ sourceElement
 	;
 	
 // functions
+
 functionDeclaration
-	: functionComments? LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
+	: {comment = "0";} functionComment? LT!* 'function' LT!* functionName LT!* formalParameterList LT!* {type="Declaration";} functionBody 
 	;
 
 functionExpression
-	//: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
-	: functionComments? LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	: {comment = "0";} functionComment? LT!* 'var'? LT!* functionName LT!* '=' LT!* 'function' LT!* formalParameterList LT!* {type="Expression";} functionBody 
 	;
 
 functionAnonymous
-	: functionComments? '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
+	: {comment = "0";} functionComment? '(' LT!* 'function' LT!* formalParameterList LT!* {name="Anonymous"; type="Anonymous"; insertFunction(); depth++;} functionBody1 {depth--; cList.add(new CodeMap(depth,code));}//LT!* ')'
 	;
 	
+
 functionName
 	: 	
 	( Identifier )
@@ -43,9 +43,11 @@ functionName
 			//insertFunction();
 		}
 	;
+
 functionComments
 	: functionComment (LT!* functionComment)*
 	;
+	
 functionComment
 	: 	
 	( Comment LT!* )
@@ -59,8 +61,11 @@ formalParameterList
 	;
 
 functionBody
-	//: '{' {depth++;} LT!* sourceElements? LT!* {depth--;}'}'
-	: '{' {insertFunction(); depth++; } LT!* functionCode? LT!* {depth--; cList.add(new CodeMap(depth,code));}'}'
+	: '{' {insertFunction(); depth++;} LT!* functionCode? {depth--; cList.add(new CodeMap(depth,code));} LT!*'}'
+	;
+
+functionBody1
+	: '{' LT!* functionCode? LT!*'}'
 	;
 
 functionCode
@@ -73,7 +78,7 @@ functionCode
 // statements
 statement
 	: statementBlock
-	| variableStatement
+	//| variableStatement
 	| emptyStatement
 	| expressionStatement
 	| ifStatement
@@ -87,7 +92,6 @@ statement
 	| throwStatement
 	| tryStatement
 	| LineComment
-	//| Comment
 	;
 	
 statementBlock
@@ -112,7 +116,7 @@ variableDeclarationListNoIn
 	;
 	
 variableDeclaration
-	: Identifier LT!* initialiser?
+	: Identifier LT!* initialiser? { System.out.println("variableDeclaration") ;}
 	;
 
 variableDeclarationNoIn
@@ -809,7 +813,7 @@ fragment UnicodeCombiningMark	// Any character in the Unicode categories "Non-sp
 	| '\u0962'..'\u0963'
 	| '\u0981'..'\u0983'
 	| '\u09BC'..'\u09C4'
-	| '\u09C7'..'\u09C8'
+		| '\u09C7'..'\u09C8'
 	| '\u09CB'..'\u09CD'
 	| '\u09D7'
 	| '\u09E2'..'\u09E3'
@@ -920,7 +924,8 @@ fragment UnicodeConnectorPunctuation	// Any character in the Unicode category "C
 	;
 	
 Comment
-	: '/*' (options {greedy=false;} : .)* '*/' //{$channel=HIDDEN;}
+	//: '/*' (options {greedy=false;} : .)* '*/' //{$channel=HIDDEN;}
+	: '/*' (options {greedy=false;} : .)* '*/'
 	;
 //Comment 
 	//: '/*'~(LT)*'/*'
@@ -931,7 +936,7 @@ Comment
 //    ;
     
 LineComment
-	: '//' ~(LT)* {System.out.println("test!!!!"); $channel=HIDDEN;}
+	: '//' ~(LT)* {$channel=HIDDEN;}
 	;
 
 LT

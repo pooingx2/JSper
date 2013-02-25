@@ -144,7 +144,7 @@ NonEscapeCharacter=17
 '('=34
 '-'=92
 'while'=43
-','=36
+','=35
 'default'=53
 'in'=45
 '-='=66
@@ -160,7 +160,7 @@ NonEscapeCharacter=17
 'typeof'=98
 '='=33
 'throw'=54
-')'=35
+')'=36
 '*='=62
 '%'=95
 'do'=42

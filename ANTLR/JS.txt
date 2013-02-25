@@ -1,3 +1,12 @@
+    private String name;		// function 이름
+    private int depth;			// function 깊이
+    private String parent;		// 부모 function 이름
+    private String comment;		// function 바로 위의 주석
+    private String type;		// function Type (Declaration, Expression, Anonymous)
+    private String code;		// function 내부의 코드
+    private List<Function> fList;		// function 리스트
+    private List<CodeMap> cList;		// function 내부 코드 리스트 (Before sorting)
+
     // parser 실행전 init()
     public void init(){
     	depth=0;

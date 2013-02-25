@@ -77,6 +77,17 @@ public class MainController extends HttpServlet {
 		//Ajax를 통해서 옵션과 코드를 받는다.
 		String option = request.getParameter("option");
 		String code = request.getParameter("code");
+
+		/*
+		for(int i=0;i<code.length();i++){
+			System.out.print(code.charAt(i));
+		}
+		
+    	String[] temp = code.split("\n");
+		for(int i=0;i<temp.length;i++){
+			if(temp[i].contains("//")) System.out.println(temp[i]);
+		}
+		*/
 		
 		// option 별로 다른 parser를 실행한다.
 		if(!(code.equals("0")) && !(code.equals("")) && code != null ) {

@@ -23,16 +23,16 @@ sourceElement
 	
 // functions
 functionDeclaration
-	: functionComment* LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
+	: functionComments? LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
 	;
 
 functionExpression
 	//: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
-	: functionComment* LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	: functionComments? LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
 	;
 
 functionAnonymous
-	: functionComment* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
+	: functionComments? '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
 	;
 	
 functionName
@@ -43,7 +43,9 @@ functionName
 			//insertFunction();
 		}
 	;
-
+functionComments
+	: functionComment (LT!* functionComment)*
+	;
 functionComment
 	: 	
 	( Comment LT!* )
@@ -84,6 +86,8 @@ statement
 	| switchStatement
 	| throwStatement
 	| tryStatement
+	| LineComment
+	//| Comment
 	;
 	
 statementBlock
@@ -116,7 +120,8 @@ variableDeclarationNoIn
 	;
 	
 initialiser
-	: '=' LT!* assignmentExpression
+	//: '=' LT!* assignmentExpression
+	: '=' LT!* expression
 	;
 
 initialiserNoIn
@@ -155,9 +160,15 @@ forStatement
 	;
 	
 forStatementInitialiserPart
+	: leftHandSideExpression
+	//| 'var' LT!* variableDeclarationNoIn
+	| 'var'? LT!* Identifier '=' expression
+	;
+	/*
 	: expressionNoIn
 	| 'var' LT!* variableDeclarationListNoIn
 	;
+	*/
 	
 forInStatement
 	: 'for' LT!* '(' LT!* forInStatementInitialiserPart LT!* 'in' LT!* expression LT!* ')' LT!* statement
@@ -220,7 +231,7 @@ finallyClause
 	: 'finally' LT!* statementBlock
 	;
 
-// expressions
+// expressionsComment
 expression
 	: assignmentExpression (LT!* ',' LT!* assignmentExpression)*
 	;
@@ -920,7 +931,7 @@ Comment
 //    ;
     
 LineComment
-	: '//' ~(LT)* //{$channel=HIDDEN;}
+	: '//' ~(LT)* {System.out.println("test!!!!"); $channel=HIDDEN;}
 	;
 
 LT

@@ -354,7 +354,7 @@ function draw_raphael( make_list_node ){
 			$.ajax({   
 				type: "POST",   
 				url: "main",   
-				data: "option=function&code="+make_list[i][5],
+				data: "option=function&code="+encodeURIComponent(make_list[i][5]),
 				success: function(response) {
 					console.log('succeess');
 					test_ajax = jQuery.parseJSON(response);

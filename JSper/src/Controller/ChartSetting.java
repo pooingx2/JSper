@@ -100,7 +100,7 @@ class ChartSetting{
 		else if( depthcase == 0 ){
 			for(int te = 0; chart[mapX-1][te]!="0"&&te<value.length ;te++){
 				chart[mapX][te] = "line";						
-			}			
+			}
 		}
 		for(int i=1;i<mapX+1;i++){
 			int checkup = 0;

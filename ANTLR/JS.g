@@ -17,25 +17,21 @@ sourceElements
 	
 sourceElement
 	: functionDeclaration
-	| functionExpression
-	| functionAnonymous
 	| statement
 	;
 	
 // functions
 
 functionDeclaration
-	: functionComment? LT!* 'function' LT!* functionName LT!* formalParameterList LT!* {type="Declaration";} functionBody 
+	: {comment = "0";} functionComment? LT!* 'function' LT!* functionName LT!* formalParameterList LT!* {type="Declaration";} functionBody 
 	;
 
 functionExpression
-	//: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
-	: functionComment? LT!* 'var'? LT!* functionName LT!* '=' LT!* 'function' LT!* formalParameterList LT!* {type="Expression";} functionBody 
+	: {comment = "0";} functionComment? LT!* 'var'? LT!* functionName LT!* '=' LT!* 'function' LT!* formalParameterList LT!* {type="Expression";} functionBody 
 	;
 
 functionAnonymous
-	: functionComment? '(' LT!* 'function' LT!* formalParameterList LT!* {name="Anonymous"; type="Anonymous";} functionBody //LT!* ')'
-	//| functionComment? LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous"; System.out.println("functionAnonymous");} LT!* formalParameterList LT!* functionBody LT!* '())'
+	: {comment = "0";} functionComment? '(' LT!* 'function' LT!* formalParameterList LT!* {name="Anonymous"; type="Anonymous"; insertFunction(); depth++;} functionBody1 {depth--; cList.add(new CodeMap(depth,code));}//LT!* ')'
 	;
 	
 
@@ -65,7 +61,7 @@ formalParameterList
 	;
 
 functionBody
-	: '{' {insertFunction(); depth++;} LT!* sourceElements? {depth--; cList.add(new CodeMap(depth,code));} LT!*'}'
+	: '{' {insertFunction(); depth++;} LT!* functionCode? {depth--; cList.add(new CodeMap(depth,code));} LT!*'}'
 	;
 
 functionBody1

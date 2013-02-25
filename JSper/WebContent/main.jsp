@@ -23,8 +23,9 @@
  <body id="allpage">
 	<div class="outer-center">
  		<div id="holder"></div>
- 		 		<!--Flowchart Div-->
- 		<div class="flowBG" id="flowBG">
+ 		 
+ 		 <!--Flowchart Div-->
+ 		<div class="flowBG">
  			<a id="cflowBtn" href="#"> close </a>
 			<div class="flowCont" id="flowCont">
 			</div>
@@ -48,20 +49,30 @@
 	<div class="textCode"></div>
 		<div id="editor">
 
+
+
+/*this is test foo*/
 function foo(items) {
+	/*this is test test 
+	function expression*/
 	var text = function(){}
+	/*this is test test1*/
 	function test1(){
 		function test2(){}
+		/*this is ANONYMOUS function*/
 		(function() {})()
 	}
 	var x = "All this is syntax highlighted"; 
 	var k = 0;
 }
-
+		/*this is test foo*/
 function fo3o(items) {
+    /*this is test test*/
 	function test(){}
+	/*this is test test1*/
 	function test1(){
 		function test2(){}
+		/*this is ANONYMOUS function*/
 		(function() {})()
 	}
 	var x = "All this is syntax highlighted"; 

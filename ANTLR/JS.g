@@ -48,7 +48,7 @@ functionComments
 	;
 functionComment
 	: 	
-	( Comment LT!* | LineComment LT!* )
+	( Comment LT!* )
 		{
 			comment = $Comment.text;
 		}
@@ -87,7 +87,7 @@ statement
 	| throwStatement
 	| tryStatement
 	| LineComment
-	| Comment
+	//| Comment
 	;
 	
 statementBlock
@@ -120,7 +120,8 @@ variableDeclarationNoIn
 	;
 	
 initialiser
-	: '=' LT!* assignmentExpression
+	//: '=' LT!* assignmentExpression
+	: '=' LT!* expression
 	;
 
 initialiserNoIn
@@ -159,9 +160,15 @@ forStatement
 	;
 	
 forStatementInitialiserPart
+	: leftHandSideExpression
+	//| 'var' LT!* variableDeclarationNoIn
+	| 'var'? LT!* Identifier '=' expression
+	;
+	/*
 	: expressionNoIn
 	| 'var' LT!* variableDeclarationListNoIn
 	;
+	*/
 	
 forInStatement
 	: 'for' LT!* '(' LT!* forInStatementInitialiserPart LT!* 'in' LT!* expression LT!* ')' LT!* statement
@@ -924,7 +931,7 @@ Comment
 //    ;
     
 LineComment
-	: '//' ~(LT)* //{$channel=HIDDEN;}
+	: '//' ~(LT)* {System.out.println("test!!!!"); $channel=HIDDEN;}
 	;
 
 LT

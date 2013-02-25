@@ -125,6 +125,8 @@ initialiser
 	//: '=' LT!* initialization
 	//: '=' LT!* assignmentExpression { stmText += "="+$assignmentExpression.text; }
 	: '=' LT!* {stmText+="=";} expression1
+	//: '=' LT!* {stmText+="=";} assinmentString {stmText+=$assinmentString.text}
+	//: '=' LT!* {stmText+="=";} assignmentExpression {stmText+=$assignmentExpression.text}
 	//: ('=' LT!* {stmText+="=";} initialization | '+=' LT!* {stmText+="+=";}initialization)
 	;
 
@@ -215,7 +217,7 @@ fluctuationOperation
 forInStatementInitialiserPart
 	: leftHandSideExpression
 	//| 'var' LT!* variableDeclarationNoIn
-	| 'var' LT!* Identifier '=' expression
+	: 'var'? LT!* Identifier '=' expression
 	;
 
 continueStatement

@@ -87,7 +87,8 @@ class ChartSetting{
 			indexX++;
 			if(k == value.length-1){
 				for(int te = 0; chart[mapX-1][te]!="0" ;te++){
-						chart[mapX][te] = "line";						
+					System.out.println("test : " + chart[mapX][te]);
+					chart[mapX][te] = "line";
 				}
 			}
 		}

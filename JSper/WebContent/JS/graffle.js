@@ -344,8 +344,6 @@ function draw_raphael( make_list_node ){
 
 	var clickAjax = function(i){
 		return function(){
-			
-			document.getElementById('runBtn').click();
 			var initWidth = parseInt($('.outer-center').css('width'));
 			var initHeight = parseInt($('.outer-center').css('height'));
 
@@ -385,12 +383,8 @@ function draw_raphael( make_list_node ){
 							$('.flowBG').show('fast', function(){
 							});
 						} else {
-							if(i == before){
-								$('.flowBG').hide('fast');
-							}
+							$('.flowBG').hide('fast');
 						}
-						
-						before = i;
 					})();
 				},
 				error:function() {
@@ -584,7 +578,6 @@ function drawDiagram(datas,realdata){
 	if(!datas.length == 0){
 		var graphs = [];
 		var colorful_graphs = [];
-		var graphs_text = [];
 		var array_heigth = datas.length;
 		var array_width = datas[0].length;
 		var chartlength =  array_width * 90;// = 400;
@@ -840,26 +833,18 @@ function drawDiagram(datas,realdata){
 					var text = realdata[i][j];
 					if(text!="0"){	
 						if(text.length > 15){
-							if(index == "for"||index == "if"||index == "elif"||index == "else"||index=="do"||index=="switch"||index == "while"||index == "try"||index == "catch"){
-								DiagramRaphael.text(90 + j * widthSize, 74 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																
-							}else if(index=="func"){
-								DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																					
-							}else if(index=="break"){
-								DiagramRaphael.text(70 + j * widthSize, 88 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});																					
-							}else{
-								DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});
-							}							
+							
 						}else{
-							if(index == "for"||index == "if"||index == "elif"||index == "else"||index=="do"||index=="switch"||index == "while"||index == "try"||index == "catch"){
-								DiagramRaphael.text(90 + j * widthSize, 74 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																
-							}else if(index=="func"){
-								DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																					
-							}else if(index=="break"){
-								DiagramRaphael.text(70 + j * widthSize, 88 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});																					
-							}else{
-								DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});
-							}
-
+							
+						}
+						if(index == "for"||index == "if"||index == "elif"||index == "else"||index=="do"||index=="switch"||index == "while"||index == "try"||index == "catch"){
+							DiagramRaphael.text(90 + j * widthSize, 74 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																
+						}else if(index=="func"){
+							DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});																					
+						}else if(index=="break"){
+							DiagramRaphael.text(70 + j * widthSize, 88 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});																					
+						}else{
+							DiagramRaphael.text(90 + j * widthSize, 79 + i * (heightSize-15) ,text).attr({font: "10px Helvetica", opacity: 1.0,fill:"black"});
 						}
 					}
 				}

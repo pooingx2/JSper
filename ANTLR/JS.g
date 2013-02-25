@@ -18,21 +18,23 @@ sourceElements
 	
 sourceElement
 	: functionDeclaration
+	| functionExpression
+	| functionAnonymous
 	| statement
 	;
 	
 // functions
 functionDeclaration
-	: functionComments? LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
+	: functionComment? LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
 	;
 
 functionExpression
 	//: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
-	: functionComments? LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	: functionComment? LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
 	;
 
 functionAnonymous
-	: functionComments? '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
+	: functionComment? '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
 	;
 	
 functionName
@@ -60,7 +62,7 @@ formalParameterList
 
 functionBody
 	//: '{' {depth++;} LT!* sourceElements? LT!* {depth--;}'}'
-	: '{' {insertFunction(); depth++; } LT!* functionCode? LT!* {depth--; cList.add(new CodeMap(depth,code));}'}'
+	: '{' {insertFunction(); depth++; System.out.println("depth++");} LT!* functionCode? LT!* {depth--; cList.add(new CodeMap(depth,code));System.out.println("depth--");}'}'
 	;
 
 functionCode
@@ -87,7 +89,7 @@ statement
 	| throwStatement
 	| tryStatement
 	| LineComment
-	//| Comment
+	| Comment
 	;
 	
 statementBlock
@@ -809,7 +811,7 @@ fragment UnicodeCombiningMark	// Any character in the Unicode categories "Non-sp
 	| '\u0962'..'\u0963'
 	| '\u0981'..'\u0983'
 	| '\u09BC'..'\u09C4'
-	| '\u09C7'..'\u09C8'
+		| '\u09C7'..'\u09C8'
 	| '\u09CB'..'\u09CD'
 	| '\u09D7'
 	| '\u09E2'..'\u09E3'
@@ -920,7 +922,8 @@ fragment UnicodeConnectorPunctuation	// Any character in the Unicode category "C
 	;
 	
 Comment
-	: '/*' (options {greedy=false;} : .)* '*/' //{$channel=HIDDEN;}
+	//: '/*' (options {greedy=false;} : .)* '*/' //{$channel=HIDDEN;}
+	: '/*' (options {greedy=false;} : .)* '*/'
 	;
 //Comment 
 	//: '/*'~(LT)*'/*'
@@ -931,7 +934,7 @@ Comment
 //    ;
     
 LineComment
-	: '//' ~(LT)* {System.out.println("test!!!!"); $channel=HIDDEN;}
+	: '//' ~(LT)* {$channel=HIDDEN;}
 	;
 
 LT

@@ -80,6 +80,7 @@ statement
 	| switchStatement
 	| throwStatement
 	| tryStatement
+	| LineComment
 	;
 	
 statementBlock
@@ -217,7 +218,7 @@ fluctuationOperation
 forInStatementInitialiserPart
 	: leftHandSideExpression
 	//| 'var' LT!* variableDeclarationNoIn
-	: 'var'? LT!* Identifier '=' expression
+	| 'var'? LT!* Identifier '=' expression
 	;
 
 continueStatement
@@ -963,9 +964,9 @@ fragment UnicodeConnectorPunctuation	// Any character in the Unicode category "C
 Comment
 	: '/*' (options {greedy=false;} : .)* '*/' //{$channel=HIDDEN;}
 	;
-    
+
 LineComment
-	: '//' ~(LT)* //{$channel=HIDDEN;}
+	: '//' ~(LT)* {$channel=HIDDEN;}
 	;
 
 LT

@@ -64,12 +64,13 @@
  			<div><a href="#" onClick="setSize(4); return false;">-</a></div>
 		</div>
 		<select class="codeSelector" onChange = "javascript:selectCodeEvent(this)">
-			  <option value="new">New</option>
+			  <option value="new" selected>New</option>
 			  <option value="Random_1">Random_1</option>
-			  <option value="CheckEqualSort" selected>CheckEqualSort</option>
+			  <option value="CheckEqualSort">CheckEqualSort</option>
 			  <option value="SelectionSort">SelectionSort</option>
 			  <option value="QuickSort">QuickSort</option>
 			  <option value="DFS">DFS</option>
+			  <option value="AstarAlgorithm">AstarAlgorithm</option>
 		</select>
 		
 		<select class="skinSelector" onChange = "javascript:selectEvent(this)">
@@ -234,16 +235,11 @@
 			editor.setTheme("ace/theme/" + selectObj.value);
 		}
 		
-		selectCodeEvent = function (selectObj) {		
-			$.ajax({
-				type : "POST",
-				url : "main",
-			  	data: "option=file&code="+encodeURIComponent(selectObj.value),
-				success : function(response) {
-					console.log('succeess');
-				},
-				error : function() { console.log('error'); }
-				});
+		selectCodeEvent = function (selectObj) {	
+			$.post('main', { "option=file&code=": encodeURIComponent(selectObj.value) },
+			function(data) {
+				editor.setValue(data); 
+			});
 		}
 		
 		selectDraw = function (selectValue) {

@@ -21,7 +21,7 @@
 <script type="text/javascript" src="JS/jquery.layout-latest.js"></script>
 </head>
  <body id="allpage">
-	<div class="outer-center">
+	<div class="outer-center" id="outer-center">
  		<div id="holder"></div>
  		 
  		 <!--Flowchart Div-->
@@ -45,18 +45,32 @@
 		</select>
 	</div>
 
-	<div class="outer-west">
+	<div class="outer-west" id="outer-west">
 	<div class="textCode"></div>
 		<div id="editor">
 
-
-
 /*this is test foo*/
 function foo(items) {
-    var text = function(){}
+    var text = function(){
+        var k =0;
+        function kff(){}
+    }
     function test1(){
-        function test2(){}
-    	(function() {})()
+        function test2(){
+            var k=0;
+            var l = 0;
+        }
+        (function() {
+            function ktest(){
+                
+            }
+         if(l>3){
+             for(var i=0;i<4;i++){
+                 if(d>3){d++;}
+                 else{break;}
+             }
+         }   
+    	})()
 	}
     for(j=0 ; j < datas[0].length ; j++){
     			var index = datas[i][j];
@@ -157,8 +171,7 @@ function fo3o(items) {
 	var x = "All this is syntax highlighted"; 
 	var k = 0;
 }
-		
-		
+	
 		
 		</div>
 		<div class="findBG">
@@ -215,6 +228,9 @@ function fo3o(items) {
 <script src="JS/raphael-min.js"></script>
 <script src="JS/graffle.js"></script>
 <script type="text/javascript">
+$("#runBtn").click(function userViewSub(){
+	$('#left_up').css({"height":$('#outer-west').css("height") - 7});
+});
 	$("#runBtn").click(function userViewSub(){
 		$('.lineBG').show(false);
 		var eLine = $(".ace_error").length;

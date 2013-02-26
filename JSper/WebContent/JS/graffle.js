@@ -408,7 +408,7 @@ function draw_raphael( make_list_node ){
 		if(list_node_text[2] == "0"){ push_arrays( 0, list_node_text, m ); }
 		else{
 			for( var k = m - 1 ; k >= 0 ; k-- ){
-				if( make_list_node[k][1] == list_node_text[2] ){ push_arrays( k+1, list_node_text, m ); break;}
+				if(( make_list_node[k][0] == (list_node_text[0]-1) )&& make_list_node[k][1] == list_node_text[2] ){ push_arrays( k+1, list_node_text, m ); break;}
 			}
 		}
 	};

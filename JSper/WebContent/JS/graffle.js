@@ -491,8 +491,7 @@ function drawDiagram(datas,realdata){
 					if(index=="if"||index=="elif"||index=="else"||index=="for"||index=="while"||index=="do"||index=="switch"||index=="try"||index=="catch"){
 						logical.push(DiagramRaphael.rect( 89 + j * widthSize, 155 + i * heightSize, 1, 1, 5 ));
 						colorful_logical.push(DiagramRaphael.rhombus(30 + j * widthSize, 145 + i * heightSize,"white"));
-					}
-					else if(index=="1"||index=="case"||index=="default"||index=="func"){
+					}else if(index=="1"||index=="case"||index=="default"||index=="func"){
 						logical.push(DiagramRaphael.rect( 54 + j * widthSize, 135 + i * heightSize, 70, 40, 5 ));					
 						colorful_logical.push("");
 					}else if(index=="R"){

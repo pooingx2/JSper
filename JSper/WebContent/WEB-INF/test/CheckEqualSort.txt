@@ -1,4 +1,3 @@
-/*check equal*/
 function check_equal(a,b){
 	for( var m=0 ; m < b.length ; m++ ){
 		for( var k=0 ; k < a.length ; k++ ){

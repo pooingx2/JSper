@@ -65,6 +65,7 @@ public class MainController extends HttpServlet {
 	
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
 		
@@ -94,14 +95,37 @@ public class MainController extends HttpServlet {
 		//Ajax를 통해서 옵션과 코드를 받는다.
 		String option = request.getParameter("option");
 		String code = request.getParameter("code");
-		
-		// option 별로 다른 parser를 실행한다.
+
+		// file 이름을 파라미터로 받은경우 해당 file의 코드를 변경
+		// option 별로 다른 함수를 실행한다.
 		if(!(code.equals("0")) && !(code.equals("")) && code != null ) {
-			if(option.equals("total"))
+			if(option.equals("file"))	// file : 변경할 샘플코드를 적용하여 refresh
+				changeCode(code, request, response);
+			else if(option.equals("total"))		// 전체 코드를 함수 계층구조로 파싱
 				TotalParser(code, request, response);
-			else if(option.equals("function"))
+			else if(option.equals("function"))		// 함수 내부코드를 flowchart로 파싱
 				functionParser(code, request, response);
 		}
+	}
+
+
+	private void changeCode(String file, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String filename = "/WEB-INF/test/"+file+".txt";
+		ServletContext context = getServletContext();
+		InputStream input = context.getResourceAsStream(filename);
+
+		String code="";
+		String temp="";
+		
+		if(input != null){
+			InputStreamReader isr = new InputStreamReader(input);
+			BufferedReader reader = new BufferedReader(isr);
+			while((temp = reader.readLine()) != null){
+				code += temp+'\n';
+			}
+		}
+		PrintWriter writer = response.getWriter();
+		writer.write(code);
 	}
 
 

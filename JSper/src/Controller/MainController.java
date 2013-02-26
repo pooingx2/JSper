@@ -128,6 +128,12 @@ public class MainController extends HttpServlet {
 			
 			// flow chart를 위한 코드를 뽑아 함수에 매칭시킨다.
 			sortList(cList, 0);
+			
+
+			System.out.println("test!!!!!!!!!!!!!!!!!!!");
+			for(CodeMap item : sortList){
+				System.out.println(item.getCode());
+			}
 
 			for(int i=0; i<sortList.size();i++){
 				fList.get(i).setCode(sortList.get(i).getCode());

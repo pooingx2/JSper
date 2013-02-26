@@ -24,8 +24,8 @@
 
 <body id="allpage">
 	<div id="introPage" style="position:absolute; top: 0px; left: 0px; width:100%; height:100%; ">
-		<img src="./img/desc_01.png" style="position:fixed; top: 130px; left: 140px; width: 80%; z-index:99"/>
-		<img src="./img/desc_02.png" style="position:fixed; bottom: 200px; left: 283px; width:60%; z-index:99" />
+		<img src="./img/desc_01.png" style="position:fixed; top: 130px; left: 220px; height: 25%; z-index:99"/>
+		<img src="./img/desc_02.png" style="position:fixed; bottom: 200px; left: 283px; height:25%; z-index:99" />
 	</div>
 	<div class="outer-center">
 		
@@ -246,8 +246,8 @@
 		selectCodeEvent = function (selectObj) {	
 			$.post('main', { option:"file" ,code : encodeURIComponent(selectObj.value) },
 			function(data) {
-				var test_code = jQuery.parseJSON(response);
 				editor.setValue(data); 
+				editor.gotoLine(1);
 			});
 		}
 		

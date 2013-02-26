@@ -62,12 +62,22 @@
 			<div>
 				<input class="findInput" id="replaceWith" type="text" placeholder=" Replace with"></input>
 				<a id="findBtn_2" href="#">Replace</a>
-			</div>
+			</div>	
 		</div>
 		<div class="zoomBG">
 			<div><a href="#" onClick="setSize(3); return false;">+</a></div>
  			<div><a href="#" onClick="setSize(4); return false;">-</a></div>
 		</div>
+		<select class="codeSelector" onChange = "javascript:selectCodeEvent(this)">
+			  <option value="new" selected>New</option>
+			  <option value="Random_1">Random_1</option>
+			  <option value="CheckEqualSort">CheckEqualSort</option>
+			  <option value="SelectionSort">SelectionSort</option>
+			  <option value="QuickSort">QuickSort</option>
+			  <option value="DFS">DFS</option>
+			  <option value="AstarAlgorithm">AstarAlgorithm</option>
+		</select>
+		
 		<select class="skinSelector" onChange = "javascript:selectEvent(this)">
 			  <option value="ambiance">Ambiance</option>
 			  <option value="chrome" selected>Chrome</option>
@@ -78,6 +88,7 @@
 			  <option value="monokai">Monokai</option>
 			  <option value="textmate">Textmate</option>
 		</select>
+		
 	</div>
 <!-- <div class="outer-east">Outer East</div> -->
 
@@ -108,9 +119,6 @@
 <script src="JS/raphael-min.js"></script>
 <script src="JS/graffle.js"></script>
 <script type="text/javascript">
-$("#runBtn").click(function userViewSub(){
-	$('#left_up').css({"height":$('#outer-west').css("height") - 7});
-});
 	$("#runBtn").click(function userViewSub(){
 		$('.lineBG').show(false);
 		var eLine = $(".ace_error").length;
@@ -211,7 +219,6 @@ $("#runBtn").click(function userViewSub(){
 		var codeBtn = document.getElementById('editor');
 			codeBtn.style.fontSize='12px';
 		setSize = function( n ) {
-			
 			switch (n) {
 				case 1:
 					scaleLarge();
@@ -235,6 +242,14 @@ $("#runBtn").click(function userViewSub(){
 		selectEvent = function (selectObj) {		
 			editor.setTheme("ace/theme/" + selectObj.value);
 		}
+		
+		selectCodeEvent = function (selectObj) {	
+			$.post('main', { option:"file" ,code : encodeURIComponent(selectObj.value) },
+			function(data) {
+				editor.setValue(data); 
+			});
+		}
+		
 		selectDraw = function (selectValue) {
 				$('.lineBG').hide(false);
 			if ( selectValue.value == 'Divide'){
@@ -244,5 +259,5 @@ $("#runBtn").click(function userViewSub(){
 		}
 	}
 
-	</script>
+</script>
 	</html>

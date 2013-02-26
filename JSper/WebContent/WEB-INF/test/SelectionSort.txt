@@ -1,0 +1,23 @@
+/*this is selection sort*/
+function SelectionSort(argu){
+	var sort = argu;
+	var temp = 0;
+	for (var i = 0; i< sort.length -1; i++){
+ 		for (var j = i + 1; j < sort.length; j++){
+	 		if (sort[i] > sort[j])
+  			{
+  				temp = sort[i];
+  				sort[i] = sort[j];
+  				sort[j] = temp;
+  			}
+ 		}
+	}
+	for ( var i = 0; i < sort.length; i++){
+ 	console.log(sort[i] + " ");
+	}
+}
+
+function main(){
+	array = [44,55,66,73,74,5,45,63,23];
+	SelectionSort(array);
+}

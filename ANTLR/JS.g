@@ -35,7 +35,9 @@ functionExpression
 	;
 	
 functionAnonymous
-	: LT!* functionComment* LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* ('('  LT!* ')')?
+//u.edge.forEach(function(v,k) {
+	: LT!* functionComment* LT!* (Identifier LT!*)? '(' LT!* 'function' { System.out.println("test"); name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* ('('  LT!* ')')?
+	//| LT!* functionComment* LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* ('('  LT!* ')')?
 	| LT!* functionComment* LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!*
 	| LT!* functionComment* LT!* 'var'? LT!* Identifier LT!* '=' LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* ('('  LT!* ')')?
 	;

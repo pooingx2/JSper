@@ -1,0 +1,305 @@
+// 0 맵편집모드
+// 1 시작점 설정
+// 2 끝점 설정
+
+var mode=0;
+function hide_button(step){
+    if(document.getElementById('is_start').value=='0')
+	{
+		alert("시작점을 선택하세요.");
+		return false;
+	}
+	if(document.getElementById('is_end').value=='0')
+	{
+		alert("끝점을 선택하세요.")
+			return false;
+	}
+
+	document.getElementById('map_edit_button').disabled=true;
+	document.getElementById('set_start_button').disabled=true;
+	document.getElementById('set_end_button').disabled=true;
+
+	if(step=="oneshot")
+	{
+		document.getElementById('onestep_button').disabled=true;
+		document.getElementById('oneshot_button').disabled=true;
+	}
+
+	mode=3;
+	astar(document.getElementById('next_x').value,document.getElementById('next_y').value,step);
+}
+
+function show_button(){
+	document.getElementById('map_edit_button').disabled=false;
+	document.getElementById('set_start_button').disabled=false;
+	document.getElementById('set_end_button').disabled=false;
+	document.getElementById('algo_count').value=0;
+	document.getElementById('length').value=0;
+	document.getElementById('onestep_button').disabled=false;
+	document.getElementById('oneshot_button').disabled=false;
+	reset_map();
+}
+
+function editMode(id)
+{
+	mode=id;
+}
+
+function clickTogle(i,j)
+{
+	if(mode==0 && !is_color(i,j,"#ff0000"))
+	{
+		if(!is_color(i,j,"#000000"))
+			set_color(i,j,"#000000");
+		else
+			set_color(i,j,"#ffffff");
+	}
+	else if(mode==1 && !is_color(i,j,"#0000ff"))
+	{
+		before_x=document.getElementById('start_x').value;
+		before_y=document.getElementById('start_y').value;
+		if(document.getElementById('is_start').value=="1")
+		{
+			set_color(before_x,before_y,"#ffffff");
+			document.getElementById('ggg').rows[before_y].cells[before_x].innerHTML='&nbsp;';
+			document.getElementById('pass').rows[before_y].cells[before_x].innerHTML='&nbsp;';
+		}
+		document.getElementById('is_start').value="1"
+		document.getElementById('start_x').value=i;
+		document.getElementById('start_y').value=j;
+		document.getElementById('next_x').value=i;
+		document.getElementById('next_y').value=j;
+		set_color(i,j,"#ff0000");
+		document.getElementById('ggg').rows[j].cells[i].innerHTML=0;
+		document.getElementById('pass').rows[j].cells[i].innerHTML='★';
+	}
+	else if(mode==2 && !is_color(i,j,"#ff0000"))
+	{
+		before_x=document.getElementById('end_x').value;
+		before_y=document.getElementById('end_y').value;
+		if(document.getElementById('is_end').value=="1")
+		{
+			set_color(before_x,before_y,"#ffffff");
+			document.getElementById('pass').rows[before_y].cells[before_x].innerHTML='&nbsp;';
+		}
+		document.getElementById('is_end').value="1"
+		document.getElementById('end_x').value=i;
+		document.getElementById('end_y').value=j;
+		set_color(i,j,"#0000ff");
+		document.getElementById('pass').rows[j].cells[i].innerHTML='☆';
+	}
+}
+
+function astar(x,y,step)
+{
+	cnt=0;
+	if(!is_block(x-1,y-1) && !is_block(x-1,y) && !is_block(x,y-1))
+	{
+		set_1(x-1,y-1,'#00ff00','↖');
+	}
+	if(!is_block(x,y-1))
+	{
+		set_1(x,y-1,'#00ff00','↑');
+	}
+	if(!is_block(x-1+2,y-1) && !is_block(x,y-1) && !is_block(x-0+1,y))
+	{
+		set_1(x-1+2,y-1,'#00ff00','↗');
+	}
+	if(!is_block(x-1,y))
+	{
+		set_1(x-1,y,'#00ff00','←');
+	}
+	if(!is_block(x-0+1,y))
+	{
+		set_1(x-0+1,y,'#00ff00','→');
+	}
+	if(!is_block(x-1,y-0+1) && !is_block(x-1,y) && !is_block(x,y-0+1))
+	{
+		set_1(x-1,y-0+1,'#00ff00','↙');
+	}
+	if(!is_block(x,y-0+1))
+	{
+		set_1(x,y-0+1,'#00ff00','↓');
+	}
+	if(!is_block(x-0+1,y-0+1) && !is_block(x,y-0+1) && !is_block(x-0+1,y))
+	{
+		set_1(x-0+1,y-0+1,'#00ff00','↘');
+	}
+
+	mile=99999;
+
+	for(j=0; j<10; j++)
+	{
+		for(i=0; i<10; i++)
+		{			
+			if(mile>=document.getElementById('fff').rows[j].cells[i].innerHTML*1 && !is_block(i,j))
+			{
+				mile=document.getElementById('fff').rows[j].cells[i].innerHTML*1;
+				document.getElementById('next_x').value=i;
+				document.getElementById('next_y').value=j;
+				document.getElementById('length').value=mile;
+			}
+
+			if(document.getElementById('world_map').rows[j].cells[i].bgColor=="#00ff00")
+				cnt=1;
+		}
+	}
+	if(cnt==0)
+	{
+		alert("길이 막혀있습니다.");
+		return false;
+	}
+	if(document.getElementById('end_x').value==document.getElementById('next_x').value && document.getElementById('end_y').value==document.getElementById('next_y').value)
+	{
+		alert("길을 찾았습니다.");
+		set_color(document.getElementById('end_x').value,document.getElementById('end_y').value,'#0000ff');
+		astar_print(document.getElementById('end_x').value,document.getElementById('end_y').value);
+		document.getElementById('length').value=document.getElementById('fff').rows[document.getElementById('end_y').value].cells[document.getElementById('end_x').value].innerHTML;
+		document.getElementById('pass').rows[document.getElementById('end_y').value].cells[document.getElementById('end_x').value].innerHTML='☆';
+		return true;
+	}
+	else
+	{
+		next_xx=document.getElementById('next_x').value;
+		next_yy=document.getElementById('next_y').value;
+		set_color(next_xx,next_yy,'#ffff00');
+		document.getElementById('algo_count').value=1+document.getElementById('algo_count').value*1;
+		if(step=="oneshot")
+			setTimeout("astar(document.getElementById('next_x').value,document.getElementById('next_y').value,'oneshot')",100);
+	}
+}
+
+function is_block(x,y)
+{
+	if(x >=0 && y >=0 && x < 10 && y < 10)
+	{
+		if(document.getElementById('world_map').rows[y].cells[x].bgColor=="#000000"||document.getElementById('world_map').rows[y].cells[x].bgColor=="#ff0000"||document.getElementById('world_map').rows[y].cells[x].bgColor=="#ffff00")
+			return true;
+		else
+			return false;
+	}
+	else
+	{
+		return true;
+	}
+}
+
+function set_color(x,y,color)
+{
+	document.getElementById('world_map').rows[y].cells[x].bgColor=color;
+}
+
+function is_color(x,y,color)
+{
+	if(document.getElementById('world_map').rows[y].cells[x].bgColor==color)
+		return true;
+	else
+		return false;
+}
+
+function set_ggg(x,y,pass)
+{
+	ggg_value=Math.abs(document.getElementById('next_x').value-x)+Math.abs(document.getElementById('next_y').value-y);
+	if(ggg_value==2)
+		ggg_value=1.4;
+	ggg_value=ggg_value+document.getElementById('ggg').rows[document.getElementById('next_y').value].cells[document.getElementById('next_x').value].innerHTML*1;
+
+	if(isNaN(document.getElementById('ggg').rows[y].cells[x].innerHTML))
+		next_value=99999;
+	else
+		next_value=document.getElementById('ggg').rows[y].cells[x].innerHTML*1;
+
+	if(ggg_value<next_value)
+	{
+		document.getElementById('ggg').rows[y].cells[x].innerHTML=ggg_value.toFixed(1);
+		set_pass(x,y,pass);
+	}
+}
+
+function set_hhh(x,y)
+{
+	x_length=Math.abs(document.getElementById('end_x').value-x);
+	y_length=Math.abs(document.getElementById('end_y').value-y);
+
+	if(document.getElementById('select_method').value=="xy_length")
+	{
+		hhh_value=x_length+y_length;
+	}
+	else if(document.getElementById('select_method').value=="u_length")
+	{
+		hhh_value=Math.sqrt(Math.pow(x_length,2)+Math.pow(y_length,2));
+	}
+	document.getElementById('hhh').rows[y].cells[x].innerHTML=hhh_value.toFixed(1);
+}
+
+function set_fff(x,y)
+{
+	fff_value=document.getElementById('ggg').rows[y].cells[x].innerHTML*1+document.getElementById('hhh').rows[y].cells[x].innerHTML*1;
+	document.getElementById('fff').rows[y].cells[x].innerHTML=fff_value.toFixed(1);
+}
+
+function set_pass(x,y,pass)
+{
+	document.getElementById('pass').rows[y].cells[x].innerHTML=pass;
+}
+
+function set_1(x,y,color,pass)
+{
+	set_color(x,y,color);
+	set_ggg(x,y,pass);
+	set_hhh(x,y);
+	set_fff(x,y);
+}
+
+function astar_print(x,y)
+{
+	document.getElementById('world_map').rows[y].cells[x].bgColor="#00ffff";
+	if(document.getElementById('pass').rows[y].cells[x].innerHTML=='★')
+	{
+		document.getElementById('world_map').rows[document.getElementById('start_y').value].cells[document.getElementById('start_x').value].bgColor="#ff0000";
+		document.getElementById('world_map').rows[document.getElementById('end_y').value].cells[document.getElementById('end_x').value].bgColor="#0000ff";
+		return true;
+	}
+
+	switch (document.getElementById('pass').rows[y].cells[x].innerHTML)
+	{
+		case '↖' :	x++;	y++;	break;
+		case '↑' :			y++;	break;
+		case '↗' :	x--;	y++;	break;
+		case '←' :	x++;			break;
+		case '→' :	x--;			break;
+		case '↙' : x++;	y--;	break;
+		case '↓' :			y--;	break;
+		case '↘' : x--;	y--;	break;	
+		default: break;
+	}
+
+	astar_print(x,y);
+}
+
+function reset_map(){
+	for(j=0; j<10; j++)
+	{
+		for(i=0; i<10; i++)
+		{
+			document.getElementById('ggg').rows[j].cells[i].innerHTML="&nbsp;";
+			document.getElementById('hhh').rows[j].cells[i].innerHTML="&nbsp;";
+			document.getElementById('fff').rows[j].cells[i].innerHTML="&nbsp;";
+			document.getElementById('pass').rows[j].cells[i].innerHTML="&nbsp;";
+			if(document.getElementById('world_map').rows[j].cells[i].bgColor=="#ffff00" || document.getElementById('world_map').rows[j].cells[i].bgColor=="#00ffff" || document.getElementById('world_map').rows[j].cells[i].bgColor=="#00ff00")
+				document.getElementById('world_map').rows[j].cells[i].bgColor="#ffffff";
+		}
+	}
+	document.getElementById('ggg').rows[document.getElementById('start_y').value].cells[document.getElementById('start_x').value].innerHTML=0;
+	document.getElementById('pass').rows[document.getElementById('start_y').value].cells[document.getElementById('start_x').value].innerHTML='★';
+	document.getElementById('pass').rows[document.getElementById('end_y').value].cells[document.getElementById('end_x').value].innerHTML='☆';
+	document.getElementById('next_x').value=document.getElementById('start_x').value;
+	document.getElementById('next_y').value=document.getElementById('start_y').value;
+}
+
+function view_process(){
+	if(document.getElementById('process').style.display=="none")
+		document.getElementById('process').style.display="block";
+	else if(document.getElementById('process').style.display=="block")
+		document.getElementById('process').style.display="none";
+}

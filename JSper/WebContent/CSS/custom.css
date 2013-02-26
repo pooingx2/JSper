@@ -7,7 +7,15 @@
 	text-align: center;
 	z-index: 100;
 }
-
+.codeSelector {
+	position: absolute;
+	background-color: #FFF;
+	right: 20px;
+	bottom: 90px;
+	width: 80px;
+	text-align: center;
+	z-index: 100;
+}
 .drawSelector {
 	position: fixed;
 	background-color: #FFF;

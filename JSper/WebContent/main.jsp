@@ -210,7 +210,6 @@
 		var codeBtn = document.getElementById('editor');
 			codeBtn.style.fontSize='12px';
 		setSize = function( n ) {
-			
 			switch (n) {
 				case 1:
 					scaleLarge();
@@ -236,7 +235,7 @@
 		}
 		
 		selectCodeEvent = function (selectObj) {	
-			$.post('main', { "option=file&code=": encodeURIComponent(selectObj.value) },
+			$.post('main', { option:"file" ,code : encodeURIComponent(selectObj.value) },
 			function(data) {
 				editor.setValue(data); 
 			});

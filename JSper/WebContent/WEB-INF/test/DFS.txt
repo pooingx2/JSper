@@ -1,0 +1,56 @@
+var BFSstack = [];
+/*this function is not recursive DFS function*/
+function DFSsearch( start_index , goal_index ,graphdata){
+    	var start = start_index;
+		var graph_data = graphdata;
+		var graph_length = graph_data.length;
+		var graph_bool = [];
+		for(var i=0;i<graph_length;i++){
+			graph_bool.push(false);
+		}		 
+		var goal = goal_index;
+		while( true ){
+			console.log(start);
+			if( ! graph_bool[start] ){
+				for( var n=0 ; n < graph_data[start].length ; n++ ){
+					BFSstack.push(graph_data[start][n]);
+				}
+				graph_bool[start] = true;
+			}
+			if( BFSstack.isEmpty() ){
+				console.log("fail");
+				break;
+			}
+			start = BFSstack.pop();
+			if( start == goal ){
+				System.out.println("goal");
+				break;
+			}
+		}
+	}
+var graph_datas = [];
+//this function is recursive DFS function
+function DFS( position, position1, test ){
+	already = test;
+	already[position] = true;
+	while( position1 < graph_datas[position].length ){
+		var value = graph_datas[position][position1];
+		console.log( position +" , "+ position1 +" , "+ value );
+		if( value == goal){
+			console.log("find");
+			break;
+		}
+		else{
+			if( !already[value] ){
+				DFS( value , position1 ,already );					
+				break;
+			}
+		}
+		position1++;
+    }
+}
+/*this function is main function*/
+function main(){
+    var graph = [[1,4,2],[2],[3],[4],[1,5],[0]];
+    DFSsearch(1,5,graph);
+}

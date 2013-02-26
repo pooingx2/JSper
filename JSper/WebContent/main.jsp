@@ -57,12 +57,21 @@
 			<div>
 				<input class="findInput" id="replaceWith" type="text" placeholder=" Replace with"></input>
 				<a id="findBtn_2" href="#">Replace</a>
-			</div>
+			</div>	
 		</div>
 		<div class="zoomBG">
 			<div><a href="#" onClick="setSize(3); return false;">+</a></div>
  			<div><a href="#" onClick="setSize(4); return false;">-</a></div>
 		</div>
+		<select class="codeSelector" onChange = "javascript:selectCodeEvent(this)">
+			  <option value="new">New</option>
+			  <option value="Random_1">Random_1</option>
+			  <option value="CheckEqualSort" selected>CheckEqualSort</option>
+			  <option value="SelectionSort">SelectionSort</option>
+			  <option value="DFS">DFS</option>
+			  <option value="BFS">BFS</option>
+		</select>
+		
 		<select class="skinSelector" onChange = "javascript:selectEvent(this)">
 			  <option value="ambiance">Ambiance</option>
 			  <option value="chrome" selected>Chrome</option>
@@ -73,6 +82,7 @@
 			  <option value="monokai">Monokai</option>
 			  <option value="textmate">Textmate</option>
 		</select>
+		
 	</div>
 <!-- <div class="outer-east">Outer East</div> -->
 
@@ -103,9 +113,6 @@
 <script src="JS/raphael-min.js"></script>
 <script src="JS/graffle.js"></script>
 <script type="text/javascript">
-$("#runBtn").click(function userViewSub(){
-	$('#left_up').css({"height":$('#outer-west').css("height") - 7});
-});
 	$("#runBtn").click(function userViewSub(){
 		$('.lineBG').show(false);
 		var eLine = $(".ace_error").length;
@@ -226,6 +233,19 @@ $("#runBtn").click(function userViewSub(){
 		selectEvent = function (selectObj) {		
 			editor.setTheme("ace/theme/" + selectObj.value);
 		}
+		
+		selectCodeEvent = function (selectObj) {		
+			$.ajax({
+				type : "POST",
+				url : "main",
+			  	data: "file="+encodeURIComponent(selectObj.value),
+				success : function(response) {
+					console.log('succeess');
+				},
+				error : function() { console.log('error'); }
+				});
+		}
+		
 		selectDraw = function (selectValue) {
 				$('.lineBG').hide(false);
 			if ( selectValue.value == 'Divide'){

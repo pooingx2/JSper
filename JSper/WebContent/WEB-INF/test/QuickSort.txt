@@ -1,0 +1,88 @@
+	/** 
+	quick sort 
+	 **/
+	var arr = new Array(10, 9, 8, 1, 6, 5, 4, 3, 2, 7);
+	//var arr = new Array(2,1); 
+	var pivotIndex = 0;
+	var tmpValue = 0;
+	var tmpArr;
+
+	var CountLoop = 0;
+	function SortStep1(arr) {
+		CountLoop++;
+
+		if ((arr.length / 2) < 1) {
+		} else if ((arr.length / 2) == 1) {
+			var tmpNum = 0;
+			if (arr[0] > arr[1]) {
+				tmpNum = arr[1];
+				arr[1] = arr[0];
+				arr[0] = tmpNum;
+
+			}
+
+			var tmpArr = new Array(arr[0], arr[1]);
+
+			//printArr(tmpArr); 
+		} else {
+
+			var middle = Math.round(arr.length / 2) - 1;
+			var tmpArrLeft = new Array();
+			var tmpArrRight = new Array();
+
+			var tmpRight = 0;
+			var tmpLeft = 0;
+			for ( var i = 0; i < middle; i++) {
+				if (arr[i] > arr[middle]) {
+					tmpArrRight[tmpRight++] = arr[i];
+				} else {
+					tmpArrLeft[tmpLeft++] = arr[i];
+				}
+			}
+
+			for ( var i = middle + 1; i < arr.length; i++) {
+				if (arr[i] < arr[middle]) {
+					tmpArrLeft[tmpLeft++] = arr[i];
+				} else {
+					tmpArrRight[tmpRight++] = arr[i];
+				}
+			}
+
+			if (tmpArrLeft.length > 1)
+				var Left = SortStep1(tmpArrLeft);
+			else
+				var Left = tmpArrLeft;
+
+			if (tmpArrRight.length > 1)
+				var Right = SortStep1(tmpArrRight);
+			else
+				var Right = tmpArrRight;
+
+			var tmpArr = new Array(Left.length + Right.length - 1);
+			var tmpK = 0;
+			for ( var i = 0; i < Left.length; i++) {
+				tmpArr[tmpK++] = Left[i];
+			}
+			tmpArr[tmpK++] = arr[middle];
+			for ( var i = 0; i < Right.length; i++) {
+				tmpArr[tmpK++] = Right[i];
+			}
+		}
+		return tmpArr;
+	}
+
+	function printArr(arr) {
+		var tmpStr = "";
+		for ( var i = 0; i < arr.length; i++) {
+			if (i == 0)
+				tmpStr += arr[i];
+			else
+				tmpStr += " , " + arr[i];
+		}
+		alert(tmpStr);
+	}
+
+	var ttt = SortStep1(arr);
+	alert("arrayLength : " + ttt.length + "\n\n total loop number : "
+			+ CountLoop);
+	printArr(ttt);

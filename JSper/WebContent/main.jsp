@@ -68,8 +68,8 @@
 			  <option value="Random_1">Random_1</option>
 			  <option value="CheckEqualSort" selected>CheckEqualSort</option>
 			  <option value="SelectionSort">SelectionSort</option>
+			  <option value="QuickSort">QuickSort</option>
 			  <option value="DFS">DFS</option>
-			  <option value="BFS">BFS</option>
 		</select>
 		
 		<select class="skinSelector" onChange = "javascript:selectEvent(this)">
@@ -238,7 +238,7 @@
 			$.ajax({
 				type : "POST",
 				url : "main",
-			  	data: "file="+encodeURIComponent(selectObj.value),
+			  	data: "option=file&code="+encodeURIComponent(selectObj.value),
 				success : function(response) {
 					console.log('succeess');
 				},
@@ -255,5 +255,5 @@
 		}
 	}
 
-	</script>
+</script>
 	</html>

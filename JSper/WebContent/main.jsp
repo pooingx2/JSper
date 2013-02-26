@@ -236,8 +236,10 @@
 		}
 		
 		selectCodeEvent = function (selectObj) {	
-			$.post('main', { "option=file&code=": encodeURIComponent(selectObj.value) },
+			$.post('main', { option:"file",code : encodeURIComponent( selectObj.value ) },
 			function(data) {
+				var test_code = jQuery.parseJSON(response);
+//				test_code.flist
 				editor.setValue(data); 
 			});
 		}

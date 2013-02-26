@@ -1,9 +1,14 @@
-/*this is test foo*/
+ /*this is test foo*/
 function foo(items) {
+    /*this is Expression function*/
     var text = function(){}
     function test1(){
         function test2(){}
-    	(function() {})()
+        var a=1;
+        /* Anonymous function*/
+    	var i= (function() {
+         return {a: b}
+    	})()
 	}
     for(j=0 ; j < datas[0].length ; j++){
     			var index = datas[i][j];
@@ -38,11 +43,13 @@ function foo(items) {
             break;
         case 3:
             d--;
-        case 3:
+            break;
+        default:
+            break;
     }
 }
 
-
+/* variable Declaration*/
 function fo3o(items) {
 	
 	var x = "All this is syntax highlighted"; 
@@ -90,7 +97,6 @@ function foo(items) {
             break;
         case 3:
             d--;
-        case 3:
     }
 }
 
@@ -105,3 +111,4 @@ function fo3o(items) {
 	var k = 0;
 }
 		
+ 

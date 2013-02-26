@@ -23,29 +23,22 @@ sourceElement
 	| statement
 	| Comment
 	;
-
-// functions
-
 	
 functionDeclaration
-	: {initData();}functionComment? LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
+	//: LT!* functionComment? LT!* 'function' LT!* functionName {type="Declaration";System.out.println("Test2 : "+name); } LT!* formalParameterList LT!* functionBody
+	: LT!* functionComment* LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
 	;
 
 functionExpression
 	//: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
-	: {initData();}functionComment? LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	: LT!* functionComment* LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
 	;
 	
 functionAnonymous
-	: {initData();}functionComment? LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
-	| {initData();}functionComment? LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!*
-	| {initData();}functionComment? LT!* 'var'? LT!* Identifier LT!* '=' LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* '('  LT!* ')'
+	: LT!* functionComment* LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* ('('  LT!* ')')?
+	| LT!* functionComment* LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!*
+	| LT!* functionComment* LT!* 'var'? LT!* Identifier LT!* '=' LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* ('('  LT!* ')')?
 	;
-	
-stingtest
-	: 'var'? LT!* Identifier LT!* '=' LT!*
-	;
-
 
 functionName
 	: 	
@@ -55,13 +48,12 @@ functionName
 			//insertFunction();
 		}
 	;
-functionComments
-	: functionComment (LT!* functionComment)*
-	;
+	
 functionComment
 	: 	
 	( Comment LT!* )
 		{
+			//initData();
 			comment = $Comment.text;
 		}
 	;
@@ -944,7 +936,7 @@ Comment
 //    ;
     
 LineComment
-	: '//' ~(LT)* {System.out.println("test!!!!"); $channel=HIDDEN;}
+	: '//' ~(LT)* {$channel=HIDDEN;}
 	;
 
 LT

@@ -1,12 +1,15 @@
 package Controller;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -19,7 +22,6 @@ import org.antlr.runtime.RecognitionException;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import Antlr.JSLexer;
 import Antlr.JSParser;
 import Antlr.fCodeLexer;
@@ -65,7 +67,22 @@ public class MainController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
+		
+		String filename = "/WEB-INF/test/test1.txt";
+		ServletContext context = getServletContext();
+		InputStream input = context.getResourceAsStream(filename);
 
+		String code="";
+		String temp="";
+		
+		if(input != null){
+			InputStreamReader isr = new InputStreamReader(input);
+			BufferedReader reader = new BufferedReader(isr);
+			while((temp = reader.readLine()) != null){
+				code += temp+'\n';
+			}
+		}
+		request.setAttribute("code", code);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("main.jsp");
 		dispatcher.forward(request,  response);
 	}
@@ -73,21 +90,10 @@ public class MainController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		request.setCharacterEncoding("utf-8");
-		
+			
 		//Ajax를 통해서 옵션과 코드를 받는다.
 		String option = request.getParameter("option");
 		String code = request.getParameter("code");
-
-		/*
-		for(int i=0;i<code.length();i++){
-			System.out.print(code.charAt(i));
-		}
-		
-    	String[] temp = code.split("\n");
-		for(int i=0;i<temp.length;i++){
-			if(temp[i].contains("//")) System.out.println(temp[i]);
-		}
-		*/
 		
 		// option 별로 다른 parser를 실행한다.
 		if(!(code.equals("0")) && !(code.equals("")) && code != null ) {
@@ -123,7 +129,7 @@ public class MainController extends HttpServlet {
 			// flow chart를 위한 코드를 뽑아 함수에 매칭시킨다.
 			sortList(cList, 0);
 
-			for(int i=0; i<sortList.size()-1;i++){
+			for(int i=0; i<sortList.size();i++){
 				fList.get(i).setCode(sortList.get(i).getCode());
 			}
 			

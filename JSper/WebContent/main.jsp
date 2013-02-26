@@ -7,12 +7,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>JSper</title>
 <!-- ace -->
 <link rel="stylesheet" href="CSS/layout-default.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="CSS/layout.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="CSS/custom.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="CSS/jquery-ui-1.10.1.custom.css" type="text/css" />
+<link rel="shortcut icon" href="img/logo2.png" />
 
 <!-- jquert.layout -->
 <script type="text/javascript" src="JS/jquery-latest.js"></script>
@@ -20,24 +21,24 @@
 <script type="text/javascript" src="JS/jquery-ui-latest.js"></script>
 <script type="text/javascript" src="JS/jquery.layout-latest.js"></script>
 </head>
- <body id="allpage">
-	<div class="outer-center" id="outer-center">
- 		<div id="holder"></div>
- 		 
+
+<body id="allpage">
+	<div class="outer-center">
+			<div id="holder"></div>
  		 <!--Flowchart Div-->
  		<div class="flowBG" id="flowBG">
  			<a id="cflowBtn" href="#"> close </a>
 			<div class="flowCont" id="flowCont">
 			</div>
 		</div>
-		
+	
 		<!--diagramColor Div-->
 		<div class="lineBG">
 			<span style="background-color:#fff8dc; font-weight:bold"><small>Declaration</small></span>
 			<span style="background-color:#ffe4e1; font-weight:bold"><small>Expression</small></span>
 			<span style="background-color:#e6e6fa; font-weight:bold"><small>Anonymous</small></span>
 		</div>
-		 		
+	 		
  		<select class="drawSelector" onChange = "javascript:selectDraw(this)">
  			  <option value="Divide">Divide</option>
 			  <option value="Colorful">Depth</option>
@@ -45,135 +46,9 @@
 		</select>
 	</div>
 
-	<div class="outer-west" id="outer-west">
-	<div class="textCode"></div>
-		<div id="editor">
-
-/*this is test foo*/
-function foo(items) {
-    var text = function(){
-        var k =0;
-        function kff(){}
-    }
-    function test1(){
-        function test2(){
-            var k=0;
-            var l = 0;
-        }
-        (function() {
-            function ktest(){
-                
-            }
-         if(l>3){
-             for(var i=0;i<4;i++){
-                 if(d>3){d++;}
-                 else{break;}
-             }
-         }   
-    	})()
-	}
-    for(j=0 ; j < datas[0].length ; j++){
-    			var index = datas[i][j];
-				if(index!="0"){
-					if(index=="if"||index=="elif"||index=="else"||index=="for"||index=="while"||index=="do"||index=="switch"||index=="try"||index=="catch"){
-						colorful_logical.push(DiagramRaphael.rect( 895 ));
-					}
-				}else{
-					logical.push("");				
-					colorful_logical.push("");
-				}
-			}
-    for(i=3;i<4;i++){
-        if(i==5){
-            break;
-        }
-    }
-    for(j=0 ; j < 4 ; j++){
-        			var argu = datas[i][j];
-					if(argu=="line"){
-						var casebreak = false;
-                    break;
-					}
-                    break;
-                    var k=0;
-    }
-    switch(n){
-        case 1:
-            break;
-        case 2:
-            d++;
-            break;
-        case 3:
-            d--;
-        case 3:
-    }
-}
-
-
-function fo3o(items) {
-	
-	var x = "All this is syntax highlighted"; 
-	var k = 0;
-}
-		
-		
-
-function foo(items) {
-    var text = function(){}
-    function test1(){
-        function test2(){}
-		(function() {})()
-	}
-    for(j=0 ; j < datas[0].length ; j++){
-    			var index = datas[i][j];
-				if(index!="0"){
-					if(index=="if"||index=="elif"||index=="else"||index=="for"||index=="while"||index=="do"||index=="switch"||index=="try"||index=="catch"){
-						colorful_logical.push(DiagramRaphael.rect( 895 ));
-					}
-				}else{
-					logical.push("");				
-					colorful_logical.push("");
-				}
-			}
-    for(i=3;i<4;i++){
-        if(i==5){
-            break;
-        }
-    }
-    for(j=0 ; j < 4 ; j++){
-        			var argu = datas[i][j];
-					if(argu=="line"){
-						var casebreak = false;
-                    break;
-					}
-                    break;
-                    var k=0;
-    }
-    switch(n){
-        case 1:
-            break;
-        case 2:
-            d++;
-            break;
-        case 3:
-            d--;
-        case 3:
-    }
-}
-
-
-function fo3o(items) {
-	function test(){}
-	function test1(){
-		function test2(){}
-		(function() {})()
-	}
-	var x = "All this is syntax highlighted"; 
-	var k = 0;
-}
-	
-		
-		</div>
+	<div class="outer-west">
+		<div class="textCode"></div>
+		<div id="editor"> ${code} </div>
 		<div class="findBG">
 			<div>
 				<input class="findInput" id="searchFor" type="text" placeholder=" Search for"></input>

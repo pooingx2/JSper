@@ -1,13 +1,13 @@
 LT=4
 DecimalDigit=19
-Identifier=6
+Identifier=5
 SingleStringCharacter=11
 T__93=93
 T__94=94
 T__91=91
 T__92=92
 T__90=90
-Comment=5
+Comment=6
 SingleEscapeCharacter=16
 UnicodeLetter=26
 ExponentPart=23

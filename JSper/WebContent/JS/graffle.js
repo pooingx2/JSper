@@ -643,6 +643,9 @@ function drawDiagram(datas,realdata){
 						for(var l1 = i-1;;l1--){
 							if(datas[l1][j]!="0"){
 								if(datas[l1][j]=="caseN"&&datas[i-1][j+1]!="breakN"){
+									if(i==array_height-1){
+										break;									
+									}
 									casebreak = true;
 									break;
 								}

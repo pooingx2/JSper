@@ -44,10 +44,9 @@ class ChartSetting{
 		indexX = 0; 
 	}
 	public void CheckChart(int depths,String array[][]){
-		depth = depths;
 		value = array;
 		lengthX = value.length*3;
-		lengthY = depth+3;
+		lengthY = depths+3;
 		chart = new String[lengthX][lengthY];
 		details = new String[lengthX][lengthY];
 		depthcase = 0;
@@ -60,40 +59,41 @@ class ChartSetting{
 		}
 		
 		for(int k=0;k<value.length;k++){
-			int depth = Integer.parseInt(value[indexX][0]);
+			int depthcheck = Integer.parseInt(value[indexX][0]);
 			String subname = value[indexX][2];
 			subname = subname.trim();
-			if( startDepth == depth){
+			if( startDepth == depthcheck){
 				mapX+=1;
 				setChart(subname);
 				depthcase = 0;
-			}else if(startDepth < depth){
-				startDepth = depth;
+			}else if(startDepth < depthcheck){
+				startDepth = depthcheck;
 				mapY +=1;
 				setChart(subname);
 				depthcase = 1;
-			}else if(startDepth > depth){
-				for(int j=0;j<startDepth - depth;j++){
+			}else if(startDepth > depthcheck){
+				for(int j=0;j<startDepth - depthcheck;j++){
 					mapY -=1;					
 				}
 				mapX +=2;
-				startDepth = depth;
+				startDepth = depthcheck;
 				setChart(subname);
 				depthcase=2;
 			}
 			mapX +=1;
 			indexX++;
+			depth = depthcheck;
 		}
-		if( depthcase == 2||depthcase == 1 ){
-			mapX++;
+		if(depth==0){
 			for(int te = 0; chart[mapX-1][te]!="0"&&te<value.length ;te++){
 				chart[mapX][te] = "line";						
 			}			
-		}
-		else if( depthcase == 0 ){
+
+		}else{
+			mapX++;
 			for(int te = 0; chart[mapX-1][te]!="0"&&te<value.length ;te++){
 				chart[mapX][te] = "line";						
-			}
+			}						
 		}
 		for(int i=1;i<mapX+1;i++){
 			int checkup = 0;

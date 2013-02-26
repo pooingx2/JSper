@@ -1,47 +1,41 @@
-grammar JS;
+grammar JS3;
 
 options
 {
 	output=AST;
 	backtrack=true;
-	//k = 1;
 	memoize=true;
 }
 program
 	: {System.out.println(" ----- ANTLR Total Parser Start! ----- ");}
 	LT!* sourceElements LT!* EOF!
 	;
-
+	
 sourceElements
 	: sourceElement (LT!* sourceElement)*
 	;
-
+	
 sourceElement
 	: functionDeclaration
-	| functionExpression 
+	| functionExpression
 	| functionAnonymous
 	| statement
-	| Comment
 	;
-
-// functions
-
 	
+// functions
 functionDeclaration
-	: {initData();}functionComment? LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
+	: functionComment? LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
 	;
 
 functionExpression
 	//: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
-	: {initData();}functionComment? LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	: functionComment? LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	;
+
+functionAnonymous
+	: functionComment? '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
 	;
 	
-functionAnonymous
-	: {initData();}functionComment? '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
-	| {initData();}functionComment? LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!*
-	;
-
-
 functionName
 	: 	
 	( Identifier )
@@ -60,14 +54,14 @@ functionComment
 			comment = $Comment.text;
 		}
 	;
-
+	 
 formalParameterList
 	: '(' (LT!* Identifier (LT!* ',' LT!* Identifier)*)? LT!* ')'
 	;
 
 functionBody
 	//: '{' {depth++;} LT!* sourceElements? LT!* {depth--;}'}'
-	: '{' {insertFunction(); depth++; } LT!* functionCode? LT!* {depth--; cList.add(new CodeMap(depth,code));}'}'
+	: '{' {insertFunction(); depth++; System.out.println("depth++");} LT!* functionCode? LT!* {depth--; cList.add(new CodeMap(depth,code));System.out.println("depth--");}'}'
 	;
 
 functionCode
@@ -96,11 +90,11 @@ statement
 	| LineComment
 	| Comment
 	;
-
+	
 statementBlock
 	: '{' LT!* statementList? LT!* '}'
 	;
-
+	
 statementList
  	: statement (LT!* statement)*
 	;
@@ -109,15 +103,15 @@ variableStatement
 	: 'var' LT!* variableDeclarationList (LT | ';')!
 	;
 
-
+	
 variableDeclarationList
 	: variableDeclaration (LT!* ',' LT!* variableDeclaration)*
 	;
-
+	
 variableDeclarationListNoIn
 	: variableDeclarationNoIn (LT!* ',' LT!* variableDeclarationNoIn)*
 	;
-
+	
 variableDeclaration
 	: Identifier LT!* initialiser?
 	;
@@ -125,7 +119,7 @@ variableDeclaration
 variableDeclarationNoIn
 	:  LT!* initialiserNoIn?
 	;
-
+	
 initialiser
 	//: '=' LT!* assignmentExpression
 	: '=' LT!* expression
@@ -134,38 +128,38 @@ initialiser
 initialiserNoIn
 	: '=' LT!* assignmentExpressionNoIn
 	;
-
+	
 emptyStatement
 	: ';'
 	;
-
+	
 expressionStatement
 	: expression (LT | ';')!
 	;
-
+	
 ifStatement
 	: 'if' LT!* '(' LT!* expression LT!* ')' LT!* statement (LT!* 'else' LT!* statement)?
 	;
-
+	
 iterationStatement
 	: doWhileStatement
 	| whileStatement
 	| forStatement
 	| forInStatement
 	;
-
+	
 doWhileStatement
 	: 'do' LT!* statement LT!* 'while' LT!* '(' expression ')' (LT | ';')!
 	;
-
+	
 whileStatement
 	: 'while' LT!* '(' LT!* expression LT!* ')' LT!* statement
 	;
-
+	
 forStatement
 	: 'for' LT!* '(' (LT!* forStatementInitialiserPart)? LT!* ';' (LT!* expression)? LT!* ';' (LT!* expression)? LT!* ')' LT!* statement
 	;
-
+	
 forStatementInitialiserPart
 	: leftHandSideExpression
 	//| 'var' LT!* variableDeclarationNoIn
@@ -176,11 +170,11 @@ forStatementInitialiserPart
 	| 'var' LT!* variableDeclarationListNoIn
 	;
 	*/
-
+	
 forInStatement
 	: 'for' LT!* '(' LT!* forInStatementInitialiserPart LT!* 'in' LT!* expression LT!* ')' LT!* statement
 	;
-
+	
 forInStatementInitialiserPart
 	: leftHandSideExpression
 	| 'var' LT!* variableDeclarationNoIn
@@ -197,7 +191,7 @@ breakStatement
 returnStatement
 	: 'return' expression? (LT | ';')!
 	;
-
+	
 withStatement
 	: 'with' LT!* '(' LT!* expression LT!* ')' LT!* statement
 	;
@@ -205,11 +199,11 @@ withStatement
 labelledStatement
 	: Identifier LT!* ':' LT!* statement
 	;
-
+	
 switchStatement
 	: 'switch' LT!* '(' LT!* expression LT!* ')' LT!* caseBlock
 	;
-
+	
 caseBlock
 	: '{' (LT!* caseClause)* (LT!* defaultClause (LT!* caseClause)*)? LT!* '}'
 	;
@@ -217,11 +211,11 @@ caseBlock
 caseClause
 	: 'case' LT!* expression LT!* ':' LT!* statementList?
 	;
-
+	
 defaultClause
 	: 'default' LT!* ':' LT!* statementList?
 	;
-
+	
 throwStatement
 	: 'throw' expression (LT | ';')!
 	;
@@ -233,7 +227,7 @@ tryStatement
 catchClause
 	: 'catch' LT!* '(' LT!* Identifier LT!* ')' LT!* statementBlock
 	;
-
+	
 finallyClause
 	: 'finally' LT!* statementBlock
 	;
@@ -242,36 +236,35 @@ finallyClause
 expression
 	: assignmentExpression (LT!* ',' LT!* assignmentExpression)*
 	;
-
+	
 expressionNoIn
 	: assignmentExpressionNoIn (LT!* ',' LT!* assignmentExpressionNoIn)*
 	;
-
+	
 assignmentExpression
 	: conditionalExpression
 	| leftHandSideExpression LT!* assignmentOperator LT!* assignmentExpression
 	;
-
+	
 assignmentExpressionNoIn
 	: conditionalExpressionNoIn
 	| leftHandSideExpression LT!* assignmentOperator LT!* assignmentExpressionNoIn
 	;
-
+	
 leftHandSideExpression
 	: callExpression
 	| newExpression
 	;
-
+	
 newExpression
 	: memberExpression
 	| 'new' LT!* newExpression
 	;
-
+	
 memberExpression
-	//: (primaryExpression | functionExpression | functionAnonymous | 'new' LT!* memberExpression LT!* arguments) (LT!* memberExpressionSuffix)*
-	:(primaryExpression | 'new' LT!* memberExpression LT!* arguments) (LT!* memberExpressionSuffix)*
+	: (primaryExpression | functionExpression | functionAnonymous | 'new' LT!* memberExpression LT!* arguments) (LT!* memberExpressionSuffix)*
 	;
-
+	
 memberExpressionSuffix
 	: indexSuffix
 	| propertyReferenceSuffix
@@ -280,7 +273,7 @@ memberExpressionSuffix
 callExpression
 	: memberExpression LT!* arguments (LT!* callExpressionSuffix)*
 	;
-
+	
 callExpressionSuffix
 	: arguments
 	| indexSuffix
@@ -290,15 +283,15 @@ callExpressionSuffix
 arguments
 	: '(' (LT!* assignmentExpression (LT!* ',' LT!* assignmentExpression)*)? LT!* ')'
 	;
-
+	
 indexSuffix
 	: '[' LT!* expression LT!* ']'
 	;	
-
+	
 propertyReferenceSuffix
 	: '.' LT!* Identifier
 	;
-
+	
 assignmentOperator
 	: '=' | '*=' | '/=' | '%=' | '+=' | '-=' | '<<=' | '>>=' | '>>>=' | '&=' | '^=' | '|='
 	;
@@ -314,40 +307,40 @@ conditionalExpressionNoIn
 logicalORExpression
 	: (bitwiseORExpression (LT!* '&&' LT!* bitwiseORExpression)*) (LT!* '||' LT!* (bitwiseORExpression (LT!* '&&' LT!* bitwiseORExpression)*))*
 	;
-
+	
 logicalORExpressionNoIn
 	: logicalANDExpressionNoIn (LT!* '||' LT!* logicalANDExpressionNoIn)*
 	;
-
-
+	
+	
 logicalANDExpressionNoIn
 	: bitwiseORExpressionNoIn (LT!* '&&' LT!* bitwiseORExpressionNoIn)*
 	;
-
+	
 bitwiseORExpression
 	: bitwiseXORExpression (LT!* '|' LT!* bitwiseXORExpression)*
 	;
-
+	
 bitwiseORExpressionNoIn
 	: bitwiseXORExpressionNoIn (LT!* '|' LT!* bitwiseXORExpressionNoIn)*
 	;
-
+	
 bitwiseXORExpression
 	: bitwiseANDExpression (LT!* '^' LT!* bitwiseANDExpression)*
 	;
-
+	
 bitwiseXORExpressionNoIn
 	: bitwiseANDExpressionNoIn (LT!* '^' LT!* bitwiseANDExpressionNoIn)*
 	;
-
+	
 bitwiseANDExpression
 	: equalityExpression (LT!* '&' LT!* equalityExpression)*
 	;
-
+	
 bitwiseANDExpressionNoIn
 	: equalityExpressionNoIn (LT!* '&' LT!* equalityExpressionNoIn)*
 	;
-
+	
 equalityExpression
 	: relationalExpression (LT!* ('==' | '!=' | '===' | '!==') LT!* relationalExpression)*
 	;
@@ -355,7 +348,7 @@ equalityExpression
 equalityExpressionNoIn
 	: relationalExpressionNoIn (LT!* ('==' | '!=' | '===' | '!==') LT!* relationalExpressionNoIn)*
 	;
-
+	
 relationalExpression
 	: shiftExpression (LT!* ('<' | '>' | '<=' | '>=' | 'instanceof' | 'in') LT!* shiftExpression)*
 	;
@@ -380,7 +373,7 @@ unaryExpression
 	: postfixExpression
 	| ('delete' | 'void' | 'typeof' | '++' | '--' | '+' | '-' | '~' | '!') unaryExpression
 	;
-
+	
 postfixExpression
 	: leftHandSideExpression ('++' | '--')?
 	;
@@ -393,7 +386,7 @@ primaryExpression
 	| objectLiteral
 	| '(' LT!* expression LT!* ')'
 	;
-
+	
 // arrayLiteral definition.
 arrayLiteral
 	: '[' LT!* assignmentExpression? (LT!* ',' (LT!* assignmentExpression)?)* LT!* ']'
@@ -403,7 +396,7 @@ arrayLiteral
 objectLiteral
 	: '{' LT!* propertyNameAndValue (LT!* ',' LT!* propertyNameAndValue)* LT!* '}'
 	;
-
+	
 propertyNameAndValue
 	: propertyName LT!* ':' LT!* assignmentExpression
 	;
@@ -422,7 +415,7 @@ literal
 	| StringLiteral
 	| NumericLiteral
 	;
-
+	
 assinmentString
 	: 'null'
 	| 'true'
@@ -432,13 +425,13 @@ assinmentString
 	| conditionalExpression
 	| leftHandSideExpression LT!* assignmentOperator LT!* assignmentExpression
 	;
-
+	
 // lexer rules.
 StringLiteral
 	: '"' DoubleStringCharacter* '"'
 	| '\'' SingleStringCharacter* '\''
 	;
-
+	
 fragment DoubleStringCharacter
 	: ~('"' | '\\' | LT)	
 	| '\\' EscapeSequence
@@ -455,7 +448,7 @@ fragment EscapeSequence
 	| HexEscapeSequence
 	| UnicodeEscapeSequence
 	;
-
+	
 fragment CharacterEscapeSequence
 	: SingleEscapeCharacter
 	| NonEscapeCharacter
@@ -475,33 +468,33 @@ fragment EscapeCharacter
 	| 'x'
 	| 'u'
 	;
-
+	
 fragment HexEscapeSequence
 	: 'x' HexDigit HexDigit
 	;
-
+	
 fragment UnicodeEscapeSequence
 	: 'u' HexDigit HexDigit HexDigit HexDigit
 	;
-
+	
 NumericLiteral
 	: DecimalLiteral
 	| HexIntegerLiteral
 	;
-
+	
 fragment HexIntegerLiteral
 	: '0' ('x' | 'X') HexDigit+
 	;
-
+	
 fragment HexDigit
 	: DecimalDigit | ('a'..'f') | ('A'..'F')
 	;
-
+	
 fragment DecimalLiteral
 	: DecimalDigit+ '.' DecimalDigit* ExponentPart?
 	| '.'? DecimalDigit+ ExponentPart?
 	;
-
+	
 fragment DecimalDigit
 	: ('0'..'9')
 	;
@@ -513,7 +506,7 @@ fragment ExponentPart
 Identifier
 	: IdentifierStart IdentifierPart*
 	;
-
+	
 fragment IdentifierStart
 	: UnicodeLetter
 	| '$'
@@ -526,7 +519,7 @@ fragment IdentifierPart
 	| UnicodeDigit
 	| UnicodeConnectorPunctuation
 	;
-
+	
 fragment UnicodeLetter		// Any character in the Unicode categories "Uppercase letter (Lu)", 
 	: '\u0041'..'\u005A'	// "Lowercase letter (Ll)", "Titlecase letter (Lt)",
 	| '\u0061'..'\u007A'	// "Modifier letter (Lm)", "Other letter (Lo)", or "Letter number (Nl)".
@@ -790,7 +783,7 @@ fragment UnicodeLetter		// Any character in the Unicode categories "Uppercase le
 	| '\uFFD2'..'\uFFD7'
 	| '\uFFDA'..'\uFFDC'
 	;
-
+	
 fragment UnicodeCombiningMark	// Any character in the Unicode categories "Non-spacing mark (Mn)"
 	: '\u0300'..'\u034E'	// or "Combining spacing mark (Mc)".
 	| '\u0360'..'\u0362'
@@ -817,7 +810,7 @@ fragment UnicodeCombiningMark	// Any character in the Unicode categories "Non-sp
 	| '\u0962'..'\u0963'
 	| '\u0981'..'\u0983'
 	| '\u09BC'..'\u09C4'
-	| '\u09C7'..'\u09C8'
+		| '\u09C7'..'\u09C8'
 	| '\u09CB'..'\u09CD'
 	| '\u09D7'
 	| '\u09E2'..'\u09E3'
@@ -916,7 +909,7 @@ fragment UnicodeDigit		// Any character in the Unicode category "Decimal number 
 	| '\u1810'..'\u1819'
 	| '\uFF10'..'\uFF19'
 	;
-
+	
 fragment UnicodeConnectorPunctuation	// Any character in the Unicode category "Connector punctuation (Pc)".
 	: '\u005F'
 	| '\u203F'..'\u2040'
@@ -926,9 +919,10 @@ fragment UnicodeConnectorPunctuation	// Any character in the Unicode category "C
 	| '\uFF3F'
 	| '\uFF65'
 	;
-
+	
 Comment
-	: '/*' (options {greedy=false;} : .)* '*/' //{$channel=HIDDEN;}
+	//: '/*' (options {greedy=false;} : .)* '*/' //{$channel=HIDDEN;}
+	: '/*' (options {greedy=false;} : .)* '*/'
 	;
 //Comment 
 	//: '/*'~(LT)*'/*'
@@ -939,7 +933,7 @@ Comment
 //    ;
     
 LineComment
-	: '//' ~(LT)* {System.out.println("test!!!!"); $channel=HIDDEN;}
+	: '//' ~(LT)* {$channel=HIDDEN;}
 	;
 
 LT

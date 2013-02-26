@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="CSS/layout.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="CSS/custom.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="CSS/jquery-ui-1.10.1.custom.css" type="text/css" />
-<link rel="shortcut icon" href="img/btnRun.png" />
+<link rel="shortcut icon" href="img/logo2.png" />
 
 <!-- jquert.layout -->
 <script type="text/javascript" src="JS/jquery-latest.js"></script>

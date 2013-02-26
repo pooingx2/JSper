@@ -25,16 +25,18 @@ sourceElement
 	
 // functions
 functionDeclaration
-	: functionComment* LT!* 'function' LT!* functionName {stmType="func";} LT!* formalParameterList LT!* functionBody
+	: 'function' LT!* functionName {stmType="func";} LT!* formalParameterList LT!* functionBody
 	;
 
 functionExpression
 	//: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
-	: functionComment* LT!* 'var'? LT!* functionName {stmType="func";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
+	: 'var'? LT!* functionName {stmType="func";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
 	;
 
 functionAnonymous
-	: functionComment* '(' LT!* 'function' {stmType="func"; stmText="func Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
+	: '(' LT!* 'function' {stmType="func"; stmText="func Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
+	| LT!* 'function' {stmType="func"; stmText="func Anonymous";} LT!* formalParameterList LT!* functionBody LT!*
+	
 	;
 	
 functionName
@@ -81,6 +83,7 @@ statement
 	| throwStatement
 	| tryStatement
 	| LineComment
+	| Comment
 	;
 	
 statementBlock
@@ -303,7 +306,7 @@ newExpression
 	;
 	
 memberExpression
-	: (primaryExpression | functionExpression | functionAnonymous | 'new' LT!* memberExpression LT!* arguments) (LT!* memberExpressionSuffix)*
+	: (primaryExpression | 'new' LT!* memberExpression LT!* arguments) (LT!* memberExpressionSuffix)*
 	;
 	
 memberExpressionSuffix

@@ -37,8 +37,13 @@ functionExpression
 	;
 	
 functionAnonymous
-	: {initData();}functionComment? '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
+	: {initData();}functionComment? LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
 	| {initData();}functionComment? LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!*
+	| {initData();}functionComment? LT!* 'var'? LT!* Identifier LT!* '=' LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* '('  LT!* ')'
+	;
+	
+stingtest
+	: 'var'? LT!* Identifier LT!* '=' LT!*
 	;
 
 

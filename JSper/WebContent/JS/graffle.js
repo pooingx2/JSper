@@ -66,126 +66,6 @@ Raphael.fn.connection = function (obj1, obj2, line, bg) {
 		};
 	}
 };
-Raphael.fn.connections = function (obj1, obj2, line, bg) {
-	if (obj1.line && obj1.from && obj1.to) {
-		line = obj1;
-		obj1 = line.from;
-		obj2 = line.to;
-	};
-	var bb1 = obj1.getBBox(),
-	bb2 = obj2.getBBox(),
-
-	p = [{x: bb1.x + bb1.width / 2, y: bb1.y - 1},
-	     {x: bb1.x + bb1.width / 2, y: bb1.y + bb1.height + 1},
-	     {x: bb1.x - 1, y: bb1.y + bb1.height / 2},
-	     {x: bb1.x + bb1.width + 1, y: bb1.y + bb1.height / 2},
-	     {x: bb2.x + bb2.width / 2, y: bb2.y - 1},
-	     {x: bb2.x + bb2.width / 2, y: bb2.y + bb2.height + 1},
-	     {x: bb2.x - 1, y: bb2.y + bb2.height / 2},
-	     {x: bb2.x + bb2.width + 1, y: bb2.y + bb2.height / 2}],
-	     d = {}, 
-	     dis = [];
-
-	var i=0;
-	var j=5; 
-	var dx = Math.abs(p[i].x - p[j].x),
-	dy = Math.abs(p[i].y - p[j].y);
-	if ((i == j - 4) || (((i != 3 && j != 6) || p[i].x < p[j].x) && ((i != 2 && j != 7) || p[i].x > p[j].x) && ((i != 0 && j != 5) || p[i].y > p[j].y) && ((i != 1 && j != 4) || p[i].y < p[j].y))) {
-		dis.push(dx + dy);
-		d[dis[dis.length - 1]] = [i, j];
-	}
-	if (dis.length == 0) {
-		var res = [0, 4];
-	} else {
-		res = d[Math.min.apply(Math, dis)];
-	}
-
-	var x1 = p[res[0]].x,
-	y1 = p[res[0]].y,
-	x4 = p[res[1]].x,
-	y4 = p[res[1]].y;
-	dx = Math.max(Math.abs(x1 - x4) / 2, 10);
-	dy = Math.max(Math.abs(y1 - y4) / 2, 10);
-	var x2 = [x1, x1, x1 - dx, x1 + dx][res[0]].toFixed(3),
-	y2 = [y1 - dy, y1 + dy, y1, y1][res[0]].toFixed(3),
-	x3 = [0, 0, 0, 0, x4, x4, x4 - dx, x4 + dx][res[1]].toFixed(3),
-	y3 = [0, 0, 0, 0, y1 + dy, y1 - dy, y4, y4][res[1]].toFixed(3);
-	var path = ["M", x1.toFixed(3), y1.toFixed(3),/* "C", x2, y2, x3, y3, */x4.toFixed(3), y4.toFixed(3)].join(",");
-
-	if (line && line.line) {
-		line.bg && line.bg.attr({path: path});
-		line.line.attr({path: path});
-	} else {
-		var color = typeof line == "string" ? line : "#000";
-		return {
-			bg: bg && bg.split && this.path(path).attr({stroke: bg.split("|")[0], fill: "none", "stroke-width": bg.split("|")[1] || 3}),
-			line: this.path(path).attr({stroke: color, fill: "none"}).toBack(),
-			from: obj1,
-			to: obj2
-		};
-	}
-};
-Raphael.fn.connectionsleft = function (obj1, obj2, line, bg) {
-	if (obj1.line && obj1.from && obj1.to) {
-		line = obj1;
-		obj1 = line.from;
-		obj2 = line.to;
-	};
-	var bb1 = obj1.getBBox(),
-	bb2 = obj2.getBBox(),
-
-	p = [{x: bb1.x + bb1.width / 2, y: bb1.y - 1},
-	     {x: bb1.x + bb1.width / 2, y: bb1.y + bb1.height + 1},
-	     {x: bb1.x - 1, y: bb1.y + bb1.height / 2},
-	     {x: bb1.x + bb1.width + 1, y: bb1.y + bb1.height / 2},
-	     {x: bb2.x + bb2.width / 2, y: bb2.y - 1},
-	     {x: bb2.x + bb2.width / 2, y: bb2.y + bb2.height + 1},
-	     {x: bb2.x - 1, y: bb2.y + bb2.height / 2},
-	     {x: bb2.x + bb2.width + 1, y: bb2.y + bb2.height / 2}],
-	     d = {}, 
-	     dis = [];
-
-	var i=0;
-	var j=6; 
-	var dx = Math.abs(p[i].x - p[j].x),
-	dy = Math.abs(p[i].y - p[j].y);
-	if ((i == j - 4) || (((i != 3 && j != 6) || p[i].x < p[j].x) && ((i != 2 && j != 7) || p[i].x > p[j].x) && ((i != 0 && j != 5) || p[i].y > p[j].y) && ((i != 1 && j != 4) || p[i].y < p[j].y))) {
-		dis.push(dx + dy);
-		d[dis[dis.length - 1]] = [i, j];
-	}
-
-	if (dis.length == 0) {
-		var res = [0, 4];
-	} else {
-		res = d[Math.min.apply(Math, dis)];
-	}
-
-	var x1 = p[res[0]].x,
-	y1 = p[res[0]].y,
-	x4 = p[res[1]].x,
-	y4 = p[res[1]].y;
-	dx = Math.max(Math.abs(x1 - x4) / 2, 10);
-	dy = Math.max(Math.abs(y1 - y4) / 2, 10);
-	var x2 = [x1, x1, x1 - dx, x1 + dx][res[0]].toFixed(3),
-	y2 = [y1 - dy, y1 + dy, y1, y1][res[0]].toFixed(3),
-	x3 = [0, 0, 0, 0, x4, x4, x4 - dx, x4 + dx][res[1]].toFixed(3),
-	y3 = [0, 0, 0, 0, y1 + dy, y1 - dy, y4, y4][res[1]].toFixed(3);
-	var path = ["M", x1.toFixed(3), y1.toFixed(3),/* "C", x2, y2, x3, y3, */x4.toFixed(3), y4.toFixed(3)].join(",");
-
-	if (line && line.line) {
-		line.bg && line.bg.attr({path: path});
-		line.line.attr({path: path});
-	} else {
-		var color = typeof line == "string" ? line : "#000";
-		return {
-			bg: bg && bg.split && this.path(path).attr({stroke: bg.split("|")[0], fill: "none", "stroke-width": bg.split("|")[1] || 3}),
-			line: this.path(path).attr({stroke: color, fill: "none"}).toBack(),
-			from: obj1,
-			to: obj2
-		};
-	}
-};
-
 
 function draw_raphael( make_list_node ){
 
@@ -530,8 +410,8 @@ Raphael.fn.rhombus = function (x,y,color){
 Raphael.fn.arrow = function (x1, y1, x2, y2, size , color) {
 	var angle = Math.atan2(x1-x2,y2-y1);
 	angle = (angle / (2 * Math.PI)) * 360;
-	var arrowPath = this.path("M" + x2 + " " + y2 + " L" + (x2 - size) + " " + (y2 - size) + " L" + (x2 - size) + " " + (y2 + size) + " L" + x2 + " " + y2 ).attr({"fill":color,"stroke":color}).rotate((90+angle),x2,y2);
-	var linePath = this.path("M" + x1 + " " + y1 + " L" + x2 + " " + y2).attr ("stroke", color);
+	var arrowPath = this.path("M" + x2 + " " + y2 + " L" + (x2 - size) + " " + (y2 - size) + " L" + (x2 - size) + " " + (y2 + size) + " L" + x2 + " " + y2 ).attr({"fill":color,"stroke":color}).rotate((90+angle),x2,y2).toBack();
+	var linePath = this.path("M" + x1 + " " + y1 + " L" + x2 + " " + y2).attr ("stroke", color).toBack();
 	return [linePath,arrowPath];
 };
 function DrawGraphLine(paper,start,end,type,color){
@@ -544,15 +424,16 @@ function DrawGraphLine(paper,start,end,type,color){
 		startPosY = start.attrs.y + start.attrs.height/2; 
 		endPosX = end.attrs.x;
 		endPosY = end.attrs.y + end.attrs.height/2;		
+		paper.arrow(startPosX,startPosY,endPosX,endPosY,0,color);
 	}else if(type == "down"){
 		startPosX = start.attrs.x + start.attrs.width/2;
 		startPosY = start.attrs.y + start.attrs.height; 
 		endPosX = end.attrs.x + end.attrs.width/2;
 		endPosY = end.attrs.y;		
+		paper.arrow(startPosX,startPosY,endPosX,endPosY,0,color);
 	}else{
 
 	}
-	paper.arrow(startPosX,startPosY,endPosX,endPosY,0,color);
 }
 function DrawGraphArrow(paper,start,end,type,color){
 	var startPosX;
@@ -571,7 +452,7 @@ function DrawGraphArrow(paper,start,end,type,color){
 	}else{ 
 
 	}
-	paper.arrow(startPosX,startPosY,endPosX,endPosY,5,color);
+	paper.arrow(startPosX,startPosY,endPosX,endPosY,2,color);
 }
 function drawDiagram(datas,realdata){
 	if(!datas.length == 0){
@@ -608,14 +489,14 @@ function drawDiagram(datas,realdata){
 				var index = datas[i][j];
 				if(index!="0"){
 					if(index=="if"||index=="elif"||index=="else"||index=="for"||index=="while"||index=="do"||index=="switch"||index=="try"||index=="catch"){
-						logical.push(DiagramRaphael.rect( 89 + j * widthSize, 150 + i * heightSize, 1, 1, 5 ));
+						logical.push(DiagramRaphael.rect( 89 + j * widthSize, 155 + i * heightSize, 1, 1, 5 ));
 						colorful_logical.push(DiagramRaphael.rhombus(30 + j * widthSize, 145 + i * heightSize,"white"));
 					}
 					else if(index=="1"||index=="case"||index=="default"||index=="func"){
 						logical.push(DiagramRaphael.rect( 54 + j * widthSize, 135 + i * heightSize, 70, 40, 5 ));					
 						colorful_logical.push("");
 					}else if(index=="R"){
-						logical.push(DiagramRaphael.rect( 89 + j * widthSize, 154 + i * heightSize, 0, 0, 5 ));						
+						logical.push(DiagramRaphael.rect( 89 + j * widthSize, 155 + i * heightSize, 0, 0, 5 ));						
 						colorful_logical.push("");
 					}else{
 						logical.push(DiagramRaphael.rect( 89 + j * widthSize, 160 + i * heightSize, 1, 1, 5 ));	
@@ -655,16 +536,16 @@ function drawDiagram(datas,realdata){
 							}
 						}
 						if(!casebreak&&datas[i][j+1]=="line"){
-							DiagramRaphael.connections(graphs[i][j+1] , graphs[i][j], "black");					
+							DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i][j+1],"right","black");
 						}
 
 						if(i+1<array_height&&datas[i+1][j]!="0"&&datas[i+1][j]!="R"){
-							DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");										
+							DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","black");
 						}
 						for(var k=i-1;k>0;k--){
 							if(datas[k][j]!="0"){
 								if(datas[k][j]!="swN"){
-									DiagramRaphael.connections(graphs[k][j] , graphs[i][j], "black");																	
+									DrawGraphLine(DiagramRaphael,graphs[k][j],graphs[i][j],"down","black");
 								}
 								break;
 							}
@@ -672,55 +553,54 @@ function drawDiagram(datas,realdata){
 					}
 					if(argu=="if"){
 						if(i>0&&datas[i-1][j]!="0"&&datas[i-1][j]!="R"){
-							DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+							DrawGraphLine(DiagramRaphael,graphs[i-1][j],graphs[i][j],"down","black");
 						}
-						DiagramRaphael.connections(graphs[i+1][j], graphs[i][j] , "red");
-						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
-						DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
+						DrawGraphArrow(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","red");
+						DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i][j],"right","green");
+						DrawGraphLine(DiagramRaphael,graphs[i+1][j+1],graphs[i][j+1],"down","green");
 						DiagramRaphael.text(65 + j * widthSize, 87 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
 						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 					}
 					else if(argu=="elif"){
 						for(var i1 = i-1;i1>0;i1--){
 							if(datas[i1][j]=="if"||datas[i1][j]=="elif"){
-								DiagramRaphael.connections(graphs[i1+1][j] , graphs[i][j], "black");																	
+								DrawGraphLine(DiagramRaphael,graphs[i1+1][j],graphs[i+1][j],"down","black");
 								break;
 							}
 						}
-						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
-						DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
-						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");
+						DrawGraphArrow(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","red");
+						DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i][j],"right","green");
+						DrawGraphLine(DiagramRaphael,graphs[i+1][j+1],graphs[i][j+1],"down","green");
 						DiagramRaphael.text(65 + j * widthSize, 87 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
 						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 					}
 					else if(argu=="elifN"){
 						if(datas[i+1][j]!="0"){
-							DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");					
+							DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","black");
 						}
 					}else if(argu=="do"){
 						if(i>0&&graphs[i-1][j]!=""){
-							DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+							DrawGraphLine(DiagramRaphael,graphs[i-1][j],graphs[i][j],"down","black");
 						}
-						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");
-						DiagramRaphael.connections(graphs[i+1][j+1] ,graphs[i][j] , "black");
+						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","black");
+						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j+1],"down","black");
 					}else if(argu=="for"){
 						if(i>0&&graphs[i-1][j]!=""){
-							DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+							DrawGraphLine(DiagramRaphael,graphs[i-1][j],graphs[i+1][j],"down","black");
 						}
-						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");
-
-						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
-						DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
-						DiagramRaphael.connectionsleft(graphs[i+1][j+1] ,graphs[i][j], "black");				
+						DrawGraphArrow(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","red");
+						DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i][j],"right","green");
+						DrawGraphLine(DiagramRaphael,graphs[i+1][j+1],graphs[i][j+1],"down","green");
+						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j+1],"down","black");
 						DiagramRaphael.text(65 + j * widthSize, 87 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
 						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 					}else if(argu=="case"){
 						if(i>0&&graphs[i-1][j]!=""){
-							DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+							DrawGraphLine(DiagramRaphael,graphs[i-1][j],graphs[i][j],"down","black");
 						}
-						DiagramRaphael.connections(graphs[i+1][j], graphs[i][j] , "red");
-						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i][j+1],"right","green");
-						DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i+1][j+1],"down","green");
+						DrawGraphArrow(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","red");
+						DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i][j],"right","green");
+						DrawGraphLine(DiagramRaphael,graphs[i+1][j+1],graphs[i][j+1],"down","green");
 						DiagramRaphael.text(65 + j * widthSize, 95 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
 						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 						if(datas[i-1][j+1]=="line"&&datas[i-2][j+1]!="breakN"){
@@ -728,8 +608,8 @@ function drawDiagram(datas,realdata){
 						}
 					}
 					else if(argu=="break"){
-						DiagramRaphael.connections(graphs[i][j], graphs[i+1][j] , "black");						
-						DiagramRaphael.connections(graphs[i-1][j], graphs[i][j] , "black");	
+						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","black");
+						DrawGraphLine(DiagramRaphael,graphs[i-1][j],graphs[i][j],"down","black");
 						if(i+2<array_height&&datas[i+2][j]!="line"&&datas[i+2][j]!="0"){
 							graphs[i][j-1] = DiagramRaphael.rect( 89 + (j-1) * widthSize, 160 + i * heightSize, 1, 1, 5 );
 							DrawGraphLine(DiagramRaphael,graphs[i][j-1],graphs[i][j],"right","red");							
@@ -737,83 +617,86 @@ function drawDiagram(datas,realdata){
 					}
 					else if(argu=="default"){
 						if(i>0&&graphs[i-1][j]!=""){
-							DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+							DrawGraphLine(DiagramRaphael,graphs[i-1][j],graphs[i][j],"down","black");
 						}
-						DiagramRaphael.connections(graphs[i+1][j], graphs[i][j] , "red");
+						DrawGraphArrow(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","red");
 						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i][j+1],"right","green");
 						DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i+1][j+1],"down","green");
 						DiagramRaphael.text(65 + j * widthSize, 95 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
 						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 					}else if(argu=="try"){
-						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");
-						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "black");				
-						DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "black");
+						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","black");
+						DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i][j],"right","black");
+						DrawGraphLine(DiagramRaphael,graphs[i+1][j+1],graphs[i][j+1],"down","black");
 					}else if(argu=="catch"){
-						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");					
-						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "black");				
-						DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "black");
+						DrawGraphArrow(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","red");
+						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i][j+1],"right","green");
+						DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i+1][j+1],"down","green");
 					}else if(argu=="func"){
 						if(i>0&&graphs[i-1][j]!=""){
-							DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+							DrawGraphLine(DiagramRaphael,graphs[i-1][j],graphs[i][j],"down","black");
 						}
-						DiagramRaphael.connections(graphs[i+1][j], graphs[i][j] , "black");
+						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","black");
 					}else if(argu=="switch"){
 						if(i>0&&graphs[i-1][j]!=""){
-							DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+							DrawGraphLine(DiagramRaphael,graphs[i-1][j],graphs[i][j],"down","black");
 						}
-						DiagramRaphael.connections(graphs[i+1][j] ,graphs[i][j] , "black");				
+						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","black");
 					}else if(argu=="while"){
 						if(datas[i+1][j+1]=="whileY"){
 							if(i>0&&graphs[i-1][j]!=""){
-								DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "green");
+								DrawGraphLine(DiagramRaphael,graphs[i-1][j],graphs[i][j],"down","green");
 							}
-							DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");
+							DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","black");
 						}else{
 							if(i>0&&graphs[i-1][j]!=""){
-								DiagramRaphael.connections(graphs[i][j] ,graphs[i-1][j] , "black");
+								DrawGraphLine(DiagramRaphael,graphs[i-1][j],graphs[i][j],"down","black");
 							}
-							DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");
-							DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
-							DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
-							DiagramRaphael.connectionsleft(graphs[i+1][j+1] ,graphs[i][j], "black");
+							DrawGraphArrow(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","red");
+							DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i][j+1],"right","green");
+							DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i+1][j+1],"down","green");
+							DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j+1],"down","black");
 							DiagramRaphael.text(65 + j * widthSize, 87 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
 							DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 						}
 						if(graphs[i+2][j]!=""){
-							DiagramRaphael.connections(graphs[i+2][j] ,graphs[i+1][j] , "black");					
+							DrawGraphLine(DiagramRaphael,graphs[i+1][j],graphs[i+2][j],"down","black");
 						}
 					}	
 					else if(argu=="else"){
 
 						for(var i1 = i-1;i1>0;i1--){
 							if(datas[i1][j]=="if"||datas[i1][j]=="elif"){
-								DiagramRaphael.connections(graphs[i1+1][j] , graphs[i][j], "black");																	
+								DrawGraphLine(DiagramRaphael,graphs[i1+1][j],graphs[i][j],"down","black");
 								break;
 							}
 						}
-						DiagramRaphael.connections(graphs[i][j] ,graphs[i][j+1] , "green");				
-						DiagramRaphael.connections(graphs[i][j+1] ,graphs[i+1][j+1] , "green");
-						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "red");																	
+						DrawGraphArrow(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","red");
+						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i][j+1],"right","green");
+						DrawGraphLine(DiagramRaphael,graphs[i][j+1],graphs[i+1][j+1],"down","green");
 						DiagramRaphael.text(65 + j * widthSize, 87 + i * (heightSize - 15) ,"n o").attr({font: "10px Helvetica", opacity: 1.0,fill:"red"});
 						DiagramRaphael.text(157 + j * widthSize, 70 + i * (heightSize - 15) ,"y e s").attr({font: "10px Helvetica", opacity: 1.0,fill:"green"});
 
 					}
 					else if(argu=="1"){
-						DiagramRaphael.connections(graphs[i+1][j] , graphs[i][j], "black");
+						DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+1][j],"down","black");
 						if(i+2<array_height&&datas[i+2][j]!="0"){
-							DiagramRaphael.connections(graphs[i+2][j] , graphs[i][j], "black");					
+							DrawGraphLine(DiagramRaphael,graphs[i][j],graphs[i+2][j],"down","black");
 						}
 					}
 					else if(argu=="ifY"||argu=="elifY"||argu=="elseY"||argu=="doY"||argu=="caseY"||argu=="catchY"){
-						DiagramRaphael.connections(graphs[i][j-1] , graphs[i][j], "black");
+						DrawGraphArrow(DiagramRaphael,graphs[i][j-1],graphs[i][j],"right","black");						
 					}
 					if( graphs[i][j]!="" ){
 						graphs[i][j].attr({fill: "white", stroke: "black", "stroke-width": 2});
 					}
+					if(colorful_graphs[i][j]!=""){
+						colorful_graphs[i][j].attr({fill: "white", stroke: "black", "stroke-width": 2});						
+					}
 				}
 			}
-			DiagramRaphael.connections(graphs[0][0], startnode , "black");
-			DiagramRaphael.connections(graphs[array_height-1][0] ,endnode ,"black");
+			DrawGraphLine(DiagramRaphael,startnode,graphs[0][0],"down","black");
+			DrawGraphLine(DiagramRaphael,graphs[array_height-1][0],endnode,"down","black");
 
 			for(var i=0;i<realdata.length;i++){
 				for(var j=0;j<realdata[0].length;j++){

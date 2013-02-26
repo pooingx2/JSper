@@ -23,8 +23,13 @@
 </head>
 
 <body id="allpage">
+	<div id="introPage" style="position:absolute; top: 0px; left: 0px; width:100%; height:100%; ">
+		<img src="./img/desc_01.png" style="position:fixed; top: 130px; left: 140px; width: 80%; z-index:99"/>
+		<img src="./img/desc_02.png" style="position:fixed; bottom: 200px; left: 283px; width:60%; z-index:99" />
+	</div>
 	<div class="outer-center">
-			<div id="holder"></div>
+		
+		<div id="holder"></div>
  		 <!--Flowchart Div-->
  		<div class="flowBG" id="flowBG">
  			<a id="cflowBtn" href="#"> close </a>
@@ -167,6 +172,10 @@ $("#runBtn").click(function userViewSub(){
 	});
 	$(document).ready(function() {
 		//$( ".flowBG" ).resizable({ handles: 'n, e, s, w' })
+		
+		$(window).click(function(){
+			$('#introPage').hide();
+		})
 		
 		$('.flowBG').scroll(function(){
 		    $('#cflowBtn').css('top', $(this).scrollTop());

@@ -23,8 +23,13 @@
 </head>
 
 <body id="allpage">
+	<div id="introPage" style="position:absolute; top: 0px; left: 0px; width:100%; height:100%; ">
+		<img src="./img/desc_01.png" style="position:fixed; top: 130px; left: 220px; height: 25%; z-index:99"/>
+		<img src="./img/desc_02.png" style="position:fixed; bottom: 200px; left: 283px; height:25%; z-index:99" />
+	</div>
 	<div class="outer-center">
-			<div id="holder"></div>
+		
+		<div id="holder"></div>
  		 <!--Flowchart Div-->
  		<div class="flowBG" id="flowBG">
  			<a id="cflowBtn" href="#"> close </a>
@@ -176,6 +181,10 @@
 	$(document).ready(function() {
 		//$( ".flowBG" ).resizable({ handles: 'n, e, s, w' })
 		
+		$(window).click(function(){
+			$('#introPage').hide();
+		})
+		
 		$('.flowBG').scroll(function(){
 		    $('#cflowBtn').css('top', $(this).scrollTop());
 		    console.log('asdf');
@@ -238,6 +247,7 @@
 			$.post('main', { option:"file" ,code : encodeURIComponent(selectObj.value) },
 			function(data) {
 				editor.setValue(data); 
+				editor.gotoLine(1);
 			});
 		}
 		

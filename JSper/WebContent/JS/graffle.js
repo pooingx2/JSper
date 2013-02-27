@@ -1,6 +1,6 @@
 var m_colorful ="Divide";
 var divide_color = ["#ffe4e1","#e6e6fa","#b0e0e6","#fff8dc","#87ceeb","#87cefa","#4169e1","#6a5acd","#4682b4"];
-var flow_color = ["#afeeee","#fffacd","#fff8dc","#f5f5dc"];
+var flow_color = ["#ffded0","#dccbf3","#fffbd0","#c7f4e0"];
 var make_list = [];
 var alltext = true;
 
@@ -367,19 +367,19 @@ function changeColor(argu){
 		m_caption_hides.attr({"stroke":"#333","stroke-width": 0.8,"fill":"#ddd"});
 	}
 	else if(argu == "Divide"){	
-		m_shapes[0].attr({fill: divide_color[3], stroke: "black", "fill-opacity": 0.9, "stroke-width": 0.6});	
-		m_caption_rect[0].attr({fill: divide_color[3], stroke: "black", "fill-opacity": 0.7, "stroke-width": 0.5});
-		m_caption_hides[0].attr({fill: divide_color[3], stroke: "black", "fill-opacity": 0.5, "stroke-width": 0.5});			
+		m_shapes[0].attr({fill: flow_color[3], stroke: "black", "fill-opacity": 0.9, "stroke-width": 0.6});	
+		m_caption_rect[0].attr({fill: flow_color[3], stroke: "black", "fill-opacity": 0.7, "stroke-width": 0.5});
+		m_caption_hides[0].attr({fill: flow_color[3], stroke: "black", "fill-opacity": 0.5, "stroke-width": 0.5});			
 		for(var i = 1 , count = m_shapes.length; i<count;i++){
 			var color; 
 			if(make_list[i-1][6]=="Expression"){
-				color = divide_color[0];
+				color = flow_color[0];
 			}else if(make_list[i-1][6]=="Anonymous"){
-				color = divide_color[1];				
+				color = flow_color[1];				
 			}else if(make_list[i-1][6]=="Declaration"){
-				color = divide_color[3];				
+				color = flow_color[2];				
 			}else{
-				color = divide_color[6];				
+				color = flow_color[3];				
 			}
 			m_shapes[i].attr({fill: color, stroke: "black", "fill-opacity": 0.9, "stroke-width": 0.6});	
 			m_caption_rect[i].attr({fill: color, stroke: "black", "fill-opacity": 0.7, "stroke-width": 0.5});
@@ -491,8 +491,7 @@ function drawDiagram(datas,realdata){
 					if(index=="if"||index=="elif"||index=="else"||index=="for"||index=="while"||index=="do"||index=="switch"||index=="try"||index=="catch"){
 						logical.push(DiagramRaphael.rect( 89 + j * widthSize, 155 + i * heightSize, 1, 1, 5 ));
 						colorful_logical.push(DiagramRaphael.rhombus(30 + j * widthSize, 145 + i * heightSize,"white"));
-					}
-					else if(index=="1"||index=="case"||index=="default"||index=="func"){
+					}else if(index=="1"||index=="case"||index=="default"||index=="func"){
 						logical.push(DiagramRaphael.rect( 54 + j * widthSize, 135 + i * heightSize, 70, 40, 5 ));					
 						colorful_logical.push("");
 					}else if(index=="R"){

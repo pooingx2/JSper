@@ -23,7 +23,7 @@ sourceElement
 	| statement
 	| Comment
 	;
-	
+
 functionDeclaration
 	//: LT!* functionComment? LT!* 'function' LT!* functionName {type="Declaration";System.out.println("Test2 : "+name); } LT!* formalParameterList LT!* functionBody
 	: LT!* functionComment* LT!* 'function' LT!* functionName {type="Declaration";} LT!* formalParameterList LT!* functionBody
@@ -33,11 +33,9 @@ functionExpression
 	//: functionComment* LT!* 'var'? LT!* functionName {fList.get(fList.size()-1).setType("Expression");} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
 	: LT!* functionComment* LT!* 'var'? LT!* functionName {type="Expression";} LT!* '=' LT!* 'function' LT!* formalParameterList LT!* functionBody
 	;
-	
+
 functionAnonymous
-//u.edge.forEach(function(v,k) {
-	: LT!* functionComment* LT!* (Identifier LT!*)? '(' LT!* 'function' { System.out.println("test"); name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* ('('  LT!* ')')?
-	//| LT!* functionComment* LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* ('('  LT!* ')')?
+	: LT!* functionComment* LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* ('('  LT!* ')')?
 	| LT!* functionComment* LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!*
 	| LT!* functionComment* LT!* 'var'? LT!* Identifier LT!* '=' LT!* '(' LT!* 'function' {name="Anonymous"; type="Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* ('('  LT!* ')')?
 	;
@@ -50,7 +48,7 @@ functionName
 			//insertFunction();
 		}
 	;
-	
+
 functionComment
 	: 	
 	( Comment LT!* )

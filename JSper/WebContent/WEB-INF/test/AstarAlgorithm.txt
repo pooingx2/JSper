@@ -1,7 +1,3 @@
-// 0 맵편집모드
-// 1 시작점 설정
-// 2 끝점 설정
-
 var mode=0;
 function hide_button(step){
     if(document.getElementById('is_start').value=='0')

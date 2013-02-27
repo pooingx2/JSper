@@ -100,7 +100,6 @@ function draw_raphael( make_list_node ){
 			push_array( array, shapes[i] );
 		}
 	};
-	function make_node( parent , list, height ){ make_rec_to_line( parent , 190 + list[0] * 30, 100 + height, 60, 40, 5); };
 	function make_line( shapes_start, shapes_end ){ push_array( m_connection,r.connection( shapes_start, shapes_end, "#fff")); };
 	function line_to_line( parent , child ){
 		push_array( m_shapes,child );

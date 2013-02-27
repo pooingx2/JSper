@@ -1,8 +1,8 @@
-function Cipher(input, w) {    // main Cipher function [§5.1]
+function Cipher(input, w) {    // main Cipher function [?5.1]
   var Nb = 4;               // block size (in words): no of columns in state (fixed at 4 for AES)
   var Nr = w.length/Nb - 1; // no of rounds: 10/12/14 for 128/192/256-bit keys
 
-  var state = [[],[],[],[]];  // initialise 4xNb byte-array 'state' with input [§3.4]
+  var state = [[],[],[],[]];  // initialise 4xNb byte-array 'state' with input [?3.4]
   for (var i=0; i<4*Nb; i++) state[i%4][Math.floor(i/4)] = input[i];
 
   state = AddRoundKey(state, w, 0, Nb);
@@ -18,13 +18,13 @@ function Cipher(input, w) {    // main Cipher function [§5.1]
   state = ShiftRows(state, Nb);
   state = AddRoundKey(state, w, Nr, Nb);
 
-  var output = new Array(4*Nb);  // convert state to 1-d array before returning [§3.4]
+  var output = new Array(4*Nb);  // convert state to 1-d array before returning [?3.4]
   for (var i=0; i<4*Nb; i++) output[i] = state[i%4][Math.floor(i/4)];
   return output;
 }
 
 
-function SubBytes(s, Nb) {    // apply SBox to state S [§5.1.1]
+function SubBytes(s, Nb) {    // apply SBox to state S [?5.1.1]
   for (var r=0; r<4; r++) {
     for (var c=0; c<Nb; c++) s[r][c] = Sbox[s[r][c]];
   }
@@ -32,7 +32,7 @@ function SubBytes(s, Nb) {    // apply SBox to state S [§5.1.1]
 }
 
 
-function ShiftRows(s, Nb) {    // shift row r of state S left by r bytes [§5.1.2]
+function ShiftRows(s, Nb) {    // shift row r of state S left by r bytes [?5.1.2]
   var t = new Array(4);
   for (var r=1; r<4; r++) {
     for (var c=0; c<4; c++) t[c] = s[r][(c+r)%Nb];  // shift into temp copy
@@ -42,15 +42,15 @@ function ShiftRows(s, Nb) {    // shift row r of state S left by r bytes [§5.1.
 }
 
 
-function MixColumns(s, Nb) {   // combine bytes of each col of state S [§5.1.3]
+function MixColumns(s, Nb) {   // combine bytes of each col of state S [?5.1.3]
   for (var c=0; c<4; c++) {
     var a = new Array(4);  // 'a' is a copy of the current column from 's'
-    var b = new Array(4);  // 'b' is a{02} in GF(2^8)
+    var b = new Array(4);  // 'b' is a?{02} in GF(2^8)
     for (var i=0; i<4; i++) {
       a[i] = s[i][c];
       b[i] = s[i][c]&0x80 ? s[i][c]<<1 ^ 0x011b : s[i][c]<<1;
     }
-    // a[n] ^ b[n] is a{03} in GF(2^8)
+    // a[n] ^ b[n] is a?{03} in GF(2^8)
     s[0][c] = b[0] ^ a[1] ^ b[1] ^ a[2] ^ a[3]; // 2*a0 + 3*a1 + a2 + a3
     s[1][c] = a[0] ^ b[1] ^ a[2] ^ b[2] ^ a[3]; // a0 * 2*a1 + 3*a2 + a3
     s[2][c] = a[0] ^ a[1] ^ b[2] ^ a[3] ^ b[3]; // a0 + a1 + 2*a2 + 3*a3
@@ -60,7 +60,7 @@ function MixColumns(s, Nb) {   // combine bytes of each col of state S [§5.1.3]
 }
 
 
-function AddRoundKey(state, w, rnd, Nb) {  // xor Round Key into state S [§5.1.4]
+function AddRoundKey(state, w, rnd, Nb) {  // xor Round Key into state S [?5.1.4]
   for (var r=0; r<4; r++) {
     for (var c=0; c<Nb; c++) state[r][c] ^= w[rnd*4+c][r];
   }
@@ -68,7 +68,7 @@ function AddRoundKey(state, w, rnd, Nb) {  // xor Round Key into state S [§5.1.
 }
 
 
-function KeyExpansion(key) {  // generate Key Schedule (byte-array Nr+1 x Nb) from Key [§5.2]
+function KeyExpansion(key) {  // generate Key Schedule (byte-array Nr+1 x Nb) from Key [?5.2]
   var Nb = 4;            // block size (in words): no of columns in state (fixed at 4 for AES)
   var Nk = key.length/4  // key length (in words): 4/6/8 for 128/192/256-bit keys
   var Nr = Nk + 6;       // no of rounds: 10/12/14 for 128/192/256-bit keys
@@ -167,7 +167,7 @@ function AESEncryptCtr(plaintext, password, nBits) {
   var key = Cipher(pwBytes, KeyExpansion(pwBytes));  // gives us 16-byte key
   key = key.concat(key.slice(0, nBytes-16));  // expand key to 16/24/32 bytes long
 
-  // initialise counter block (NIST SP800-38A §B.2): millisecond time-stamp for nonce in 1st 8 bytes,
+  // initialise counter block (NIST SP800-38A ?B.2): millisecond time-stamp for nonce in 1st 8 bytes,
   // block counter in 2nd 8 bytes
   var counterBlock = new Array(blockSize);
   var nonce = (new Date()).getTime();  // timestamp: milliseconds since 1-Jan-1970
@@ -371,18 +371,19 @@ String.prototype.decodeBase64 = function(utf8decode) {
 String.prototype.encodeUTF8 = function() {
   // use regular expressions & String.replace callback function for better efficiency 
   // than procedural approaches
-  var str = this.replace(
-      /[\u0080-\u07ff]/g,  // U+0080 - U+07FF => 2 bytes 110yyyyy, 10zzzzzz
-      function(c) { 
+  var changefunc1 = function(c) { 
         var cc = c.charCodeAt(0);
-        return String.fromCharCode(0xc0 | cc>>6, 0x80 | cc&0x3f); }
-    );
-  str = str.replace(
-      /[\u0800-\uffff]/g,  // U+0800 - U+FFFF => 3 bytes 1110xxxx, 10yyyyyy, 10zzzzzz
-      function(c) { 
+        return String.fromCharCode(0xc0 | cc>>6, 0x80 | cc&0x3f); 
+    };
+  var changevalue1 = "/[\u0080-\u07ff]/g";
+  var changefunc2 = function(c) { 
         var cc = c.charCodeAt(0); 
-        return String.fromCharCode(0xe0 | cc>>12, 0x80 | cc>>6&0x3F, 0x80 | cc&0x3f); }
-    );
+        return String.fromCharCode(0xe0 | cc>>12, 0x80 | cc>>6&0x3F, 0x80 | cc&0x3f); 
+    };
+  var changevalue2 =  "/[\u0800-\uffff]/g";
+
+  var str = this.replace(changevalue1 , changefunc1 );
+  str = str.replace(changevalue2 , changefunc2 );
   return str;
 }
 
@@ -393,17 +394,19 @@ String.prototype.encodeUTF8 = function() {
  * @return decoded string
  */
 String.prototype.decodeUTF8 = function() {
-  var str = this.replace(
-      /[\u00c0-\u00df][\u0080-\u00bf]/g,                 // 2-byte chars
-      function(c) {  // (note parentheses for precence)
+  var changefunc1 = function(c) {  // (note parentheses for precence)
         var cc = (c.charCodeAt(0)&0x1f)<<6 | c.charCodeAt(1)&0x3f;
-        return String.fromCharCode(cc); }
-    );
-  str = str.replace(
-      /[\u00e0-\u00ef][\u0080-\u00bf][\u0080-\u00bf]/g,  // 3-byte chars
-      function(c) {  // (note parentheses for precence)
+        return String.fromCharCode(cc); 
+        };
+
+  var changevalue1 = "/[\u00c0-\u00df][\u0080-\u00bf]/g";
+  var changefunc2 = function(c) {  // (note parentheses for precence)
         var cc = ((c.charCodeAt(0)&0x0f)<<12) | ((c.charCodeAt(1)&0x3f)<<6) | ( c.charCodeAt(2)&0x3f); 
-        return String.fromCharCode(cc); }
-    );
+        return String.fromCharCode(cc); 
+        };
+  var changevalue2 =  "/[\u00e0-\u00ef][\u0080-\u00bf][\u0080-\u00bf]/g";
+
+  var str = this.replace(changevalue1 , changefunc1 );
+  str = str.replace(changevalue2 , changefunc2 );
   return str;
 }

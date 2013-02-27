@@ -34,7 +34,7 @@ functionExpression
 	;
 
 functionAnonymous
-	: '(' LT!* 'function' {stmType="func"; stmText="func Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'
+	: '(' LT!* 'function' {stmType="func"; stmText="func Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')'LT!*'('  LT!* ')'?
 	| 'function' {stmType="func"; stmText="func Anonymous";} LT!* formalParameterList LT!* functionBody LT!*
 	| 'var'? LT!* Identifier LT!* '=' LT!* '(' LT!* 'function' {stmType="func"; stmText="func Anonymous";} LT!* formalParameterList LT!* functionBody LT!* ')' LT!* '('  LT!* ')'
 	;

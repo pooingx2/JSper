@@ -82,6 +82,9 @@ statement
 	| switchStatement
 	| throwStatement
 	| tryStatement
+	| functionDeclaration
+	| functionExpression
+	| functionAnonymous
 	| LineComment
 	| Comment
 	;

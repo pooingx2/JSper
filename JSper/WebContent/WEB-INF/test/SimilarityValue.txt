@@ -1,0 +1,20 @@
+function Similarity_value(array){
+    var data = array;
+    var target = 27;
+    var near = 0; 
+    var abs = 0;
+    var min = 100;
+
+    for(var i=0; i < data.length; i++){
+        abs = ((data[i] - target) < 0) ? - ((data[i])-target) : (data[i] - target);
+        if(abs < min){
+        min = abs;
+        near = data[i];
+        }
+    }
+} 
+
+function Main(){
+    data = [23,42,543,56,34,75];
+    similarity_value(data);
+}

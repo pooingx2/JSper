@@ -1,14 +1,13 @@
-
 var mode=0;
 function hide_button(step){
     if(document.getElementById('is_start').value=='0')
 	{
-		alert("set start position.");
+		alert("???? ?????.");
 		return false;
 	}
 	if(document.getElementById('is_end').value=='0')
 	{
-		alert("set end position.")
+		alert("??? ?????.")
 			return false;
 	}
 
@@ -68,7 +67,7 @@ function clickTogle(i,j)
 		document.getElementById('next_y').value=j;
 		set_color(i,j,"#ff0000");
 		document.getElementById('ggg').rows[j].cells[i].innerHTML=0;
-		document.getElementById('pass').rows[j].cells[i].innerHTML='★';
+		document.getElementById('pass').rows[j].cells[i].innerHTML='?';
 	}
 	else if(mode==2 && !is_color(i,j,"#ff0000"))
 	{
@@ -83,7 +82,7 @@ function clickTogle(i,j)
 		document.getElementById('end_x').value=i;
 		document.getElementById('end_y').value=j;
 		set_color(i,j,"#0000ff");
-		document.getElementById('pass').rows[j].cells[i].innerHTML='☆';
+		document.getElementById('pass').rows[j].cells[i].innerHTML='?';
 	}
 }
 
@@ -92,35 +91,35 @@ function astar(x,y,step)
 	cnt=0;
 	if(!is_block(x-1,y-1) && !is_block(x-1,y) && !is_block(x,y-1))
 	{
-		set_1(x-1,y-1,'#00ff00','↖');
+		set_1(x-1,y-1,'#00ff00','?');
 	}
 	if(!is_block(x,y-1))
 	{
-		set_1(x,y-1,'#00ff00','↑');
+		set_1(x,y-1,'#00ff00','?');
 	}
 	if(!is_block(x-1+2,y-1) && !is_block(x,y-1) && !is_block(x-0+1,y))
 	{
-		set_1(x-1+2,y-1,'#00ff00','↗');
+		set_1(x-1+2,y-1,'#00ff00','?');
 	}
 	if(!is_block(x-1,y))
 	{
-		set_1(x-1,y,'#00ff00','←');
+		set_1(x-1,y,'#00ff00','?');
 	}
 	if(!is_block(x-0+1,y))
 	{
-		set_1(x-0+1,y,'#00ff00','→');
+		set_1(x-0+1,y,'#00ff00','?');
 	}
 	if(!is_block(x-1,y-0+1) && !is_block(x-1,y) && !is_block(x,y-0+1))
 	{
-		set_1(x-1,y-0+1,'#00ff00','↙');
+		set_1(x-1,y-0+1,'#00ff00','?');
 	}
 	if(!is_block(x,y-0+1))
 	{
-		set_1(x,y-0+1,'#00ff00','↓');
+		set_1(x,y-0+1,'#00ff00','?');
 	}
 	if(!is_block(x-0+1,y-0+1) && !is_block(x,y-0+1) && !is_block(x-0+1,y))
 	{
-		set_1(x-0+1,y-0+1,'#00ff00','↘');
+		set_1(x-0+1,y-0+1,'#00ff00','?');
 	}
 
 	mile=99999;
@@ -143,16 +142,16 @@ function astar(x,y,step)
 	}
 	if(cnt==0)
 	{
-		alert("길이 막혀있습니다.");
+		alert("?? ??????.");
 		return false;
 	}
 	if(document.getElementById('end_x').value==document.getElementById('next_x').value && document.getElementById('end_y').value==document.getElementById('next_y').value)
 	{
-		alert("길을 찾았습니다.");
+		alert("?? ?????.");
 		set_color(document.getElementById('end_x').value,document.getElementById('end_y').value,'#0000ff');
 		astar_print(document.getElementById('end_x').value,document.getElementById('end_y').value);
 		document.getElementById('length').value=document.getElementById('fff').rows[document.getElementById('end_y').value].cells[document.getElementById('end_x').value].innerHTML;
-		document.getElementById('pass').rows[document.getElementById('end_y').value].cells[document.getElementById('end_x').value].innerHTML='☆';
+		document.getElementById('pass').rows[document.getElementById('end_y').value].cells[document.getElementById('end_x').value].innerHTML='?';
 		return true;
 	}
 	else
@@ -251,7 +250,7 @@ function set_1(x,y,color,pass)
 function astar_print(x,y)
 {
 	document.getElementById('world_map').rows[y].cells[x].bgColor="#00ffff";
-	if(document.getElementById('pass').rows[y].cells[x].innerHTML=='★')
+	if(document.getElementById('pass').rows[y].cells[x].innerHTML=='?')
 	{
 		document.getElementById('world_map').rows[document.getElementById('start_y').value].cells[document.getElementById('start_x').value].bgColor="#ff0000";
 		document.getElementById('world_map').rows[document.getElementById('end_y').value].cells[document.getElementById('end_x').value].bgColor="#0000ff";
@@ -260,14 +259,14 @@ function astar_print(x,y)
 
 	switch (document.getElementById('pass').rows[y].cells[x].innerHTML)
 	{
-		case '↖' :	x++;	y++;	break;
-		case '↑' :			y++;	break;
-		case '↗' :	x--;	y++;	break;
-		case '←' :	x++;			break;
-		case '→' :	x--;			break;
-		case '↙' : x++;	y--;	break;
-		case '↓' :			y--;	break;
-		case '↘' : x--;	y--;	break;	
+		case '?' :	x++;	y++;	break;
+		case '?' :			y++;	break;
+		case '?' :	x--;	y++;	break;
+		case '?' :	x++;			break;
+		case '?' :	x--;			break;
+		case '?' : x++;	y--;	break;
+		case '?' :			y--;	break;
+		case '?' : x--;	y--;	break;	
 		default: break;
 	}
 
@@ -288,8 +287,8 @@ function reset_map(){
 		}
 	}
 	document.getElementById('ggg').rows[document.getElementById('start_y').value].cells[document.getElementById('start_x').value].innerHTML=0;
-	document.getElementById('pass').rows[document.getElementById('start_y').value].cells[document.getElementById('start_x').value].innerHTML='★';
-	document.getElementById('pass').rows[document.getElementById('end_y').value].cells[document.getElementById('end_x').value].innerHTML='☆';
+	document.getElementById('pass').rows[document.getElementById('start_y').value].cells[document.getElementById('start_x').value].innerHTML='?';
+	document.getElementById('pass').rows[document.getElementById('end_y').value].cells[document.getElementById('end_x').value].innerHTML='?';
 	document.getElementById('next_x').value=document.getElementById('start_x').value;
 	document.getElementById('next_y').value=document.getElementById('start_y').value;
 }

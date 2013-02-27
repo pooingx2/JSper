@@ -76,6 +76,8 @@
 			  <option value="QuickSort">QuickSort</option>
 			  <option value="DFS">DFS</option>
 			  <option value="AstarAlgorithm">AstarAlgorithm</option>
+			  <option value="SimilarityValue">SimilarityValue</option>
+			  <option value="AES">AES</option>
 		</select>
 		
 		<select class="skinSelector" onChange = "javascript:selectEvent(this)">
